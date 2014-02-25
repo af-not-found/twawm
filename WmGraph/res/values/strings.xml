@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 画面 -->
+    <string name="settings">Settings</string>
+    <string name="info">Info</string>
+    <string name="invalid_format">Inputed value format is invalid</string>
+    <string name="pass_not_initialized">[Warning] Password is not initialized.</string>
+
+    <!-- ルーター設定 -->
+    <string name="menu_ap_conn_category">Router settings</string>
+    <string name="menu_ap_ip_addr_title">Router LAN address</string>
+    <string name="menu_ap_ip_addr_summary">If you change DNS IP address, this IP address must be set.</string>
+    <string name="menu_ap_ip_addr_dialog_title">Router LAN-side IP address \n ex) 192.168.0.1</string>
+        
+    <string name="pause">pause</string>
+    <string name="realtime">realtime</string>
+    <string name="update_interval_label">update interval</string>
+    
+</resources>

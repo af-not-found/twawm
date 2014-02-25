@@ -1,0 +1,74 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 画面共通文字列 -->
+    <string name="app_name" translatable="false">twawm</string>
+    <string name="app_subname" translatable="false">(Toggle WiFi And WM)</string>
+    <string name="app_version" translatable="false">ver</string>
+    <string name="deleloper" translatable="false">by afnf</string>
+    <string name="wiki_url" translatable="false">http://w.livedoor.jp/twawm/</string>
+    <string name="title_activity_main" translatable="false">twawm</string>
+
+    <!-- ウィジェット共通文字列 -->
+    <string name="wifi_on" translatable="false">WiFi ON</string>
+    <string name="wifi_off" translatable="false">WiFi OFF</string>
+    <string name="batt_charging" translatable="false">Charging</string>
+    <string name="pausing_en" translatable="false">Pausing</string>
+    <string name="processing" translatable="false">…</string>
+    <string name="processing1" translatable="false" tools:ignore="TypographyFractions">1/4 BT</string>
+    <string name="processing2" translatable="false">2/4 WiFi</string>
+    <string name="processing3" translatable="false" tools:ignore="TypographyFractions">3/4 conn</string>
+    <string name="processing4" translatable="false">4/4 net</string>
+    <string name="online" translatable="false">Online</string>
+    <string name="offline" translatable="false">Offline</string>
+    <string name="standby_ok" translatable="false">Standby</string>
+    <string name="standby_ng" translatable="false">Stby NG</string>
+    <string name="no_ap" translatable="false">noRouter</string>
+    <string name="not_wm" translatable="false">not WM</string>
+    <string name="watchdog_timeout" translatable="false">Timeout</string>
+
+    <!-- 一般設定 -->
+
+    <!-- ステータスチェック設定 -->
+    <string name="dv_menu_online_check_interval_sec" translatable="false">120</string>
+    <string name="dv_menu_online_check_dns_timeout_sec" translatable="false">4</string>
+    <string name="dv_menu_online_check_count_after_offline" translatable="false">15</string>
+    <string name="dv_menu_online_check_interval_sec_after_offline" translatable="false">8</string>
+
+    <!-- ウィジェット設定 -->
+    <string name="dv_menu_widget_str_color" translatable="false">@string/color_white_value</string>
+    <string name="dv_menu_widget_background" translatable="false">@string/color_black_trans_value</string>
+    <string name="dv_menu_widget_click_action_wifi_disabled" translatable="false">@string/menu_widget_click_action__resume</string>
+    <string name="dv_menu_widget_click_action_online" translatable="false">@string/menu_widget_click_action__standby</string>
+    <string name="dv_menu_widget_click_action_offline" translatable="false">@string/menu_widget_click_action__choose</string>
+
+    <!-- ルーター設定 -->
+    <string name="dv_menu_ap_conn_retry_limit" translatable="false">0</string>
+    <string name="dv_menu_ap_conn_timeout_sec" translatable="false">20</string>
+    <string name="dv_menu_disable_wifi_when_ap_conn_failed" translatable="false">false</string>
+    <string name="dv_menu_start_wizard_automatically" translatable="false">true</string>
+
+    <!-- サービス設定 -->
+    <string name="dv_menu_action_after_suspend" translatable="false">@string/menu_action_after_suspend__wifioff_stop_service</string>
+    <string name="dv_menu_statusbar_notify" translatable="false">@string/menu_statusbar_notify__always</string>
+    <string name="dv_menu_start_service_when_wifi_enabled" translatable="false">false</string>
+    <string name="dv_menu_enable_logging" translatable="false">true</string>
+    
+    <!-- リモート起動設定 -->
+    <string name="dv_menu_bt_connection_timeout_sec" translatable="false">15</string>
+
+    <!-- preference key -->
+    <string name="menu_key_widget_str_color" translatable="false">menu_key_widget_str_color</string>
+    <string name="menu_key_widget_background" translatable="false">menu_key_widget_background</string>
+    <string name="menu_key_widget_click_action_wifi_disabled" translatable="false">menu_key_widget_click_action_wifi_disabled</string>
+    <string name="menu_key_widget_click_action_online" translatable="false">menu_key_widget_click_action_online</string>
+    <string name="menu_key_widget_click_action_offline" translatable="false">menu_key_widget_click_action_offline</string>
+    <string name="menu_key_reset_batt_history" translatable="false">menu_key_reset_batt_history</string>
+    <string name="menu_key_action_after_suspend" translatable="false">menu_action_after_suspend</string>
+    <string name="menu_key_ap_ip_addr" translatable="false">menu_ap_ip_addr</string>
+    <string name="menu_key_bt_address" translatable="false">menu_bt_address</string>
+    <string name="menu_key_backup" translatable="false">menu_key_backup</string>
+    <string name="menu_key_restore" translatable="false">menu_key_restore</string>
+    <string name="menu_key_router_control_password" translatable="false">menu_key_router_control_password</string>
+    <string name="menu_key_reset_settings" translatable="false">menu_key_reset_settings</string>
+
+</resources>

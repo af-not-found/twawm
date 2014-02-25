@@ -1,0 +1,195 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 画面 -->
+    <string name="resume">リモート起動</string>
+    <string name="standby">スタンバイ</string>
+    <string name="settings">設定</string>
+    <string name="info">情報</string>
+    <string name="select_action">アクションを選択</string>
+    <string name="working">機能有効</string>
+    <string name="pausing">一時停止中</string>
+    <string name="pausing_long">アプリケーションは一時停止中です</string>
+    <string name="bt_addr_saved">Bluetoothアドレスが保存されました。\n次回からリモート起動できます。</string>
+    <string name="send_log_short">レポート</string>
+    <string name="not_works_fine">うまく\n 動かない場合</string>
+    <string name="others">その他</string>
+    <string name="save">保存</string>
+    <string name="exec">実行</string>
+    <string name="cancel">キャンセル</string>
+    <string name="invalid_format">[警告] 入力フォーマットが不正です</string>
+    <string name="router_ip_addr_not_set">[警告] ルーターIPアドレスが設定されていません</string>
+    <string name="bt_error_need_to_reboot">[警告] Bluetoothエラー発生、端末の再起動が必要かも？</string>
+
+    <!-- 初期設定ウィザード -->
+    <string name="wizard_title">初期設定ウィザード</string>
+    <string name="wizard_text_init">これからtwawmの初期設定を行います。この作業は5分程度で終わります。</string>
+    <string name="wizard_text_connection">WiFiを有効にしてから、WMルーターに接続してください。</string>
+    <string name="wizard_text_input_router_ip">WMルーターに接続できません。ルーターIPアドレスを入力して下さい。\n 例) 192.168.0.1</string>
+    <string name="wizard_text_password_not_init">管理画面パスワードが未設定です。管理画面を開いて設定して下さい。</string>
+    <string name="wizard_text_input_password1">設定したパスワードを入力して下さい。\n※2013/9/3のファームウェア更新によって、スタンバイにパスワードが必要になりました。</string>
+    <string name="wizard_text_input_password2">WMルーター管理画面パスワードを入力して下さい。\n※2013/9/3のファームウェア更新によって、スタンバイにパスワードが必要になりました。</string>
+    <string name="wizard_text_invalid_password">ログインできませんでした。再入力して下さい。</string>
+    <string name="wizard_text_fin">パスワードが確認できました。終了します。</string>
+    <string name="wizard_button_next">次へ</string>
+    <string name="wizard_button_dont_start_wizard_automatically">ウィザード無効化</string>
+    <string name="wizard_button_wifi">WiFi設定を開く</string>
+    <string name="wizard_button_router">管理画面を開く</string>
+    <string name="wizard_button_fin">終了</string>
+    <string name="wizard_dialog_loading">確認中…</string>
+
+    <!-- ログ送信 -->
+    <string name="menu_sendlog_report_type">★動作報告にご協力ください！</string>
+    <string name="menu_sendlog_message">メッセージ</string>
+    <string name="menu_sendlog_type__ok_label">正常動作</string>
+    <string name="menu_sendlog_type__ng_label">不具合有り</string>
+    <string name="menu_sendlog_type__others_label">その他</string>
+    <string name="menu_sendlog_what"><u>・送信情報について</u></string>
+    <string name="menu_sendlog_reply"><u>・返信掲示板</u></string>
+    <string name="send_log">作者にログを送る</string>
+    <string name="send_log_ok">ログの送信に成功しました</string>
+    <string name="send_log_ng">ログの送信に失敗しました</string>
+    <string name="send_log_not_online">オンラインでないため送信できません</string>
+    <string name="send_log_logging_disabled">「高度な設定」→「ログ出力」が有効でないため送信できません</string>
+    <string name="send_log_archived">ログ圧縮完了、送信中…</string>
+    <string name="send_log_retry">ログ送信失敗、リトライ中…</string>
+
+    <!-- 通知 -->
+    <string name="service_started_long">サービスが開始されました</string>
+    <string name="standby_ok_long">スタンバイ成功</string>
+    <string name="standby_ng_long">スタンバイ失敗</string>
+    <string name="ap_not_found_long">WiFiアクセスポイント検出失敗</string>
+    <string name="not_wm_long">Aterm WMルーターではありません</string>
+    <string name="watchdog_timeout_long">操作タイムアウト</string>
+    <string name="bluetooth_failed_long">リモート起動に失敗しました</string>
+    <string name="switching_router">ルーター切り替え中</string>
+    <string name="wimax_recn_failed_frmver">ファームウェアバージョンが古いため実行できません</string>
+    <string name="wimax_disconnecting">WiMAX切断中…</string>
+    <string name="wimax_connecting">WiMAX接続中…</string>
+    <string name="reboot_wmrouter">ルーター再起動中…</string>
+    <string name="failed">失敗しました</string>
+
+    <!-- 色ラベル -->
+    <string name="color_black_label">黒</string>
+    <string name="color_gray_label">灰色</string>
+    <string name="color_white_label">白</string>
+    <string name="color_red_label">赤</string>
+    <string name="color_green_label">緑</string>
+    <string name="color_blue_label">青</string>
+    <string name="color_none_label">無し</string>
+    <string name="color_black_trans_label">黒(透過)</string>
+    <string name="color_white_trans_label">白(透過)</string>
+
+    <!-- ステータスチェック設定 -->
+    <string name="menu_online_check_category">ステータスチェック設定</string>
+    <string name="menu_online_check_interval_sec_title">ステータスチェック間隔</string>
+    <string name="menu_online_check_interval_sec_summay">オンライン状態・電波強度・バッテリー残をチェックする間隔を秒で指定</string>
+    <string name="menu_online_check_interval_sec_dialog_title">ステータスチェック間隔 [秒] (推奨設定=120)</string>
+    <string name="menu_online_check_dns_timeout_sec_dialog_title">DNSタイムアウト [秒] (推奨設定=4)</string>
+    <string name="menu_online_check_dns_timeout_sec_summay">オンライン状態チェックのためのDNSルックアップタイムアウトを秒で指定</string>
+    <string name="menu_online_check_dns_timeout_sec_title">DNSタイムアウト</string>
+    <string name="menu_online_check_interval_sec_after_offline_dialog_title">オフライン後チェック間隔 [秒] (推奨設定=8)</string>
+    <string name="menu_online_check_interval_sec_after_offline_summay">オフラインになった後、オンライン状態をチェックする間隔を秒で指定</string>
+    <string name="menu_online_check_interval_sec_after_offline_title">オフライン後チェック間隔</string>
+    <string name="menu_online_check_count_after_offline_dialog_title">オフライン後チェック回数 (推奨設定=15)</string>
+    <string name="menu_online_check_count_after_offline_summay">オフラインになった後、オンライン状態をチェックする上限回数</string>
+    <string name="menu_online_check_count_after_offline_title">オフライン後チェック回数</string>
+
+    <!-- ウィジェット設定 -->
+    <string name="menu_widget_setting_title">ウィジェット設定</string>
+    <string name="menu_widget_display_setting">ウィジェット表示設定</string>
+    <string name="menu_widget_str_color_title">文字色</string>
+    <string name="menu_widget_background_title">背景</string>
+    <string name="menu_widget_click_action_title">ウィジェットをタップしたときの挙動</string>
+    <string name="menu_widget_click_action_wifi_disabled_title">WiFi無効時</string>
+    <string name="menu_widget_click_action_online_title">オンライン時</string>
+    <string name="menu_widget_click_action_offline_title">その他</string>
+    <string name="menu_widget_click_action_customize_title">一覧のカスタマイズ</string>
+    <string name="menu_widget_click_action_customize_summay">「一覧から選択」の項目非表示や並び替えを行います</string>
+
+    <!-- ウィジェットタップ設定 アクション -->
+    <string name="menu_widget_click_action__none_label">なにもしない</string>
+    <string name="menu_widget_click_action__check_label">オンラインチェック</string>
+    <string name="menu_widget_click_action__resume_label">リモート起動 + WiFi ON</string>
+    <string name="menu_widget_click_action__resume_switch_label">リモート起動 + ルーター切り替え</string>
+    <string name="menu_widget_click_action__switch_label">ルーター切り替え</string>
+    <string name="menu_widget_click_action__standby_label">ルータースタンバイ</string>
+    <string name="menu_widget_click_action__wifi_on_label">WiFi ON</string>
+    <string name="menu_widget_click_action__wifi_off_label">WiFi OFF</string>
+    <string name="menu_widget_click_action__restart_label">WiFi再起動</string>
+    <string name="menu_widget_click_action__wimax_recn_label">WiMAX再接続</string>
+    <string name="menu_widget_click_action__reboot_wm_label">ルーター再起動</string>
+    <string name="menu_widget_click_action__stop_service_label">サービス停止</string>
+    <string name="menu_widget_click_action__choose_label">一覧から選択</string>
+
+    <!-- ルーター設定 -->
+    <string name="menu_ap_conn_category">ルーター設定</string>
+    <string name="menu_ap_ip_addr_title">ルーターIPアドレス</string>
+    <string name="menu_ap_ip_addr_summary">ルーター切り替えを行う場合やDNSを変更する場合に設定してください</string>
+    <string name="menu_ap_ip_addr_dialog_title">ルーターLAN側IPアドレス (例)192.168.0.1</string>
+    <string name="menu_ap_conn_timeout_sec_title">接続タイムアウト [秒]</string>
+    <string name="menu_ap_conn_timeout_sec_summay">ルーターへの接続タイムアウトを秒で指定</string>
+    <string name="menu_ap_conn_timeout_sec_dialog_title">ルーターへの接続タイムアウト [秒] (推奨設定=20)</string>
+    <string name="menu_ap_conn_retry_limit_title">再接続回数</string>
+    <string name="menu_ap_conn_retry_limit_summay">ルーターへの再接続上限回数を設定します</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_title">接続失敗時にWiFi無効</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_summay">WiFiアクセスポイントに接続できない場合、WiFiを無効にします</string>
+    <string name="menu_wizard_category">初期設定ウィザード</string>
+    <string name="menu_wizard_title">ウィザード起動</string>
+    <string name="menu_wizard_summary">初期設定ウィザードを起動します</string>
+    <string name="menu_start_wizard_automatically_title">ウィザードを自動起動する</string>
+    <string name="menu_start_wizard_automatically_summay">初期設定ウィザードが意図せず立ち上がってしまう場合、オフにしてください</string>
+    <string name="menu_reset_batt_history_title">放電履歴をリセット</string>
+    <string name="menu_reset_batt_history_toast">リセットしました</string>
+    <string name="menu_reset_batt_history_summary">現在の平均値 : %1$s%%/h</string>
+    
+    <!-- サービス設定 -->
+    <string name="menu_service_category">サービス設定</string>
+    <string name="menu_action_after_suspend_title">スタンバイ後の挙動</string>
+    <string name="menu_statusbar_notify_title">ステータスバー通知</string>
+    <string name="menu_statusbar_notify_summay">ステータスバーへの通知タイミングを選択します(要再起動)</string>
+    <string name="menu_start_service_when_wifi_enabled_title">WiFi有効時に開始</string>
+    <string name="menu_start_service_when_wifi_enabled_summay">OS側でのWiFi有効化を感知して、サービスを開始します</string>
+    <string name="menu_enable_logging_title">ログ出力を有効にする</string>
+    <string name="menu_enable_logging_summary">以下に出力されます。古いログは7日で自動削除されます。\n</string>
+
+    <!-- スタンバイ後の挙動 -->
+    <string name="menu_action_after_suspend__wifioff_stop_service_label">WiFiオフ、サービス停止</string>
+    <string name="menu_action_after_suspend__stop_service_label">サービス停止</string>
+    <string name="menu_action_after_suspend__do_nothing_label">なにもしない</string>
+    
+    <!-- ステータスバー通知 -->
+    <string name="menu_statusbar_notify__always_label">常に通知</string>
+    <string name="menu_statusbar_notify__changed_label">変化した場合</string>
+    <string name="menu_statusbar_notify__never_label">通知しない</string>
+
+    <!-- リモート起動設定 -->
+    <string name="menu_bluetooth_category">リモート起動設定</string>
+    <string name="menu_bt_resume_type_title">リモート起動方法</string>
+    <string name="menu_bt_resume_type_summay">リモート起動方法を選択します</string>
+    <string name="menu_bt_connection_timeout_sec_dialog_title">Bluetooth接続タイムアウト[秒] (推奨設定=15)</string>
+    <string name="menu_bt_connection_timeout_sec_summay">Bluetoothの接続タイムアウトを秒で指定</string>
+    <string name="menu_bt_connection_timeout_sec_title">BT接続タイムアウト</string>
+    <string name="menu_bt_address_title">Bluetoothアドレス</string>
+    <string name="menu_bt_address_summay">通常、変更する必要はありません</string>
+
+    <!-- リモート起動方法 -->
+    <string name="menu_bt_resume_type__fast_label">高速</string>
+    <string name="menu_bt_resume_type__normal_label">通常</string>
+    <string name="menu_bt_resume_type__normal_force_label">強制接続</string>
+    <string name="menu_bt_resume_type__bt_restart_label">Bluetooth再起動</string>
+
+    <!-- バックアップと復元 -->
+    <string name="menu_backup_and_restore">設定のバックアップと復元</string>
+    <string name="menu_backup_title">ファイルにバックアップ</string>
+    <string name="menu_backup_summary">全ての設定を以下にバックアップします（ルーターパスワード除く）\n</string>
+    <string name="menu_restore_title">ファイルから復元</string>
+    <string name="menu_restore_summary">全ての設定を以下から復元します\n</string>
+    <string name="backup_succeeded">バックアップに成功しました</string>
+    <string name="backup_failed">バックアップに失敗しました</string>
+    <string name="restore_succeeded">復元に成功しました</string>
+    <string name="restore_failed">復元に失敗しました</string>
+    <string name="menu_reset_settings_title">設定を初期化する</string>
+    <string name="menu_reset_settings_summay">全ての設定をリセットし、初期状態に戻します</string>
+    <string name="reset_settings_succeeded">設定の初期化が完了しました</string>
+    
+</resources>

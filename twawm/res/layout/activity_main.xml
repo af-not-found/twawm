@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <LinearLayout
+        android:id="@+id/widgetLayout_main"
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        android:background="@drawable/backbround_button_like"
+        android:clickable="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="onWdClicked"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/wdImage"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_marginRight="4dp"
+            android:clickable="false"
+            android:contentDescription="@string/info"
+            android:src="@drawable/antena_gray" />
+
+        <TextView
+            android:id="@+id/wdText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="@string/processing"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:baselineAligned="false" >
+
+        <Button
+            android:id="@+id/toggleRouter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onToggleRouter"
+            android:text="@string/standby" />
+
+        <ToggleButton
+            android:id="@+id/toggleWifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:onClick="onToggleWifi"
+            android:textOff="@string/wifi_off"
+            android:textOn="@string/wifi_on" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
+        android:gravity="center_horizontal|center_vertical" >
+
+        <ToggleButton
+            android:id="@+id/toggleWorking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="onToggleWorking"
+            android:text="@string/working"
+            android:textOff="@string/pausing"
+            android:textOn="@string/working" />
+
+        <TextView
+            android:id="@+id/textNotWorksFine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:clickable="true"
+            android:onClick="onNotWorksFine"
+            android:text="@string/not_works_fine"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/link" />
+    </LinearLayout>
+
+</LinearLayout>

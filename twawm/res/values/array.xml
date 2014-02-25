@@ -1,0 +1,189 @@
+<resources>
+
+    <!-- ステータスバー通知 -->
+    <string name="menu_statusbar_notify__always" translatable="false">always</string>
+    <string name="menu_statusbar_notify__changed" translatable="false">when changed</string>
+    <string name="menu_statusbar_notify__never" translatable="false">never</string>
+
+    <string-array name="entries_menu_statusbar_notify">
+        <item>@string/menu_statusbar_notify__always_label</item>
+        <item>@string/menu_statusbar_notify__changed_label</item>
+        <item>@string/menu_statusbar_notify__never_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_statusbar_notify">
+        <item>@string/menu_statusbar_notify__always</item>
+        <item>@string/menu_statusbar_notify__changed</item>
+        <item>@string/menu_statusbar_notify__never</item>
+    </string-array>
+
+    <!-- 色値 -->
+    <string name="color_black_value" translatable="false">black</string>
+    <string name="color_gray_value" translatable="false">gray</string>
+    <string name="color_white_value" translatable="false">white</string>
+    <string name="color_red_value" translatable="false">red</string>
+    <string name="color_green_value" translatable="false">green</string>
+    <string name="color_blue_value" translatable="false">blue</string>
+    <string name="color_none_value" translatable="false">none</string>
+    <string name="color_black_trans_value" translatable="false">black_trans</string>
+    <string name="color_white_trans_value" translatable="false">white_trans</string>
+
+    <!-- ウィジェット設定 文字色 -->
+    <string-array name="entries_menu_widget_str_color">
+        <item>@string/color_black_label</item>
+        <item>@string/color_gray_label</item>
+        <item>@string/color_white_label</item>
+        <item>@string/color_red_label</item>
+        <item>@string/color_green_label</item>
+        <item>@string/color_blue_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_widget_str_color">
+        <item>@string/color_black_value</item>
+        <item>@string/color_gray_value</item>
+        <item>@string/color_white_value</item>
+        <item>@string/color_red_value</item>
+        <item>@string/color_green_value</item>
+        <item>@string/color_blue_value</item>
+    </string-array>
+
+    <!-- ウィジェット設定 背景色 -->
+    <string-array name="entries_menu_widget_background">
+        <item>@string/color_black_trans_label</item>
+        <item>@string/color_black_label</item>
+        <item>@string/color_white_trans_label</item>
+        <item>@string/color_white_label</item>
+        <item>@string/color_none_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_widget_background">
+        <item>@string/color_black_trans_value</item>
+        <item>@string/color_black_value</item>
+        <item>@string/color_white_trans_value</item>
+        <item>@string/color_white_value</item>
+        <item>@string/color_none_value</item>
+    </string-array>
+
+    <!-- ウィジェットタップ設定 アクション -->
+    <string name="menu_widget_click_action__none" translatable="false">none</string>
+    <string name="menu_widget_click_action__check" translatable="false">check</string>
+    <string name="menu_widget_click_action__resume" translatable="false">resume</string>
+    <string name="menu_widget_click_action__resume_switch" translatable="false">resume_switch</string>
+    <string name="menu_widget_click_action__switch" translatable="false">switch</string>
+    <string name="menu_widget_click_action__wifi_on" translatable="false">wifi_on</string>
+    <string name="menu_widget_click_action__wifi_off" translatable="false">wifi_off</string>
+    <string name="menu_widget_click_action__restart" translatable="false">restart</string>
+    <string name="menu_widget_click_action__standby" translatable="false">standby</string>
+    <string name="menu_widget_click_action__wimax_recn" translatable="false">wimax_recn</string>
+    <string name="menu_widget_click_action__reboot_wm" translatable="false">reboot_wm</string>
+    <string name="menu_widget_click_action__stop_service" translatable="false">stop_service</string>
+    <string name="menu_widget_click_action__choose" translatable="false">choose</string>
+
+    <string-array name="entries_menu_widget_click_action">
+        <item>@string/menu_widget_click_action__none_label</item>
+        <item>@string/menu_widget_click_action__check_label</item>
+        <item>@string/menu_widget_click_action__standby_label</item>
+        <item>@string/menu_widget_click_action__resume_label</item>
+        <item>@string/menu_widget_click_action__resume_switch_label</item>
+        <item>@string/menu_widget_click_action__switch_label</item>
+        <item>@string/menu_widget_click_action__wifi_on_label</item>
+        <item>@string/menu_widget_click_action__wifi_off_label</item>
+        <item>@string/menu_widget_click_action__restart_label</item>
+        <item>@string/menu_widget_click_action__wimax_recn_label</item>
+        <item>@string/menu_widget_click_action__reboot_wm_label</item>
+        <item>@string/menu_widget_click_action__stop_service_label</item>
+        <item>@string/menu_widget_click_action__choose_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_widget_click_action">
+        <item>@string/menu_widget_click_action__none</item>
+        <item>@string/menu_widget_click_action__check</item>
+        <item>@string/menu_widget_click_action__standby</item>
+        <item>@string/menu_widget_click_action__resume</item>
+        <item>@string/menu_widget_click_action__resume_switch</item>
+        <item>@string/menu_widget_click_action__switch</item>
+        <item>@string/menu_widget_click_action__wifi_on</item>
+        <item>@string/menu_widget_click_action__wifi_off</item>
+        <item>@string/menu_widget_click_action__restart</item>
+        <item>@string/menu_widget_click_action__wimax_recn</item>
+        <item>@string/menu_widget_click_action__reboot_wm</item>
+        <item>@string/menu_widget_click_action__stop_service</item>
+        <item>@string/menu_widget_click_action__choose</item>
+    </string-array>
+
+    <!-- 「無し」「一覧から選択」を除外 -->
+    <string-array name="entries_menu_widget_click_action_on_choose">
+        <item>@string/menu_widget_click_action__check_label</item>
+        <item>@string/menu_widget_click_action__standby_label</item>
+        <item>@string/menu_widget_click_action__resume_label</item>
+        <item>@string/menu_widget_click_action__resume_switch_label</item>
+        <item>@string/menu_widget_click_action__switch_label</item>
+        <item>@string/menu_widget_click_action__wifi_on_label</item>
+        <item>@string/menu_widget_click_action__wifi_off_label</item>
+        <item>@string/menu_widget_click_action__restart_label</item>
+        <item>@string/menu_widget_click_action__wimax_recn_label</item>
+        <item>@string/menu_widget_click_action__reboot_wm_label</item>
+        <item>@string/menu_widget_click_action__stop_service_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_widget_click_action_on_choose">
+        <item>@string/menu_widget_click_action__check</item>
+        <item>@string/menu_widget_click_action__standby</item>
+        <item>@string/menu_widget_click_action__resume</item>
+        <item>@string/menu_widget_click_action__resume_switch</item>
+        <item>@string/menu_widget_click_action__switch</item>
+        <item>@string/menu_widget_click_action__wifi_on</item>
+        <item>@string/menu_widget_click_action__wifi_off</item>
+        <item>@string/menu_widget_click_action__restart</item>
+        <item>@string/menu_widget_click_action__wimax_recn</item>
+        <item>@string/menu_widget_click_action__reboot_wm</item>
+        <item>@string/menu_widget_click_action__stop_service</item>
+    </string-array>
+
+    <!-- AP接続設定 -->
+    <string-array name="entryValues_menu_ap_conn_retry_limit" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- スタンバイ後の挙動 -->
+    <string name="menu_action_after_suspend__wifioff_stop_service" translatable="false">wifioff</string>
+    <string name="menu_action_after_suspend__stop_service" translatable="false">stop_service</string>
+    <string name="menu_action_after_suspend__do_nothing" translatable="false">do_nothing</string>
+
+    <string-array name="entries_menu_action_after_suspend" translatable="false">
+        <item>@string/menu_action_after_suspend__wifioff_stop_service_label</item>
+        <item>@string/menu_action_after_suspend__stop_service_label</item>
+        <item>@string/menu_action_after_suspend__do_nothing_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_action_after_suspend" translatable="false">
+        <item>@string/menu_action_after_suspend__wifioff_stop_service</item>
+        <item>@string/menu_action_after_suspend__stop_service</item>
+        <item>@string/menu_action_after_suspend__do_nothing</item>
+    </string-array>
+
+    <!-- リモート起動方法 -->
+    <string name="menu_bt_resume_type__fast" translatable="false">0</string>
+    <string name="menu_bt_resume_type__normal" translatable="false">3</string>
+    <string name="menu_bt_resume_type__normal_force" translatable="false">1</string>
+    <string name="menu_bt_resume_type__bt_restart" translatable="false">2</string>
+
+    <string-array name="entries_menu_bt_resume_type" translatable="false">
+        <item>@string/menu_bt_resume_type__fast_label</item>
+        <item>@string/menu_bt_resume_type__normal_label</item>
+        <item>@string/menu_bt_resume_type__normal_force_label</item>
+        <item>@string/menu_bt_resume_type__bt_restart_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_bt_resume_type" translatable="false">
+        <item>@string/menu_bt_resume_type__fast</item>
+        <item>@string/menu_bt_resume_type__normal</item>
+        <item>@string/menu_bt_resume_type__normal_force</item>
+        <item>@string/menu_bt_resume_type__bt_restart</item>
+    </string-array>
+
+    <!-- ログ送信タイプ -->
+    <string-array name="entries_menu_sendlog_type">
+        <item>@string/menu_sendlog_type__ok_label</item>
+        <item>@string/menu_sendlog_type__ng_label</item>
+        <item>@string/menu_sendlog_type__others_label</item>
+    </string-array>
+
+</resources>

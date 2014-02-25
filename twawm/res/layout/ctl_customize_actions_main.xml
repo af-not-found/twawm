@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:onClick="onCancel"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onSave"
+            android:text="@string/save" />
+    </LinearLayout>
+
+    <com.appspot.afnf4199ga.twawm.ctl.CwacTouchListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ctl="http://schemas.android.com/apk/res/com.appspot.afnf4199ga.twawm"
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="false"
+        ctl:expanded_height="127dp"
+        ctl:grabber="@+id/icon"
+        ctl:normal_height="64dp"
+        ctl:remove_mode="none" />
+
+</LinearLayout>

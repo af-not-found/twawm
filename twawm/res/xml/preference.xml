@@ -1,0 +1,277 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- ステータスチェック設定 -->
+    <PreferenceScreen android:title="@string/menu_online_check_category" >
+        <PreferenceCategory android:title="@string/menu_online_check_category" >
+
+            <!-- ステータスチェック間隔 -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_online_check_interval_sec"
+                android:dialogTitle="@string/menu_online_check_interval_sec_dialog_title"
+                android:inputType="number"
+                android:key="menu_online_check_interval_sec"
+                android:maxLength="5"
+                android:summary="@string/menu_online_check_interval_sec_summay"
+                android:title="@string/menu_online_check_interval_sec_title" />
+
+            <!-- DNSタイムアウト -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_online_check_dns_timeout_sec"
+                android:dialogTitle="@string/menu_online_check_dns_timeout_sec_dialog_title"
+                android:inputType="number"
+                android:key="menu_online_check_timeout_sec"
+                android:maxLength="3"
+                android:summary="@string/menu_online_check_dns_timeout_sec_summay"
+                android:title="@string/menu_online_check_dns_timeout_sec_title" />
+
+            <!-- オフライン後チェック間隔 -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_online_check_interval_sec_after_offline"
+                android:dialogTitle="@string/menu_online_check_interval_sec_after_offline_dialog_title"
+                android:inputType="number"
+                android:key="menu_online_check_interval_sec_after_offline"
+                android:maxLength="3"
+                android:summary="@string/menu_online_check_interval_sec_after_offline_summay"
+                android:title="@string/menu_online_check_interval_sec_after_offline_title" />
+
+            <!-- オフライン後チェック回数 -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_online_check_count_after_offline"
+                android:dialogTitle="@string/menu_online_check_count_after_offline_dialog_title"
+                android:inputType="number"
+                android:key="menu_online_check_count_after_offline"
+                android:maxLength="2"
+                android:summary="@string/menu_online_check_count_after_offline_summay"
+                android:title="@string/menu_online_check_count_after_offline_title" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!-- ウィジェット設定 -->
+    <PreferenceScreen android:title="@string/menu_widget_setting_title" >
+
+        <!-- ウィジェット表示設定 -->
+        <PreferenceCategory android:title="@string/menu_widget_display_setting" >
+
+            <!-- ウィジェット文字色 -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_widget_str_color"
+                android:entries="@array/entries_menu_widget_str_color"
+                android:entryValues="@array/entryValues_menu_widget_str_color"
+                android:key="@string/menu_key_widget_str_color"
+                android:title="@string/menu_widget_str_color_title" />
+
+            <!-- ウィジェット背景色 -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_widget_background"
+                android:entries="@array/entries_menu_widget_background"
+                android:entryValues="@array/entryValues_menu_widget_background"
+                android:key="@string/menu_key_widget_background"
+                android:title="@string/menu_widget_background_title" />
+        </PreferenceCategory>
+
+        <!-- ウィジェットタップ設定 -->
+        <PreferenceCategory
+            android:summary="aaaa"
+            android:title="@string/menu_widget_click_action_title" >
+
+            <!-- WiFi無効時タップ -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_widget_click_action_wifi_disabled"
+                android:entries="@array/entries_menu_widget_click_action"
+                android:entryValues="@array/entryValues_menu_widget_click_action"
+                android:key="@string/menu_key_widget_click_action_wifi_disabled"
+                android:title="@string/menu_widget_click_action_wifi_disabled_title" />
+
+            <!-- オンライン時タップ -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_widget_click_action_online"
+                android:entries="@array/entries_menu_widget_click_action"
+                android:entryValues="@array/entryValues_menu_widget_click_action"
+                android:key="@string/menu_key_widget_click_action_online"
+                android:title="@string/menu_widget_click_action_online_title" />
+
+            <!-- その他タップ -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_widget_click_action_offline"
+                android:entries="@array/entries_menu_widget_click_action"
+                android:entryValues="@array/entryValues_menu_widget_click_action"
+                android:key="@string/menu_key_widget_click_action_offline"
+                android:title="@string/menu_widget_click_action_offline_title" />
+        </PreferenceCategory>
+
+        <!-- ウィジェット一覧カスタマイズ -->
+        <PreferenceCategory android:title="@string/others" >
+            <PreferenceScreen
+                android:summary="@string/menu_widget_click_action_customize_summay"
+                android:title="@string/menu_widget_click_action_customize_title" >
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:targetClass="com.appspot.afnf4199ga.twawm.ctl.CustomizeActionsActivity"
+                    android:targetPackage="com.appspot.afnf4199ga.twawm" />
+            </PreferenceScreen>
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!-- ルーター設定 -->
+    <PreferenceScreen android:title="@string/menu_ap_conn_category" >
+        <PreferenceCategory android:title="@string/menu_ap_conn_category" >
+
+            <!-- ルーターIPアドレス -->
+            <EditTextPreference
+                android:dialogTitle="@string/menu_ap_ip_addr_dialog_title"
+                android:key="@string/menu_key_ap_ip_addr"
+                android:summary="@string/menu_ap_ip_addr_summary"
+                android:title="@string/menu_ap_ip_addr_title" />
+
+            <!-- 接続タイムアウト -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_ap_conn_timeout_sec"
+                android:dialogTitle="@string/menu_ap_conn_timeout_sec_dialog_title"
+                android:inputType="number"
+                android:key="menu_ap_conn_timeout_sec"
+                android:maxLength="2"
+                android:summary="@string/menu_ap_conn_timeout_sec_summay"
+                android:title="@string/menu_ap_conn_timeout_sec_title" />
+
+            <!-- 再接続回数 -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_ap_conn_retry_limit"
+                android:entries="@array/entryValues_menu_ap_conn_retry_limit"
+                android:entryValues="@array/entryValues_menu_ap_conn_retry_limit"
+                android:key="menu_ap_conn_retry_limit"
+                android:summary="@string/menu_ap_conn_retry_limit_summay"
+                android:title="@string/menu_ap_conn_retry_limit_title" />
+
+            <!-- 接続失敗時にWiFi無効 -->
+            <CheckBoxPreference
+                android:defaultValue="@string/dv_menu_disable_wifi_when_ap_conn_failed"
+                android:key="menu_disable_wifi_when_ap_conn_failed"
+                android:summary="@string/menu_disable_wifi_when_ap_conn_failed_summay"
+                android:title="@string/menu_disable_wifi_when_ap_conn_failed_title" />
+        </PreferenceCategory>
+
+        <!-- その他 -->
+        <PreferenceCategory android:title="@string/others" >
+
+            <!-- 初期設定ウィザード -->
+            <PreferenceScreen
+                android:summary="@string/menu_wizard_summary"
+                android:title="@string/menu_wizard_title" >
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:targetClass="com.appspot.afnf4199ga.twawm.app.InitialConfigurationWizardActivity"
+                    android:targetPackage="com.appspot.afnf4199ga.twawm" />
+            </PreferenceScreen>
+
+            <!-- ウィザードを自動起動しない -->
+            <CheckBoxPreference
+                android:defaultValue="@string/dv_menu_start_wizard_automatically"
+                android:key="menu_start_wizard_automatically"
+                android:summary="@string/menu_start_wizard_automatically_summay"
+                android:title="@string/menu_start_wizard_automatically_title" />
+            
+            <!-- 放電履歴をリセット -->
+            <Preference
+                android:key="@string/menu_key_reset_batt_history"
+                android:title="@string/menu_reset_batt_history_title" >
+            </Preference>
+
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!-- サービス設定 -->
+    <PreferenceScreen android:title="@string/menu_service_category" >
+        <PreferenceCategory android:title="@string/menu_service_category" >
+
+            <!-- スタンバイ後の挙動 -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_action_after_suspend"
+                android:entries="@array/entries_menu_action_after_suspend"
+                android:entryValues="@array/entryValues_menu_action_after_suspend"
+                android:key="@string/menu_key_action_after_suspend"
+                android:title="@string/menu_action_after_suspend_title" />
+
+            <!-- ステータスバー通知 -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_statusbar_notify"
+                android:entries="@array/entries_menu_statusbar_notify"
+                android:entryValues="@array/entryValues_menu_statusbar_notify"
+                android:key="menu_statusbar_notify"
+                android:summary="@string/menu_statusbar_notify_summay"
+                android:title="@string/menu_statusbar_notify_title" />
+
+            <!-- WiFi有効時に開始 -->
+            <CheckBoxPreference
+                android:defaultValue="@string/dv_menu_start_service_when_wifi_enabled"
+                android:key="menu_start_service_when_wifi_enabled"
+                android:summary="@string/menu_start_service_when_wifi_enabled_summay"
+                android:title="@string/menu_start_service_when_wifi_enabled_title" />
+
+            <!-- ログ出力を有効にする -->
+            <CheckBoxPreference
+                android:defaultValue="@string/dv_menu_enable_logging"
+                android:key="menu_enable_logging"
+                android:title="@string/menu_enable_logging_title" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!-- リモート起動設定 -->
+    <PreferenceScreen android:title="@string/menu_bluetooth_category" >
+        <PreferenceCategory android:title="@string/menu_bluetooth_category" >
+
+            <!-- リモート起動方法 -->
+            <ListPreference
+                android:entries="@array/entries_menu_bt_resume_type"
+                android:entryValues="@array/entryValues_menu_bt_resume_type"
+                android:key="menu_bt_resume_type"
+                android:summary="@string/menu_bt_resume_type_summay"
+                android:title="@string/menu_bt_resume_type_title" />
+
+            <!-- BT接続タイムアウト -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_bt_connection_timeout_sec"
+                android:dialogTitle="@string/menu_bt_connection_timeout_sec_dialog_title"
+                android:inputType="number"
+                android:key="menu_bt_connection_timeout_sec"
+                android:maxLength="3"
+                android:summary="@string/menu_bt_connection_timeout_sec_summay"
+                android:title="@string/menu_bt_connection_timeout_sec_title" />
+
+            <!-- Bluetoothアドレス -->
+            <EditTextPreference
+                android:key="@string/menu_key_bt_address"
+                android:summary="@string/menu_bt_address_summay"
+                android:title="@string/menu_bt_address_title" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!-- バックアップと復元 -->
+    <PreferenceScreen android:title="@string/menu_backup_and_restore" >
+        <PreferenceCategory android:title="@string/menu_backup_and_restore" >
+
+            <!-- ファイルにバックアップ -->
+            <Preference
+                android:key="@string/menu_key_backup"
+                android:title="@string/menu_backup_title" >
+            </Preference>
+
+            <!-- ファイルから復元 -->
+            <Preference
+                android:key="@string/menu_key_restore"
+                android:title="@string/menu_restore_title" >
+            </Preference>
+        </PreferenceCategory>
+
+        <!-- その他 -->
+        <PreferenceCategory android:title="@string/others" >
+
+            <!-- 設定を初期化する -->
+            <Preference
+                android:key="@string/menu_key_reset_settings"
+                android:summary="@string/menu_reset_settings_summay"
+                android:title="@string/menu_reset_settings_title" >
+            </Preference>
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+</PreferenceScreen>

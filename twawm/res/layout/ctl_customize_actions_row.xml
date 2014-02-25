@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="64dp"
+    android:gravity="bottom"
+    android:ignoreGravity="@+id/icon" >
+
+    <RelativeLayout
+        android:id="@+id/inner"
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:ignoreGravity="@+id/icon" >
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:button="?android:attr/listChoiceIndicatorMultiple"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:layout_toLeftOf="@+id/icon"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:maxLines="2"
+            android:text="@string/menu_widget_click_action__resume_switch_label"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ctl_grabber" />
+
+        <View
+            android:id="@+id/drag_veil_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:alpha="0"
+            android:background="@color/ctl_drag_bg"
+            android:visibility="invisible" />
+        
+    </RelativeLayout>
+
+</RelativeLayout>

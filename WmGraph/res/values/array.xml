@@ -1,0 +1,18 @@
+<resources>
+
+    <string-array name="interval_type_labels" translatable="false">
+        <item>@string/pause</item>
+        <item>@string/realtime</item>
+        <item>6sec</item>
+        <item>15sec</item>
+        <item>60sec</item>
+    </string-array>
+    <string-array name="interval_type_values" translatable="false">
+        <item>-1</item>
+        <item>0</item>
+        <item>6</item>
+        <item>15</item>
+        <item>60</item>
+    </string-array>
+
+</resources>

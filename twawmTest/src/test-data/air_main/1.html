@@ -1,0 +1,786 @@
+<?xml version='1.0' encoding='EUC-JP'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='ja' lang='ja'>
+<head>
+<!-- 雀の往来 -->
+<meta http-equiv='Content-Type' content='text/html; charset=EUC-JP' />
+<meta http-equiv='Content-Script-Type' content='text/javascript' />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<title>[無線LAN設定] - [無線LAN設定]</title>
+<link rel='stylesheet' type='text/css' href='/common/set.css' />
+<link rel='stylesheet' type='text/css' href='/common/common.css' />
+<script type='text/javascript' src='/common/menu.js'></script>
+<script type='text/javascript' src='/common/help.js'></script>
+<script type='text/javascript' src='/common/set.js'></script>
+
+
+</head>
+<body onload='init_func()'>
+<noscript>
+</noscript>
+<script type="text/javascript" src='/common/cgi.js'>
+</script>
+<script type="text/javascript">
+<!--
+
+var save_select_air;
+var air_dual_status;
+var air_mode_status;
+var auto_channel_status;
+
+function change_air_wr01_status()
+{
+	if ('0' == save_select_air) {
+		return;
+	}
+	change_status_enable_air_mode(false);
+	if (true == air_dual_status) {
+		ChangeStatusEnable(gId('AIR_DUAL'), false);
+	}
+	ChangeStatusEnable(gId('CHANNEL'), false);
+	ChangeStatusEnable(gId('AUTO_CONFIG'), false);
+	ChangeStatusEnable(gId('POWERLEVEL'), false);
+/*	ChangeStatusEnable(gId('PROTECTION'), false); */
+	ChangeStatusEnable(gId('AIR_PRIORITY'), false);
+	ChangeStatusEnable(gId('MCAST_RATE_2_4G'), false);
+	ChangeStatusEnable(gId('DTIM'), false);
+	ChangeStatusEnable(gId('STA_PRIORITY_POWER'), false);
+	ChangeStatusEnable(gId('STA_PRIORITY_SAVE'), false);
+}
+
+/* 無線機能を使用しない場合は、それ以外の全項目をグレイアウト */
+function change_air_featue_status()
+{
+	var bool = false;
+
+	if (gId('AIR_FEATUE').checked){
+		bool = true;
+	}
+
+	ChangeStatusEnable(gId('ESSID'), bool);
+	change_status_enable_air_mode(bool);
+	if (true == air_dual_status) {
+		ChangeStatusEnable(gId('AIR_DUAL'), bool);
+	}
+	ChangeStatusEnable(gId('CHANNEL'), bool);
+	ChangeStatusEnable(gId('AUTO_CONFIG'), bool);
+	ChangeStatusEnable(gId('PORT_SEPARATE'), bool);
+	ChangeStatusEnable(gId('WEP_MODE'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_LEN'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_TYPE'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_NO'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_1'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_2'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_3'), bool);
+	ChangeStatusEnable(gId('WEP_KEY_4'), bool);
+	ChangeStatusEnable(gId('WPA_KEY'), bool);
+	ChangeStatusEnable(gId('WEP_TIME'), bool);
+	ChangeStatusEnable(gId('STEALTH'), bool);
+	ChangeStatusEnable(gId('MAC_ADDR'), bool);
+	ChangeStatusEnable(gId('POWERLEVEL'), bool);
+/*	ChangeStatusEnable(gId('PROTECTION'), bool); */
+	ChangeStatusEnable(gId('AIR_PRIORITY'), bool);
+	ChangeStatusEnable(gId('MCAST_RATE_2_4G'), bool);
+	ChangeStatusEnable(gId('DTIM'), bool);
+	ChangeStatusEnable(gId('STA_PRIORITY_POWER'), bool);
+	ChangeStatusEnable(gId('STA_PRIORITY_SAVE'), bool);
+	ChangeStatusEnable(gId('WLANSLEEP'), bool);
+
+	if (gId('ACTION_MODE').value == 'ap') {
+        	ChangeStatusEnable(gId('WLANSLEEP'), false);
+	}
+
+	/* 項目が有効になった場合、他の条件による状態と整合性をとる */
+	if (bool){
+		change_wep_mode_status();
+
+		/* 項目が有効でも、無線動作モードが自動の場合は、無線動作モードと使用チャネルはグレイアウト */
+		if ('auto' == get_air_mode()) {
+			ChangeStatusEnable(gId('CHANNEL'), false);
+		}
+	}
+}
+
+/* ネットワーク分離機能を使用しようとする場合は、警告ダイアログを表示する */
+function change_port_separate_status()
+{
+	if (gId('PORT_SEPARATE').checked){
+		alert('現在ご使用の無線LAN端末から本商品の設定画面および他のパソコン等へのアクセスができなくなる場合があります。');
+	}
+}
+
+/* 選択した暗号化モードにより、項目をグレイアウト */
+function change_wep_mode_status()
+{
+	var wep_bool = false;
+	var wpa_bool = false;
+	var wep_mode = gId('WEP_MODE').options[gId('WEP_MODE').selectedIndex].value;
+
+	if (wep_mode == 'wep'){
+		wep_bool = true;
+	} else if ((wep_mode == 'wpa-wpa2-tkip') ||
+			   (wep_mode == 'wpa-wpa2-aes') ||
+			   (wep_mode == 'tkip2') ||
+			   (wep_mode == 'aes2') ||
+			   (wep_mode == 'tkip') ||
+			   (wep_mode == 'aes')){
+		wpa_bool = true;
+	}
+
+	/* WEPのときのみ有効 */
+	ChangeStatusEnable(gId('WEP_KEY_LEN'), wep_bool);
+	ChangeStatusEnable(gId('WEP_KEY_TYPE'), wep_bool);
+	ChangeStatusEnable(gId('WEP_KEY_NO'), wep_bool);
+	ChangeStatusEnable(gId('WEP_KEY_1'), wep_bool);
+	ChangeStatusEnable(gId('WEP_KEY_2'), wep_bool);
+	ChangeStatusEnable(gId('WEP_KEY_3'), wep_bool);
+	ChangeStatusEnable(gId('WEP_KEY_4'), wep_bool);
+
+	/* WPAのときのみ有効 */
+	ChangeStatusEnable(gId('WPA_KEY'), wpa_bool);
+	ChangeStatusEnable(gId('WEP_TIME'), wpa_bool);
+}
+
+/* 選択した暗号強度により、指定方法の選択肢を変更する */
+function change_wep_key_len_status()
+{
+	var wep_key_len = parseInt(gId('WEP_KEY_LEN').options[gId('WEP_KEY_LEN').selectedIndex].value);
+	var wep_key_type_obj = gId('WEP_KEY_TYPE');
+
+	/* NN7.02対応、表示が切り替わらないため一度非表示にする */
+	wep_key_type_obj.style.display = 'none';
+	///暗号強度に応じて、指定方法の選択肢を変更する
+	if (wep_key_len == 64){
+		/* 64bit */
+		wep_key_type_obj.options[0].text  = '英数字(5桁)';
+		wep_key_type_obj.options[1].text  = '16進(10桁)';
+	} else if (wep_key_len == 128){
+		/* 128bit */
+		wep_key_type_obj.options[0].text  = '英数字(13桁)';
+		wep_key_type_obj.options[1].text  = '16進(26桁)';
+	} else{
+		/* 152bit */
+		wep_key_type_obj.options[0].text  = '英数字(16桁)';
+		wep_key_type_obj.options[1].text  = '16進(32桁)';
+	}
+	wep_key_type_obj.style.display = 'inline';
+}
+
+/* MACアドレスフィルタリング機能を使用しようとする場合は、警告ダイアログを表示する */
+function change_mac_addr_status()
+{
+	if (gId('MAC_ADDR').checked){
+		alert('接続を許可するMACアドレスは、《MACアドレスフィルタリング》画面で設定してください。\n＜ご注意＞接続を許可するMACアドレスが設定されていない場合は、無線LAN端末(子機)からの接続ができなくなります。');
+	}
+}
+
+/* submit */
+function submit_func()
+{
+	if (gId('AIR_FEATUE').checked){
+		var wep_mode = gId('WEP_MODE').options[gId('WEP_MODE').selectedIndex].value;
+		var i;
+
+		/* 暗号化モードが「暗号化無効」の場合、データ漏洩の可能性がある旨を確認するダイアログを表示する */
+		if (wep_mode == 'no'){
+			if (false == confirm('［暗号化モード］で「暗号化無効」が選択されているため、データ漏洩の可能性があります。よろしいですか？\nデータ漏洩を防ぐために、無線の暗号化を強く推奨します。')){
+				return false;
+			}
+		}
+
+		/* 暗号化モードが「WEP」の場合の特別処理 */
+		if (wep_mode == 'wep'){
+			/* 暗号化キー(WEPキー)１番〜４番が入力されていない場合、警告ダイアログを表示してsubmitを中止する */
+			if ((gId('WEP_KEY_1').value == '') &&
+				(gId('WEP_KEY_2').value == '') &&
+				(gId('WEP_KEY_3').value == '') &&
+				(gId('WEP_KEY_4').value == '')){
+				alert('［暗号化キー(WEPキー)］が入力されていません。\n［暗号化モード］として「WEP」を選択した場合は、必ず［暗号化キー(WEPキー)］を入力してください。');
+				return false;
+			}
+
+			/* 使用する暗号化キー番号(キーインデックス)に暗号化キー(WEPキー)が入力されていない場合、警告ダイアログを表示してsubmitを中止する */
+			var wep_key_no = gId('WEP_KEY_NO').options[gId('WEP_KEY_NO').selectedIndex].value;
+			if (gId('WEP_KEY_' + wep_key_no).value == ''){
+				alert('［使用する暗号化キー番号(キーインデックス)］で選択した番号に、［暗号化キー(WEPキー)］が入力されていません。\n［暗号化モード］として「WEP」を選択した場合は、必ず［暗号化キー(WEPキー)］を入力してください。');
+				return false;
+			}
+
+			/* 指定方法の桁数を算出する (有効な暗号ビット長(暗号ビット長 - 24) / 入力文字一桁のビット長(英数字:8 / 16進:4)) */
+			var wep_key_len = parseInt(gId('WEP_KEY_LEN').options[gId('WEP_KEY_LEN').selectedIndex].value);
+			var wep_key_type_idx = gId('WEP_KEY_TYPE').selectedIndex;
+			var wep_key_length = (wep_key_len - 24) / (8 / (wep_key_type_idx + 1));
+
+			/* 指定方法の桁数と暗号化キー(WEPキー)の桁数が異なる場合、警告ダイアログを表示してsubmitを中止する */
+			for (i = 1; i <= 4; i++){
+				var val = gId('WEP_KEY_' + i).value;
+				if ((val != '') && (val.length != wep_key_length)){
+					alert('［暗号化キー(WEPキー)' + i + '番］の［暗号化キー(WEPキー)］の長さが違います。\n［指定方法］で選択した方法で値を入力してください。');
+					return false;
+				}
+			}
+		}
+	}
+
+	/* 確認ダイアログを表示 */
+	if (false == confirm('設定変更は即時に有効となります。無線LAN端末から設定を行っている場合には、［設定］ボタンをクリックしたあと、変更が有効になり、無線LAN接続が切断される場合があります。\nまた、［保存］ボタンをクリックするまでは設定内容が保存されませんので、WWWブラウザを一度終了し、再度無線LAN接続を行い、［保存］ボタンをクリックして設定内容の保存を行ってください。\nよろしいですか？')) {
+		return false;
+	}
+
+	/* 無線機能は、セカンダリでもグレイアウト解除してPOSTする。（パラメータチェックエラー時用） */
+	ChangeStatusEnable(gId('AIR_FEATUE'), true);
+
+	SubmitGuard();
+	return true;
+}
+
+function change_channel_status(type)
+{
+	var air_dual = gId('AIR_DUAL');
+	var newOpt;
+
+	if ((null == air_dual) || (false == air_dual.checked)) {
+		newOpt = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13');
+	} else {
+		newOpt = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13');
+	}
+
+	if (IsNetfront_for_psp) {
+		/* 無線動作モードが自動の場合 */
+		if ('auto' == get_air_mode()) {
+			gId('CHANNEL').options.length = 1;
+			gId('CHANNEL').options[0].text = '―';
+			gId('CHANNEL').options[0].value = '―';
+			ChangeStatusEnable(gId('CHANNEL'), false);
+		} else {
+			/* 無線動作モードが手動の場合 */
+			var i = 0;
+			var s_idx = 0;
+			var channel_val = '';
+
+			/* Opera9.1でプルダウンメニューに空選択肢が表示されてしまうため、一度グレイアウトする。 */
+			ChangeStatusEnable(gId('CHANNEL'), false);
+
+			gId('CHANNEL').options.length = newOpt.length;
+			for (i = 0; i < newOpt.length; i++) {
+				gId('CHANNEL').options[i].text = newOpt[i];
+				gId('CHANNEL').options[i].value = newOpt[i];
+				if (channel_val == newOpt[i]) {
+					s_idx = i;
+				}
+			}
+
+			if ('init' == type) {
+				gId('CHANNEL').selectedIndex = s_idx;
+			} else {
+				gId('CHANNEL').selectedIndex = 6;
+			}
+
+			/* 無線機能を使用する場合は、グレイアウト解除 */
+			if (gId('AIR_FEATUE').checked) {
+				ChangeStatusEnable(gId('CHANNEL'), true); 
+			}
+		}
+	} else {
+		gId('CHANNEL').options.length = 0;
+		/* 無線動作モードが自動の場合 */
+		if ('auto' == get_air_mode()) {
+			gId('CHANNEL').options[0] = new Option('―', '―');
+			gId('CHANNEL').selectedIndex = 0;
+			ChangeStatusEnable(gId('CHANNEL'), false);
+		} else {
+			/* 無線動作モードが手動の場合 */
+			var i = 0;
+			var s_idx = 0;
+			var channel_val = '';
+
+			/* Opera9.1でプルダウンメニューに空選択肢が表示されてしまうため、一度グレイアウトする。 */
+			ChangeStatusEnable(gId('CHANNEL'), false);
+
+			for (i = 0; i < newOpt.length; i++) {
+				gId('CHANNEL').options[i] = new Option(newOpt[i], newOpt[i]);
+				if (channel_val == newOpt[i]) {
+					s_idx = i;
+				}
+			}
+
+			if ('init' == type) {
+				gId('CHANNEL').selectedIndex = s_idx;
+			} else {
+				gId('CHANNEL').selectedIndex = 6;
+			}
+
+			/* 無線機能を使用する場合は、グレイアウト解除 */
+			if (gId('AIR_FEATUE').checked) {
+				ChangeStatusEnable(gId('CHANNEL'), true); 
+			}
+		}
+	}
+}
+
+function get_air_mode()
+{
+	if (true == auto_channel_status) {
+		if (gId('AUTO_CHANNEL').checked) {
+			return 'auto';
+		} else {
+			return '24g'
+		}
+	}
+}
+
+function change_status_enable_air_mode(bool)
+{
+/*	if (true == air_mode_status) { */
+/*		ChangeStatusEnable(gId('AIR_MODE'), bool);*/
+/*	} */
+/*	 else if (true == auto_channel_status) { */
+	if (true == auto_channel_status) {
+		ChangeStatusEnable(gId('AUTO_CHANNEL'), bool);
+	}
+}
+
+/* イベントの設定 */
+function Init_Event()
+{
+	/* submitイベントへのハンドラ設定 */
+	gId('air_main').onsubmit = submit_func;
+	
+	if (null != gId('AUTO_CHANNEL')) {
+		gId('AUTO_CHANNEL').onclick = function() {
+			change_channel_status('event');
+		};
+	}
+	if (null != gId('AIR_DUAL')) {
+		gId('AIR_DUAL').onclick = function() {
+			change_channel_status('event');
+		};
+	}
+	gId('AIR_FEATUE').onclick = function() {
+		change_air_featue_status();
+		change_air_wr01_status();
+	};
+	gId('PORT_SEPARATE').onclick = change_port_separate_status;
+	gId('WEP_MODE').onchange = change_wep_mode_status;
+	gId('WEP_KEY_LEN').onchange = change_wep_key_len_status;
+	gId('MAC_ADDR').onclick = change_mac_addr_status;
+
+	gId('air_main_edit').onsubmit = function() {
+		SubmitGuard();
+		return true;
+	}; 
+}
+
+
+/* ページの初期化 */
+function Init_Page()
+{
+	save_select_air = gId('SELECT_AIR').selectedIndex;
+	if (null == gId('AIR_DUAL')) {
+		air_dual_status = false;
+	} else {
+		air_dual_status = true;
+	}
+
+	air_mode_status = false;
+
+	if (null == gId('AUTO_CHANNEL')) {
+		auto_channel_status = false;
+	} else {
+		auto_channel_status = true;
+		if ('false' == 'true') {
+			gId('AUTO_CHANNEL').checked = true;
+		}
+	}
+
+	change_air_featue_status();
+	change_wep_key_len_status();
+	change_channel_status('init');
+
+	/* セカンダリ面を選択した場合は下記の項目をグレイアウトする */
+	if('1' == save_select_air){
+		if(true == true){
+			ChangeStatusEnable(gId('AIR_FEATUE'), false);
+		}
+		if (false == true) {
+			ChangeStatusEnable(gId('AIR_FEATUE'), false); 
+		}
+		change_air_wr01_status();
+		gId('WEP_MODE').options.length = 4;
+	}
+	/* プライマリ面は無線機能、ポートセパレート機能オフ不可 */
+	if('0' == save_select_air){
+/*		ChangeStatusEnable(gId('AIR_FEATUE'), false);   */
+/*		ChangeStatusEnable(gId('PORT_SEPARATE'),false); */
+	}
+	if('true' == gId('ADV_VIEW_OPEN').value){
+		/* 高度な設定を表示する */
+		advancedViewOpen('標準設定に戻る');
+	}
+}
+
+//-->
+</script>
+
+<div><input type="hidden" id="current_pane" value="2" /></div>
+<div class='left_menu'>
+<div class='title_back'>
+<div class='off'><a href="#content_anchor"><img src='/common/spacer.gif' alt="メニューをスキップして本文へ" /></a></div>
+<a href='./index_contents'><img src='/common/image_title.gif' width="210" height="75" alt='Atermロゴ' /></a>
+</div>
+<div class='product'>
+<span>A t e r m　W M 3 8 0 0 R</span>
+<br />
+A T E R M - xxxxxx
+</div>
+<div class ="left_save">
+<input type='hidden' name='SET_STATUS' id='SET_STATUS' value='' />
+<form name='system_save' id='system_save' action='./air_main' method='post'>
+<div>
+<a href='javascript:SaveBtnClick();'><img src='/common/save_btn.gif' alt='保存' id='SAVE_BUTTON' /></a><br />
+
+<br />［保存］ボタンをクリックすると、設定値の保存を行ったあと、再起動を行います。
+<input type='hidden' name='SAVE_CMD_ISSUE' value='YES' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' />
+</div>
+</form>
+</div>
+<div class='menu' id='menu'>
+<div class='pane' id='pane2'>
+<a href='' class='folder' id='folder2'><img src='/common/right_arrow.gif' class='icon' id='icon2' alt='' />無線LAN設定</a>
+<div class='sub_pane' id='sub_pane2'>
+<a href="javascript:SetupAirClick('AIR_CARD','AIR_STATUS','AIR_STATUS_10','ECO_MODE_STATUS','DUAL_SUPPORT_STATUS','./air_main');" ><img src='/common/menu_dot.gif' alt='' />無線LAN設定</a><br />
+
+<a href="javascript:SetupAirClick('AIR_CARD','AIR_STATUS','AIR_STATUS_10','ECO_MODE_STATUS','DUAL_SUPPORT_STATUS','./mac_filter_main');" ><img src='/common/menu_dot.gif' alt='' />MACアドレスフィルタリング</a><br />
+<a href="javascript:SetupWPSClick('AIR_CARD','AIR_STATUS','AIR_STATUS_10','ECO_MODE_STATUS','DUAL_SUPPORT_STATUS','./wps_main');" ><img src='/common/menu_dot.gif' alt='' />WPS設定</a><br />
+
+</div>
+</div>
+<div class='pane' id='pane1'>
+<a href='' class='folder' id='folder1'><img src='/common/right_arrow.gif' class='icon' id='icon1' alt='' />公衆無線LAN設定</a>
+<div class='sub_pane' id='sub_pane1'>
+<a href='./basic_main'><img src='/common/menu_dot.gif' alt='' />基本設定</a><br />
+<a href='./wan_wl_main'><img src='/common/menu_dot.gif' alt='' />接続先設定</a><br />
+</div>
+</div>
+
+
+<div class='pane' id='pane6'>
+<a href='' class='folder' id='folder6'><img src='/common/right_arrow.gif' class='icon' id='icon6' alt='' />ECO設定</a>
+<div class='sub_pane' id='sub_pane6'>
+<a href='./eco_mode_main'><img src='/common/menu_dot.gif' alt='' />ECO設定</a><br />
+</div>
+</div>
+
+<div class='pane' id='pane3'>
+<a href='' class='folder' id='folder3'><img src='/common/right_arrow.gif' class='icon' id='icon3' alt='' />詳細設定</a>
+<div class='sub_pane' id='sub_pane3'>
+<a href='./lan_main'><img src='/common/menu_dot.gif' alt='' />LAN側設定</a><br />
+<a href="javascript:SetupDhcpExclusionClick('DHCP_MODE','DHCPE_ASSIGNABLE', './dhcp_exclusion_main');" ><img src='/common/menu_dot.gif' alt='' />DHCP除外設定</a><br />
+<a href="javascript:SetupDhcpAssignClick('DHCP_MODE', './dhcp_assign_main');" ><img src='/common/menu_dot.gif' alt='' />DHCP固定割当設定</a><br />
+<a href='./ipfilter_main'><img src='/common/menu_dot.gif' alt='' />パケットフィルタ設定</a><br />
+<a href='./ipnat_main'><img src='/common/menu_dot.gif' alt='' />ポートマッピング設定</a><br />
+<a href='./dnsroute_main'><img src='/common/menu_dot.gif' alt='' />DNSルーティング設定</a><br />
+
+<a href='./other_main'><img src='/common/menu_dot.gif' alt='' />その他の設定</a><br />
+</div>
+</div>
+<div class='pane' id='pane4'>
+<a href='' class='folder' id='folder4'><img src='/common/right_arrow.gif' class='icon' id='icon4' alt='' />メンテナンス</a>
+<div class='sub_pane' id='sub_pane4'>
+<a href='./password_main'><img src='/common/menu_dot.gif' alt='' />管理者パスワードの変更</a><br />
+<a href='./backup_main'><img src='/common/menu_dot.gif' alt='' />設定値の保存＆復元</a><br />
+<a href='./default_main'><img src='/common/menu_dot.gif' alt='' />設定値の初期化</a><br />
+<a href='./fw_main'><img src='/common/menu_dot.gif' alt='' />ファームウェア更新</a><br />
+<a href='./ping_main'><img src='/common/menu_dot.gif' alt='' />PINGテスト</a><br />
+<a href='./reboot_main'><img src='/common/menu_dot.gif' alt='' />再起動</a><br />
+</div>
+</div>
+<div class='pane' id='pane5'>
+<a href='' class='folder' id='folder5'><img src='/common/right_arrow.gif' class='icon' id='icon5' alt='' />情報</a>
+<div class='sub_pane' id='sub_pane5'>
+<a href='./info_main'><img src='/common/menu_dot.gif' alt='' />現在の状態</a><br />
+<a href='./log_main'><img src='/common/menu_dot.gif' alt='' />通信情報ログ</a><br />
+<a href="javascript:SetupUpnpClick('UPNP_STATUS');" ><img src='/common/menu_dot.gif' alt='' />UPnPの状態</a><br />
+
+</div>
+</div>
+
+
+
+<div class='pane' id='pane7'>
+<script type='text/javascript'>
+<!--
+function QrClick()
+{
+if (confirm('QRコードの生成に必要な本商品の機器情報をNECアクセステクニカ株式会社(以下「弊社」とします。)のサーバへ送信します。\nよろしいですか？\n※機器情報につきましては、弊社の取り扱い手続きに則り、適切な管理を行います。\n※サーバと通信を行うためインターネットに接続している必要があります。')) {
+gId('qr_submit').submit();
+}
+}
+//-->
+</script>
+<form name='qr_submit' id='qr_submit' action='https://display.qr.aterm.jp/cgi-bin/qr_create.cgi' method='post' target='blank'>
+<div class='qcode_btn'>
+<a href='javascript:QrClick();'><img src='/common/qr_button.gif' alt='設定用QRコードを表示' id='QRDATASUBMIT' /></a>
+</div>
+<div><input type='hidden' id='Pro' name='Pro' value='AtermWM3800R' /></div>
+<div><input type='hidden' id='MAC' name='MAC' value='macaddr' /></div>
+<div><input type='hidden' id='1_S' name='1_S' value='ssid1' /></div>
+<div><input type='hidden' id='1_Net' name='1_Net' value='03' /></div>
+<div><input type='hidden' id='1_PW' name='1_PW' value='pass1' /></div>
+<div><input type='hidden' id='1_Ki' name='1_Ki' value='0' /></div>
+<div><input type='hidden' id='1_Opt' name='1_Opt' value='01000000' /></div>
+<div><input type='hidden' id='2_S' name='2_S' value='ssid2' /></div>
+<div><input type='hidden' id='2_Net' name='2_Net' value='01' /></div>
+<div><input type='hidden' id='2_PW' name='2_PW' value='pass2' /></div>
+<div><input type='hidden' id='2_Ki' name='2_Ki' value='1' /></div>
+<div><input type='hidden' id='2_Opt' name='2_Opt' value='18000000' /></div>
+<div><input type='hidden' id='Rand' name='Rand' value='6C03FE4B' /></div>
+<div><input type='hidden' id='SIGN' name='SIGN' value='xxxxxxxxxxxxx' /></div>
+</form>
+
+	<div class="to_btn_area">
+		<form name='system_wimax' id='system_wimax' action='./air_main' method='post'>
+			<div>
+				<a href='javascript:WiMAXBtnClick();'><img src='/common/wimax_btn.gif' alt='WiMAX接続' id='WIMAX_BUTTON' /></a><br />
+				<div class='space2'></div>
+				<input type='hidden' name='WIMAX_CMD_ISSUE' value='YES' />
+				<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+				<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' />
+			</div>
+		</form>
+	</div>
+	
+	<p class='left_help_space'><img src='/common/help_btn.gif' alt='ヘルプ' width='18' height='17' class='help_icon' />ヘルプ表示</p>
+</div>
+</div>
+<input type='hidden' id='ACTION_MODE'          name='ACTION_MODE'          value='local' />
+<input type='hidden' id='AIR_CARD'             name='AIR_CARD'             value='' />
+<input type='hidden' id='AIR_STATUS'           name='AIR_STATUS'           value='' />
+<input type='hidden' id='UPNP_STATUS'          name='UPNP_STATUS'          value='UPnP NoUse' />
+<input type='hidden' id='DHCP_MODE'            name='DHCP_MODE'            value='enable' />
+<input type='hidden' id='DHCPE_ASSIGNABLE'     name='DHCPE_ASSIGNABLE'     value='manual' />
+<input type='hidden' id='CONTENTS_FILTER'      name='CONTENTS_FILTER'      value='disable' />
+<input type='hidden' id='ECO_MODE_STATUS'      name='ECO_MODE_STATUS'      value='false' />
+<input type='hidden' id='AIR_STATUS_10'        name='AIR_STATUS_10'        value='' />
+<input type='hidden' id='DUAL_SUPPORT_STATUS'  name='DUAL_SUPPORT_STATUS'  value='' />
+<input type='hidden' id='ECO_MODE_STATUS_WLAN' name='ECO_MODE_STATUS_WLAN' value='false' />
+<input type='hidden' id='USE_CF'               name='USE_CF'               value='true' />
+
+</div>
+<div class='contents'>
+<div class='off'>現在のページの位置</div><div class='bread_crumb_list'>トップページ ＞ 無線LAN設定 ＞ 無線LAN設定</div>
+<div class='off'><a name='content_anchor' id='content_anchor'>本文ここから</a></div>
+<h1>無線LAN設定</h1>
+<!--#OK <div class='ok_msg'>設定内容を更新しました。<br />現在の設定内容を保存する場合は、左メニューの［保存］ボタンをクリックしてください。</div> -->
+<!--ERR <div class='err_ng_msg'>入力内容に誤りがあります。詳しくは各項目のメッセージを確認してください。</div> -->
+<!--#NG <div class='err_ng_msg'>設定に失敗しました。正しく設定されていない可能性がありますので本商品の再起動を行ってください。</div> -->
+<div class='message_red'><img src='/common/attention.gif' alt='ご注意ください' /><br />設定変更は即時に有効となります。無線LAN端末から設定を行っている場合には、［設定］ボタンをクリックしたあと、変更が有効になり、無線LAN接続が切断される場合があります。</div>
+
+<br />
+<div class='message_red'>また、［保存］ボタンをクリックするまでは設定内容が保存されませんので、WWWブラウザを一度終了し、再度無線LAN接続を行い、［保存］ボタンをクリックして設定内容の保存を行ってください。</div>
+<form name='air_main_edit' id='air_main_edit' action='./air_main_edit' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div>対象ネットワークを選択
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品は無線LANアクセスポイント(親機)として、複数のネットワーク名(SSID)を持つことができます。それぞれのネットワーク名に対して、異なるセキュリティ設定(暗号化機能、ESS-IDステルス機能、MACアドレスフィルタリング機能)を行うことが可能です。設定を行うネットワーク名を選択してください。');return false;" />
+<select name='SELECT_AIR' id='SELECT_AIR' size='1'>
+<option value='0' selected='selected'>プライマリSSID：ssid1</option>
+<option value='1' >セカンダリSSID：aterm-642b56-gw</option>
+</select>
+<input type='submit' name='SELECT_AIR_BUTTON' id='SELECT_AIR_BUTTON' value='選択' />
+</div>
+<div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' />
+</div>
+</form>
+<form name='air_main' id='air_main' action='./air_main_set' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div class='button_item'>
+<input type='button' name='btnAdvancedViewChenge' id='btnAdvancedViewChenge' onclick="advancedViewChenge('高度な設定を表示','標準設定に戻る')" value='高度な設定を表示' />
+</div>
+<table class='table_common'>
+<tr>
+<td colspan='2'><h2>無線LANアクセスポイント(親機)設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANアクセスポイント(親機)に関する設定を行います。');return false;" /></h2></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>無線機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANを使用する場合は、チェックをします。無線LANを利用しない場合は「使用する」のチェックをはずしてください。本商品の電波が停止され、無線LANが無効となります。無線LANを無効にしても、本商品の有線ブロードバンドルータ機能はご利用いただけます。プライマリSSID側で設定した場合、本設定はプライマリSSID/セカンダリSSID双方に対して有効になります。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='AIR_FEATUE' id='AIR_FEATUE' value='1' checked='checked' /><label for='AIR_FEATUE'>使用する</label></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>ネットワーク名(SSID)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANのネットワーク名(SSID)を入力します。半角英数字、-(ハイフン)、_(アンダースコア)を使用して32文字以内で入力してください。なお、他のネットワーク名(SSID)と同一の名称に設定することはできません。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='ESSID' id='ESSID' maxlength='32' size='40' value='ssid1' /></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'>オートチャネルセレクト機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'オートチャネルセレクト機能を使用する場合は、チェックをします。空いているチャネルを検出し、電波状態の良いチャネルを自動選択します。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='AUTO_CHANNEL' id='AUTO_CHANNEL' value='1' checked='checked' /><label for='AUTO_CHANNEL'>使用する</label></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>デュアルチャネル機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'デュアルチャネル機能を使用する場合は、チェックをします。20MHzバンドの通信チャネルを2本束ねて利用し、40MHzバンドでの高速通信を行います。なお、デュアルチャネルに対応していない子機との通信は20MHzバンドの通信となります。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='AIR_DUAL' id='AIR_DUAL' value='1'  /><label for='AIR_DUAL'>使用する</label></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>使用チャネル<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANで使用するチャネルを選択します。<!-- オートチャネルセレクト機能を「使用しない」に設定した場合に有効になります。 -->複数のアクセスポイントが設置されている環境など電波干渉がある場合には、使用する無線チャネル番号を変更してください。またデュアルチャネル機能を利用する場合には、選択可能チャネルは、デュアルチャネルで指定可能なチャネルに変更されます。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><select name='CHANNEL' id='CHANNEL' size='1'>
+<option value=''>　</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>無線自動設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線自動設定を選択します。「らくらく無線/WPS自動」では、無線LAN端末の設定方法を識別し、自動切替を行います。使用する無線LAN端末によっては、固定モード設定が必要な場合がありますので、対象の無線LAN端末にあわせて、「らくらく無線」または「WPS」を設定してください。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><select name='AUTO_CONFIG' id='AUTO_CONFIG' size='1'>
+<option value='auto' >らくらく無線/WPS自動</option>
+<option value='wzc' selected='selected'>らくらく無線</option>
+<option value='wps' >WPS</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>ネットワーク分離機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'ネットワーク分離機能を使用する場合は、チェックをします。「使用する」に設定したSSID側の無線LAN端末は、本商品のWAN側と、同一のSSID側の無線LAN端末へのアクセスのみ可能になります。本商品の設定画面や他のSSID側の無線LAN端末へのアクセスができなくなります。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='PORT_SEPARATE' id='PORT_SEPARATE' value='1'  /><label for='PORT_SEPARATE'>使用する</label></td>
+</tr><tr>
+<td colspan='2'><h2>暗号化<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '暗号化に関する設定を行います。');return false;" /></h2></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>暗号化モード<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '暗号化モードを選択します。暗号化モードを有効にすると無線LANでの送受信データが暗号化され、第三者に傍受されにくくなります。WEP＜TKIP＜AESの順で、暗号化データは解読されにくくなりますが、本商品と通信する無線LAN端末も同じ暗号化モードに対応している必要があります。<!-- 本商品では暗号化モードは「WPA-PSK(AES)」が初期値になっています。また、ディップスイッチの「」番を「ON」にすることにより、強制的に本商品起動時の初期値を「128bit WEP」に切り替えることができます。本画面で［暗号化モード］や［暗号化キー］を変更する場合は、ディップスイッチの「」番が「OFF」であることをご確認ください。なお、セカンダリの無線ネットワーク名に対しては、WEPのみ利用可能です。 --><!-- 本商品の暗号化モードは、プライマリSSID側では「WPA/WPA2-PSK(AES)」、セカンダリSSID側では「WEP」が初期値になっています。 -->');return false;" /></td>
+<td class='small_item_td2'><select name='WEP_MODE' id='WEP_MODE' size='1'>
+<option value='no' >暗号化無効</option>
+<!--
+<option value='wep' >WEP</option>
+-->
+<option value='wpa-wpa2-tkip' >WPA/WPA2-PSK(TKIP)</option>
+<option value='wpa-wpa2-aes' selected='selected'>WPA/WPA2-PSK(AES)</option>
+<option value='aes2' >WPA2-PSK(AES)</option>
+<option value='aes' >WPA-PSK(AES)</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>暗号強度<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'WEPを利用する場合は、暗号強度を選択します。64bit＜128bitの順で解読されにくくなりますが、本商品と通信する無線LAN端末も同じ暗号強度に対応している必要があります。暗号化キー1〜4番は、すべて同じ暗号強度になります。');return false;" /></td>
+<td class='small_item_td2'><select name='WEP_KEY_LEN' id='WEP_KEY_LEN' size='1'>
+<option value='64' >64bit</option>
+<option value='128' selected='selected'>128bit</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>指定方法<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'WEPを利用する場合の暗号化キー(解読パスワード)の指定方法を選択します。英数字(0〜9、a〜z、A〜Zで構成される文字列)、または、16進(0〜9、a〜f、A〜Fで構成される文字列)から選択してください。本商品と通信する無線LAN端末も同じ指定方法で設定する必要があります。暗号化キー1〜4番は、すべて同じ指定方法になります。');return false;" /></td>
+<td class='small_item_td2'><select name='WEP_KEY_TYPE' id='WEP_KEY_TYPE' size='1'>
+<option value='0' selected='selected'>英数字(13桁)</option>
+<option value='1' >16進(26桁)</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>使用する暗号化キー番号<br />(キーインデックス)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '暗号化キー1〜4番の中で、どれを使用するかを設定します。ただし、無線LAN端末によっては「1番」しかサポートしていない場合がありますので、通常、「1番」を指定しておくことをお勧めします。');return false;" /></td>
+<td class='small_item_td2'><select name='WEP_KEY_NO' id='WEP_KEY_NO' size='1'>
+<option value='1' selected='selected'>1番</option>
+<option value='2' >2番</option>
+<option value='3' >3番</option>
+<option value='4' >4番</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'><div class='off'><a href='#skip_1'>SKIP</a></div>暗号化キー(WEPキー)1番<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '［指定方法］で選んだ文字列を［暗号強度］で設定した桁数分、暗号化キー(WEPキー)として入力します。<br />英数字の場合は、0〜9、a〜z、A〜Z、16進数の場合は、0〜9、a〜f、A〜Fで構成された文字列を入力します。本商品と通信する無線LAN端末も同じ暗号化キーを入力する必要があります。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='WEP_KEY_1' id='WEP_KEY_1' maxlength='32' size='40' value='pass2' /><div class='off'><a name='skip_1'>SKIP END</a></div></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'><div class='off'><a href='#skip_2'>SKIP</a></div>暗号化キー(WEPキー)2番<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '［指定方法］で選んだ文字列を［暗号強度］で設定した桁数分、暗号化キー(WEPキー)として入力します。<br />英数字の場合は、0〜9、a〜z、A〜Z、16進数の場合は、0〜9、a〜f、A〜Fで構成された文字列を入力します。本商品と通信する無線LAN端末も同じ暗号化キーを入力する必要があります。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='WEP_KEY_2' id='WEP_KEY_2' maxlength='32' size='40' value='' /><div class='off'><a name='skip_2'>SKIP END</a></div></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'><div class='off'><a href='#skip_3'>SKIP</a></div>暗号化キー(WEPキー)3番<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '［指定方法］で選んだ文字列を［暗号強度］で設定した桁数分、暗号化キー(WEPキー)として入力します。<br />英数字の場合は、0〜9、a〜z、A〜Z、16進数の場合は、0〜9、a〜f、A〜Fで構成された文字列を入力します。本商品と通信する無線LAN端末も同じ暗号化キーを入力する必要があります。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='WEP_KEY_3' id='WEP_KEY_3' maxlength='32' size='40' value='' /><div class='off'><a name='skip_3'>SKIP END</a></div></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'><div class='off'><a href='#skip_4'>SKIP</a></div>暗号化キー(WEPキー)4番<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '［指定方法］で選んだ文字列を［暗号強度］で設定した桁数分、暗号化キー(WEPキー)として入力します。<br />英数字の場合は、0〜9、a〜z、A〜Z、16進数の場合は、0〜9、a〜f、A〜Fで構成された文字列を入力します。本商品と通信する無線LAN端末も同じ暗号化キーを入力する必要があります。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='WEP_KEY_4' id='WEP_KEY_4' maxlength='32' size='40' value='' /><div class='off'><a name='skip_4'>SKIP END</a></div></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'>WPA暗号化キー(PSK)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '暗号化モードとして「WPA/WPA2-PSK(TKIP)」/「WPA/WPA2-PSK(AES)」/「WPA2-PSK(TKIP)」/「WPA2-PSK(AES)」/「WPA-PSK(TKIP)」/「WPA-PSK(AES)」を使用する場合の暗号化キー(Pre Shared Key)を入力します。<br />英数記号(0〜9、a〜z、A〜Z、記号)で8〜63桁、または、16進数(0〜9、a〜f、A〜F)で64桁を入力してください。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='WPA_KEY' id='WPA_KEY' maxlength='64' size='40' value='pass1' /></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'>暗号化キー更新間隔(分)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '暗号化キーの更新間隔(分)を入力します。WPAでは、暗号化キーは一定期間ごとに自動的に更新されて、より安全な状態を保ちます。入力できる値は、0(更新なし),1〜1440分です。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='WEP_TIME' id='WEP_TIME' maxlength='4' size='10' value='30' /></td>
+</tr>
+<tr>
+<td colspan='2'><h2>無線LAN端末(子機)の接続制限<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LAN端末(子機)からの接続を制限する設定を行います。');return false;" /></h2></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>ESS-IDステルス機能(SSIDの隠蔽)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LAN端末から無線LANアクセスポイント(親機)を検索したときに本商品のネットワーク名(SSID)が見えないようにする場合は、チェックをします。あらかじめ本商品のネットワーク名(SSID)を知っている無線LAN端末以外からの本商品への接続を制限できます。<!-- <br />ディップスイッチをONにすることにより強制的に有効化することが可能です。スイッチを再度戻したときには、ONにしたときの設定が保持されている場合がありますので、設定を確認しご利用ください。 -->');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='STEALTH' id='STEALTH' value='1'  /><label for='STEALTH'>使用する</label></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>MACアドレスフィルタリング機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品に設定されているMACアドレスを持つ無線LAN端末以外から本商品への無線LAN接続を制限する場合は、チェックをします。MACアドレスフィルタリング機能を使用する場合は、別途《MACアドレスフィルタリング》画面で無線LAN端末のMACアドレスを設定しておく必要があります。<!-- <br />ディップスイッチをONにすることにより強制的に有効化することが可能です。スイッチを再度戻したときには、ONにしたときの設定が保持されている場合がありますので、設定を確認しご利用ください。 -->');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='MAC_ADDR' id='MAC_ADDR' value='1'  /><label for='MAC_ADDR'>使用する</label></td>
+</tr></table>
+<table class='table_common'>
+<tr class='advView'>
+<td colspan='2'>
+<div style='margin: 0px' align='right'>
+<input type='button' name='btnAdvancedViewChenge' id='btnAdvancedViewChenge' onclick="advancedViewChenge('高度な設定を表示','標準設定に戻る')" value='標準設定に戻る' />
+</div>
+</td>
+</tr>
+<tr class='advView'>
+<td colspan='2'><h2>拡張設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '拡張設定を行います。');return false;" /></h2></td>
+</tr>
+<tr class='small_item_tr_advView'>
+<td class='small_item_td'>送信出力<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANの送信出力を選択します。送信出力を抑えると他のネットワークへの電波干渉を回避できます。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><select name='POWERLEVEL' id='POWERLEVEL' size='1'>
+<option value='100' >100%</option>
+<option value='50' >50%</option>
+<option value='25' >25%</option>
+<option value='12.5' selected='selected'>12.5%</option>
+</select></td>
+</tr><tr class='small_item_tr_advView'>
+<td class='small_item_td'>無線優先制御機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LAN通信の優先制御機能を有効にします。WMM(Wi-Fi Multimedia)方式に、原則として準拠した機能です。11nテクノロジー通信ご利用時には、本機能を必ず「使用する」に設定してください。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='AIR_PRIORITY' id='AIR_PRIORITY' value='1'  /><label for='AIR_PRIORITY'>使用する</label></td>
+</tr><tr class='small_item_tr_advView'>
+<td class='small_item_td'>マルチキャスト伝送速度(Mbps)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANのマルチキャストを伝送する速度を指定します。マルチキャストストリーミングサービスを利用する場合には、伝送速度の値を変更する(上げる)必要があります。ご利用になるストリーミングサービスの伝送速度に合わせて本設定値も変更してください。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><select name='MCAST_RATE_2_4G' id='MCAST_RATE_2_4G' size='1'>
+<option value='1' selected='selected'>1</option>
+<option value='2' >2</option>
+<option value='5.5' >5.5</option>
+<!-- <option value='6' >6</option> -->
+<!-- <option value='9' >9</option> -->
+<option value='11' >11</option>
+<!-- <option value='12' >12</option> -->
+<!-- <option value='18' >18</option> -->
+<!-- <option value='24' >24</option> -->
+<!-- <option value='36' >36</option> -->
+<!-- <option value='48' >48</option> -->
+<!-- <option value='54' >54</option> -->
+</select></td>
+</tr><tr class='small_item_tr_advView'>
+<td class='small_item_td'>DTIM(回)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'Beaconに含めるDTIMの間隔を入力します。DTIMの間隔はパワーセーブモードの無線LAN端末の動作に影響します。通常は、初期値のままで使用してください。入力できる値は、1〜10回です。プライマリSSID/セカンダリSSIDで共通の設定となります。');return false;" /></td>
+<td class='small_item_td2'><input type='text' name='DTIM' id='DTIM' maxlength='2' size='10' value='1' /></td>
+</tr>
+<tr class='small_item_tr_advView'>
+<td class='small_item_td'>無線LAN端末(子機)との通信設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LAN端末(子機)との通信設定を設定します。「スループット優先」に設定した場合、通信中は本商品からデータ送信を行うことにより無線LAN端末(子機)の省電力機能の効果が一部無効になる場合があります。「省電力優先」に設定した場合、無線LAN端末(子機)のスループットが低下する場合があります。');return false;" /></td>
+<td class='small_item_td2'>
+<label for='STA_PRIORITY_POWER'><input type='radio' name='STA_PRIORITY' id='STA_PRIORITY_POWER' value='power'  />スループット優先</label><br />
+<label for='STA_PRIORITY_SAVE'><input type='radio' name='STA_PRIORITY' id='STA_PRIORITY_SAVE' value='save' checked='checked' />省電力優先</label>
+</td>
+</tr>
+<tr class='small_item_tr_advView'>
+<td class='small_item_td'>WiFi WAN側連動<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'WiFi WAN側連動を使用する場合は、チェックをします。本機能を使用する場合、インターネット切断時にWiFiを停止します。使用する場合、無線LAN接続ではクイック設定Webが開けなくなる可能性があります。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='WLANSLEEP' id='WLANSLEEP' value='1'  /><label for='WLANSLEEP'>使用する</label></td>
+</tr></table>
+<div>
+<input type='hidden' name='ADV_VIEW_OPEN' id='ADV_VIEW_OPEN' value='false' />
+</div>
+
+<div class='button_item'>
+<input type='submit' name='UPDATE_BUTTON' id='UPDATE_BUTTON' value='設定' />
+</div>
+<hr />
+<div class='top_button'>
+<input type='button' value='トップページへ戻る'  onclick='Back()' />
+</div>
+<div>
+<input type='hidden' id='SELECT_AIR_SHOW' name='SELECT_AIR_SHOW' value='0' />
+<input type='hidden' id='AIR_SWITCH_ENABLE' name='AIR_SWITCH_ENABLE' value='true' /></div>
+<div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' />
+</div>
+</form>
+</div>
+<div id='help' style='position:absolute; top:100px; left:50px; width:12em; border-top:2px #b7c3dd solid; border-left:2px #b7c3dd solid; border-right:3px #4b5d83 solid; border-bottom:3px #4b5d83 solid; background-color: #f1f1f1; font-size:smaller; visibility : hidden;'>
+<!-- ヘルプで表示するブロック -->
+<div style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; border-bottom:2px #35589e solid;'><span style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; '>ヘルプ<img src='/common/close.gif' onmousedown='HelpHide();' style='position:absolute; top:1px; right:0px;' alt='' /></span></div>
+<div style='padding: 5px 5px 0px; '><span id='help_msg'>　</span><br /><br />
+<form>
+<div style='text-align: center; '><input type='button' value='閉じる' onclick='HelpHide();' onmousedown='mouseDownCansel= true;' /></div>
+</form>
+</div>
+</div>
+</body>
+</html>

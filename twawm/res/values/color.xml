@@ -1,0 +1,16 @@
+<resources>
+
+    <color name="black">#FF000000</color>
+    <color name="gray">#FFEEEEEE</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <color name="red">#FFFF0000</color>
+    <color name="green">#FF00FF00</color>
+    <color name="blue">#FF0000FF</color>
+        
+    <color name="link">#FF0000EE</color>
+    <color name="pref_emphasis">#FF1AADE4</color>
+
+    <color name="full_transparent">#00000000</color>
+    <color name="ctl_drag_bg">#FF7070FF</color>
+</resources>

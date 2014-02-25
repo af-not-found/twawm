@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 画面共通文字列 -->
+    <string name="app_name" translatable="false">WmGraph</string>
+    <string name="app_version" translatable="false">ver</string>
+    <string name="deleloper" translatable="false">by afnf</string>
+    <string name="wiki_url" translatable="false">http://w.livedoor.jp/twawm/d/WmGraph</string>
+    <string name="title_activity_main" translatable="false">WM Graph</string>
+    <string name="ant_label" translatable="false">ant=N/A</string>
+    <string name="rssi_label" translatable="false">RSSI=N/A</string>
+    <string name="cinr_label" translatable="false">CINR=N/A</string>
+
+    <!-- my_preference.xml -->
+    <string name="menu_key_ap_ip_addr" translatable="false">menu_ap_ip_addr</string>
+    
+    
+    <string name="loading" translatable="false" tools:ignore="TypographyEllipsis">loading...</string>
+    <string name="failed" translatable="false">failed</string>
+
+</resources>

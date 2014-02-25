@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 画面 -->
+    <string name="settings">設定</string>
+    <string name="info">情報</string>
+    <string name="invalid_format">入力フォーマットが不正です</string>
+    <string name="pass_not_initialized">[警告] パスワードが未設定です</string>
+
+    <!-- ルーター設定 -->
+    <string name="menu_ap_conn_category">ルーター設定</string>
+    <string name="menu_ap_ip_addr_title">ルーターIPアドレス</string>
+    <string name="menu_ap_ip_addr_summary">ルーター切り替えを行う場合やDNSを変更する場合に設定してください</string>
+    <string name="menu_ap_ip_addr_dialog_title">ルーターLAN側IPアドレス\n 例) 192.168.0.1</string>
+
+    <string name="pause">一時停止</string>
+    <string name="realtime">リアルタイム</string>
+    <string name="update_interval_label">更新間隔</string>
+    
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widgetDefaultLayout"
+    android:layout_width="66dp"
+    android:layout_height="66dp"
+    android:background="@drawable/backbround_black_trans"
+    android:clickable="true"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    tools:ignore="Overdraw" >
+
+    <ImageView
+        android:id="@+id/widgetImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginRight="2dp"
+        android:clickable="false"
+        android:contentDescription="@string/wifi_off"
+        android:src="@drawable/antena_gray" />
+
+    <TextView
+        android:id="@+id/widgetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="@string/processing"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</LinearLayout>

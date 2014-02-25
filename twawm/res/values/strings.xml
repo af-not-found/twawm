@@ -1,0 +1,195 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 画面 -->
+    <string name="resume">Resume</string>
+    <string name="standby">Standby</string>
+    <string name="settings">Settings</string>
+    <string name="info">Info</string>
+    <string name="select_action">Select action</string>
+    <string name="working">Working</string>
+    <string name="pausing">Pausing</string>
+    <string name="pausing_long">Application is pausing</string>
+    <string name="bt_addr_saved">Bluetooth address saved.\nFrom now on, you can resume router by Bluetooth.</string>
+    <string name="send_log_short">Report</string>
+    <string name="not_works_fine">FAQ</string>
+    <string name="others">Others</string>
+    <string name="save">Save</string>
+    <string name="exec">Execute</string>
+    <string name="cancel">Cancel</string>
+    <string name="invalid_format">[Warning] Inputed value format is invalid</string>
+    <string name="router_ip_addr_not_set">[Warning] Router IP address is not set</string>
+    <string name="bt_error_need_to_reboot">[Warning] Bluetooth error occurred. Need to reboot.</string>
+
+    <!-- 初期設定ウィザード -->
+    <string name="wizard_title">Configuration wizard</string>
+    <string name="wizard_text_init">Starting initial configuration wizard for twawm. It will only take 5 minutes.</string>
+    <string name="wizard_text_connection">Please enable Wi-Fi, then connect to WM router.</string>
+    <string name="wizard_text_input_router_ip">Couldn\'t connect to WM router. Input router IP Address.</string>
+    <string name="wizard_text_password_not_init">Admin password is not initialized. Open admin page to set.</string>
+    <string name="wizard_text_input_password1">Input the admin password of WM router.</string>
+    <string name="wizard_text_input_password2">Input the admin password of WM router.</string>
+    <string name="wizard_text_invalid_password">Couldn\'t login to admin page of WM router. Input the password again.</string>
+    <string name="wizard_text_fin">Password is confirmed. Complete.</string>
+    <string name="wizard_button_next">Next</string>
+    <string name="wizard_button_dont_start_wizard_automatically">Disable wizard</string>
+    <string name="wizard_button_wifi">Open Wi-Fi config</string>
+    <string name="wizard_button_router">Open admin page</string>
+    <string name="wizard_button_fin">Finish</string>
+    <string name="wizard_dialog_loading">Confirming now…</string>
+
+    <!-- ログ送信 -->
+    <string name="menu_sendlog_report_type">Report type</string>
+    <string name="menu_sendlog_message">Message</string>
+    <string name="menu_sendlog_type__ok_label">Works fine</string>
+    <string name="menu_sendlog_type__ng_label">Find a bug</string>
+    <string name="menu_sendlog_type__others_label">Others</string>
+    <string name="menu_sendlog_what"><u>What kind of info will be sent?</u></string>
+    <string name="menu_sendlog_reply"></string>
+    <string name="send_log">Send log to developer</string>
+    <string name="send_log_ok">Log sending succeeded</string>
+    <string name="send_log_ng">Log sending failed</string>
+    <string name="send_log_not_online">Can\'t send log because of offline</string>
+    <string name="send_log_logging_disabled">Can\'t send log because logging is disabled</string>
+    <string name="send_log_archived">Log archive succeeded, sending now…</string>
+    <string name="send_log_retry">Log sending failed, retrying…</string>
+
+    <!-- 通知 -->
+    <string name="service_started_long">Service started</string>
+    <string name="standby_ok_long">Standby OK</string>
+    <string name="standby_ng_long">Standby NG</string>
+    <string name="ap_not_found_long">WiFi access point not found</string>
+    <string name="not_wm_long">Connected router is not Aterm WM</string>
+    <string name="watchdog_timeout_long">Operation timeout</string>
+    <string name="bluetooth_failed_long">Router resuming failed</string>
+    <string name="switching_router">Switching router now</string>
+    <string name="wimax_recn_failed_frmver">Failed. Firmware version too old.</string>
+    <string name="wimax_disconnecting">Disconnecting WiMAX…</string>
+    <string name="wimax_connecting">Connecting WiMAX…</string>
+    <string name="reboot_wmrouter">Rebooting router…</string>
+    <string name="failed">Failed</string>
+
+    <!-- 色ラベル -->
+    <string name="color_black_label">Black</string>
+    <string name="color_gray_label">Gray</string>
+    <string name="color_white_label">White</string>
+    <string name="color_red_label">Red</string>
+    <string name="color_green_label">Green</string>
+    <string name="color_blue_label">Blue</string>
+    <string name="color_none_label">None</string>
+    <string name="color_black_trans_label">Black(transparent)</string>
+    <string name="color_white_trans_label">White(transparent)</string>
+
+    <!-- ステータスチェック設定 -->
+    <string name="menu_online_check_category">Status check settings</string>
+    <string name="menu_online_check_interval_sec_title">Status check interval</string>
+    <string name="menu_online_check_interval_sec_summay">Specify online/antenna/battery check interval in seconds</string>
+    <string name="menu_online_check_interval_sec_dialog_title">Status check interval [sec] (recommend=120)</string>
+    <string name="menu_online_check_dns_timeout_sec_dialog_title">DNS lookup timeout [sec] (recommend=4)</string>
+    <string name="menu_online_check_dns_timeout_sec_summay">DNS lookup timeout for online check</string>
+    <string name="menu_online_check_dns_timeout_sec_title">DNS lookup timeout</string>
+    <string name="menu_online_check_interval_sec_after_offline_dialog_title">Check interval after offline [sec] (recommend=8)</string>
+    <string name="menu_online_check_interval_sec_after_offline_summay">Online check interval after offline detected</string>
+    <string name="menu_online_check_interval_sec_after_offline_title">Check interval after offline</string>
+    <string name="menu_online_check_count_after_offline_dialog_title">Check count after offline (recommend=15)</string>
+    <string name="menu_online_check_count_after_offline_summay">Online check limit count after offline detected</string>
+    <string name="menu_online_check_count_after_offline_title">Check count after offline</string>
+
+    <!-- ウィジェット設定 -->
+    <string name="menu_widget_setting_title">Widget settings</string>
+    <string name="menu_widget_display_setting">Widget display settings</string>
+    <string name="menu_widget_str_color_title">Widget string color</string>
+    <string name="menu_widget_background_title">Widget background</string>
+    <string name="menu_widget_click_action_title">Select action when widget is tapped</string>
+    <string name="menu_widget_click_action_wifi_disabled_title">On WiFi disabled</string>
+    <string name="menu_widget_click_action_online_title">On online</string>
+    <string name="menu_widget_click_action_offline_title">Others</string>
+    <string name="menu_widget_click_action_customize_title">Customize actions</string>
+    <string name="menu_widget_click_action_customize_summay">Sort or hide items of "Prompt actions"</string>
+
+    <!-- ウィジェットタップ設定 アクション -->
+    <string name="menu_widget_click_action__none_label">Do nothing</string>
+    <string name="menu_widget_click_action__check_label">Online check</string>
+    <string name="menu_widget_click_action__resume_label">Resume router and WiFi ON</string>
+    <string name="menu_widget_click_action__resume_switch_label">Resume and Switch router</string>
+    <string name="menu_widget_click_action__switch_label">Switch router</string>
+    <string name="menu_widget_click_action__standby_label">Standby router</string>
+    <string name="menu_widget_click_action__wifi_on_label">WiFi ON</string>
+    <string name="menu_widget_click_action__wifi_off_label">WiFi OFF</string>
+    <string name="menu_widget_click_action__restart_label">Restart WiFi</string>
+    <string name="menu_widget_click_action__wimax_recn_label">Reconnect WiMAX</string>
+    <string name="menu_widget_click_action__reboot_wm_label">Reboot router</string>
+    <string name="menu_widget_click_action__stop_service_label">Stop service</string>
+    <string name="menu_widget_click_action__choose_label">Prompt actions</string>
+
+    <!-- ルーター設定 -->
+    <string name="menu_ap_conn_category">Router settings</string>
+    <string name="menu_ap_ip_addr_title">Router IP address</string>
+    <string name="menu_ap_ip_addr_summary">If you change DNS IP address, this IP address must be set.</string>
+    <string name="menu_ap_ip_addr_dialog_title">Router LAN-side IP address, ex)192.168.0.1</string>
+    <string name="menu_ap_conn_timeout_sec_title">Connection timeout</string>
+    <string name="menu_ap_conn_timeout_sec_summay">Specify router connection timeout in seconds</string>
+    <string name="menu_ap_conn_timeout_sec_dialog_title">Router Connection timeout [sec] (recommend=20)</string>
+    <string name="menu_ap_conn_retry_limit_title">Re-Connection limit</string>
+    <string name="menu_ap_conn_retry_limit_summay">Retry limit for router</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_title">Disable WiFi if no AP</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_summay">Disable WiFi if cannot find access point</string>
+    <string name="menu_wizard_category">Configuration wizard</string>
+    <string name="menu_wizard_title">Start wizard</string>
+    <string name="menu_wizard_summary">Start initial configuration wizard</string>
+    <string name="menu_start_wizard_automatically_title">Start wizard automatically</string>
+    <string name="menu_start_wizard_automatically_summay">OFF to disable wizard automatically starting</string>
+    <string name="menu_reset_batt_history_title">Reset discharging history</string>
+    <string name="menu_reset_batt_history_toast">Reset done</string>
+    <string name="menu_reset_batt_history_summary">Current average : %1$s%%/h</string>
+
+    <!-- サービス設定 -->
+    <string name="menu_service_category">Service settings</string>
+    <string name="menu_action_after_suspend_title">Select action after suspend</string>
+    <string name="menu_statusbar_notify_title">Statusbar notify</string>
+    <string name="menu_statusbar_notify_summay">Select timing to display information on statusbar (needs reboot when changed)</string>
+    <string name="menu_start_service_when_wifi_enabled_title">Start service when WiFi ON</string>
+    <string name="menu_start_service_when_wifi_enabled_summay">Start service when deteched that WiFi is enabled</string>
+    <string name="menu_enable_logging_title">Enable logging</string>
+    <string name="menu_enable_logging_summary">Output directly is following. Logs older than 7days are deleted automatically.\n</string>
+
+    <!-- スタンバイ後の挙動 -->
+    <string name="menu_action_after_suspend__wifioff_stop_service_label">WiFi OFF and stop service</string>
+    <string name="menu_action_after_suspend__stop_service_label">Stop service</string>
+    <string name="menu_action_after_suspend__do_nothing_label">Do nothing</string>
+    
+   <!-- ステータスバー通知 -->
+    <string name="menu_statusbar_notify__always_label">Always</string>
+    <string name="menu_statusbar_notify__changed_label">When changed</string>
+    <string name="menu_statusbar_notify__never_label">Never</string>
+
+    <!-- リモート起動設定 -->
+    <string name="menu_bluetooth_category">Router resume settings</string>
+    <string name="menu_bt_resume_type_title">Resume type</string>
+    <string name="menu_bt_resume_type_summay">Select resume type</string>
+    <string name="menu_bt_connection_timeout_sec_dialog_title">Bluetooth connection timeout [sec] (recommend=15)</string>
+    <string name="menu_bt_connection_timeout_sec_summay">Specify bluetooth connection timeout in seconds</string>
+    <string name="menu_bt_connection_timeout_sec_title">BT connection timeout</string>
+    <string name="menu_bt_address_title">Bluetooth address</string>
+    <string name="menu_bt_address_summay">Normally, it is unnecessary to change</string>
+
+    <!-- リモート起動方法 -->
+    <string name="menu_bt_resume_type__fast_label">Fast</string>
+    <string name="menu_bt_resume_type__normal_label">Normal</string>
+    <string name="menu_bt_resume_type__normal_force_label">Force connection</string>
+    <string name="menu_bt_resume_type__bt_restart_label">Restart bluetooth</string>
+
+    <!-- バックアップと復元 -->
+    <string name="menu_backup_and_restore">Backup/Restore settings</string>
+    <string name="menu_backup_title">Backup settings to File</string>
+    <string name="menu_backup_summary">Backup all settings to\n</string>
+    <string name="menu_restore_title">Restore settings from File</string>
+    <string name="menu_restore_summary">Restore all settings from\n</string>
+    <string name="backup_succeeded">Back succeeded</string>
+    <string name="backup_failed">Back failed</string>
+    <string name="restore_succeeded">Restore succeeded</string>
+    <string name="restore_failed">Restore failed</string>
+    <string name="menu_reset_settings_title">Reset settings</string>
+    <string name="menu_reset_settings_summay">Reset all settings</string>
+    <string name="reset_settings_succeeded">Reset succeeded</string>
+
+</resources>

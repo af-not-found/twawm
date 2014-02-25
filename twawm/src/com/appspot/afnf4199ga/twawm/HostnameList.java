@@ -1,0 +1,157 @@
+package com.appspot.afnf4199ga.twawm;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class HostnameList {
+
+	protected static int index = 0;
+	static List<String> hosts = new ArrayList<String>();
+	protected static int size;
+	static {
+
+		hosts.add("www.47news.jp");
+		hosts.add("www.adobe.com");
+		hosts.add("www.aeonbank.co.jp");
+		hosts.add("www.amazon.co.jp");
+		hosts.add("www.amazon.com");
+		hosts.add("www.ameba.jp");
+		hosts.add("www.ameblo.jp");
+		hosts.add("www.ana.co.jp");
+		hosts.add("www.android.com");
+		hosts.add("www.aozorabank.co.jp");
+		hosts.add("www.apache.org");
+		hosts.add("www.apple.com");
+		hosts.add("www.appspot.com");
+		hosts.add("www.asahi.com");
+		hosts.add("www.att.com");
+		hosts.add("www.avast.com");
+		hosts.add("www.bank-daiwa.co.jp");
+		hosts.add("www.bbc.co.uk");
+		hosts.add("www.biglobe.ne.jp");
+		hosts.add("www.bing.com");
+		hosts.add("www.bk.mufg.jp");
+		hosts.add("www.blogspot.com");
+		hosts.add("www.citibank.com");
+		hosts.add("www.cnn.com");
+		hosts.add("www.cookpad.com");
+		hosts.add("www.costco.com");
+		hosts.add("www.dell.com");
+		hosts.add("www.digg.com");
+		hosts.add("www.dion.ne.jp");
+		hosts.add("www.disney.com");
+		hosts.add("www.ebay.com");
+		hosts.add("www.evernote.com");
+		hosts.add("www.excite.co.jp");
+		hosts.add("www.facebook.com");
+		hosts.add("www.fedex.com");
+		hosts.add("www.flickr.com");
+		hosts.add("www.forbes.com");
+		hosts.add("www.fox.com");
+		hosts.add("www.fujitv.co.jp");
+		hosts.add("www.gap.com");
+		hosts.add("www.github.com");
+		hosts.add("www.goo.ne.jp");
+		hosts.add("www.google.co.jp");
+		hosts.add("www.google.com");
+		hosts.add("www.googlecode.com");
+		hosts.add("www.gree.jp");
+		hosts.add("www.hatena.ne.jp");
+		hosts.add("www.hilton.com");
+		hosts.add("www.infoseek.co.jp");
+		hosts.add("www.instagr.am");
+		hosts.add("www.intel.com");
+		hosts.add("www.jal.co.jp");
+		hosts.add("www.japannetbank.co.jp");
+		hosts.add("www.jibunbank.co.jp");
+		hosts.add("www.jorudan.co.jp");
+		hosts.add("www.jp-bank.japanpost.jp");
+		hosts.add("www.jquery.com");
+		hosts.add("www.jqueryui.com");
+		hosts.add("www.kddi.com");
+		hosts.add("www.last.fm");
+		hosts.add("www.lenovo.com");
+		hosts.add("www.lifehacker.com");
+		hosts.add("www.live.com");
+		hosts.add("www.livedoor.com");
+		hosts.add("www.mainichi.jp");
+		hosts.add("www.mapion.co.jp");
+		hosts.add("www.microsoft.com");
+		hosts.add("www.mixi.jp");
+		hosts.add("www.mizuhobank.co.jp");
+		hosts.add("www.mozilla.com");
+		hosts.add("www.mozilla.org");
+		hosts.add("www.msn.co.jp");
+		hosts.add("www.msn.com");
+		hosts.add("www.mtv.com");
+		hosts.add("www.mufg.jp");
+		hosts.add("www.mynavi.jp");
+		hosts.add("www.mysql.com");
+		hosts.add("www.nationalgeographic.com");
+		hosts.add("www.nba.com");
+		hosts.add("www.nbc.com");
+		hosts.add("www.netbk.co.jp");
+		hosts.add("www.nhk.or.jp");
+		hosts.add("www.nike.com");
+		hosts.add("www.nikkei.com");
+		hosts.add("www.nikkeibp.co.jp");
+		hosts.add("www.nokia.com");
+		hosts.add("www.nomura-trust.co.jp");
+		hosts.add("www.norton.com");
+		hosts.add("www.nttdocomo.co.jp");
+		hosts.add("www.ocn.ne.jp");
+		hosts.add("www.okwave.jp");
+		hosts.add("www.orixbank.co.jp");
+		hosts.add("www.paypal.com");
+		hosts.add("www.php.net");
+		hosts.add("www.plala.or.jp");
+		hosts.add("www.playstation.com");
+		hosts.add("www.rakuten-bank.co.jp");
+		hosts.add("www.rakuten.co.jp");
+		hosts.add("www.reddit.com");
+		hosts.add("www.resona-gr.co.jp");
+		hosts.add("www.sakura.ne.jp");
+		hosts.add("www.sap.com");
+		hosts.add("www.sevenbank.co.jp");
+		hosts.add("www.sgt.jp");
+		hosts.add("www.shinseibank.com");
+		hosts.add("www.smbc.co.jp");
+		hosts.add("www.smtb.jp");
+		hosts.add("www.so-net.ne.jp");
+		hosts.add("www.softbank.jp");
+		hosts.add("www.sony.com");
+		hosts.add("www.sony.jp");
+		hosts.add("www.sonybank.net");
+		hosts.add("www.symantec.com");
+		hosts.add("www.t-mobile.com");
+		hosts.add("www.tbs.co.jp");
+		hosts.add("www.time.com");
+		hosts.add("www.tokyostarbank.co.jp");
+		hosts.add("www.trendmicro.com");
+		hosts.add("www.tumblr.com");
+		hosts.add("www.twitpic.com");
+		hosts.add("www.twitter.com");
+		hosts.add("www.ubuntu.com");
+		hosts.add("www.ubuntuforums.org");
+		hosts.add("www.ustream.tv");
+		hosts.add("www.weather.com");
+		hosts.add("www.wikipedia.org");
+		hosts.add("www.xbox.com");
+		hosts.add("www.yahoo.co.jp");
+		hosts.add("www.yahoo.com");
+		hosts.add("www.yomiuri.co.jp");
+		hosts.add("www.youtube.com");
+		hosts.add("www.zozo.jp");
+
+		size = hosts.size();
+		Collections.shuffle(hosts);
+	}
+
+	static String getNext() {
+		if (++index >= size) {
+			index = 0;
+		}
+		return hosts.get(index);
+	}
+}
