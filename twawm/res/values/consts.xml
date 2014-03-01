@@ -2,10 +2,10 @@
 
     <!-- 画面共通文字列 -->
     <string name="app_name" translatable="false">twawm</string>
-    <string name="app_subname" translatable="false">(Toggle WiFi And WM)</string>
+    <string name="app_subname" translatable="false">for WM3800R/WM3600R</string>
     <string name="app_version" translatable="false">ver</string>
     <string name="deleloper" translatable="false">by afnf</string>
-    <string name="wiki_url" translatable="false">http://w.livedoor.jp/twawm/</string>
+    <string name="wiki_url" translatable="false">http://seesaawiki.jp/twawm/</string>
     <string name="title_activity_main" translatable="false">twawm</string>
 
     <!-- ウィジェット共通文字列 -->

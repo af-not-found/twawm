@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='EUC-JP'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='ja' lang='ja'>
+<head>
+<!-- 雀の往来 -->
+<meta http-equiv='Content-Type' content='text/html; charset=EUC-JP' />
+<meta http-equiv='Content-Script-Type' content='text/javascript' />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<title>[ECO設定] - [ECO設定]</title>
+<link rel='stylesheet' type='text/css' href='/common/set.css' />
+<link rel='stylesheet' type='text/css' href='/common/common.css' />
+<script type='text/javascript' src='/common/menu.js'></script>
+<script type='text/javascript' src='/common/help.js'></script>
+
+
+</head>
+<body onload='init_func()'>
+<noscript>
+</noscript>
+<script type="text/javascript" src='/common/cgi.js'>
+</script>
+<script type="text/javascript">
+<!--
+function change_mode_status()
+{
+	if(gId('POWER_SLEEP').checked){
+		alert('本機能を使用した場合、使用している無線LAN端末 (子機) によっては、つながりにくくなる場合があります。また、セカンダリSSIDは使用できなくなります。\n本機能を使用した後に、本機能を解除すると、セカンダリSSIDの無線機能が有効となります。セカンダリSSIDを使用しない場合には、クイック設定Webの無線LAN設定 > 無線LAN設定ページにて、セカンダリSSIDを選択し、無線機能の「使用する」のチェックを外してください。');
+	}
+
+}
+function change_forget_status()
+{
+	if(gId('FORGET_CUT').checked){
+		alert('本機能を使用した場合、通信中であっても、本商品で約６０分間操作（ボタン操作、クレードル着脱、ACアダプタ／USBケーブルの抜き差し）を行わないと、強制的に休止状態になります。ただし、ウェイティング中は休止状態になりません。');
+	}
+
+}
+
+
+function change_select_time_status()
+{
+	var select_mode = gId('ECO_MODE_SELECT').options[gId('ECO_MODE_SELECT').selectedIndex].value;
+	
+	if (select_mode == 'none') {
+		ChangeStatusEnable(gId('ECO_TIME_MM'), false);
+	} else {
+		ChangeStatusEnable(gId('ECO_TIME_MM'), true);
+	}
+}
+
+function Init_Event()
+{
+    gId('eco_mode_main').onsubmit = function(){
+
+        if (false == confirm('［設定］ボタンをクリックしたあと、変更が有効になり、接続が切断される場合があります。\nよろしいですか？')) {
+            return false;
+        }
+        SubmitGuard();
+        return true;
+    }
+
+    gId('UPDATE_BUTTON').onclick = function(){
+        Reload();
+    }
+    
+    gId('ECO_MODE_SELECT').onchange = change_select_time_status;
+	gId('FORGET_CUT').onclick = change_forget_status;
+	gId('POWER_SLEEP').onclick = change_mode_status;
+    
+}
+
+/* ページの初期化 */
+function Init_Page()
+{
+    if (gId('RTAP_MODE').value == 'ap') {
+        ChangeStatusEnable(gId('ECO_MODE_SELECT'), false);
+        ChangeStatusEnable(gId('ECO_LED_TIME'), false);
+        ChangeStatusEnable(gId('BLUETOOTH_HIBE'), false);
+        ChangeStatusEnable(gId('ECO_TIME_MM'), false);
+        ChangeStatusEnable(gId('SUPLLY_SELECT'), false);
+        ChangeStatusEnable(gId('FORGET_CUT'), false);
+        ChangeStatusEnable(gId('POWER_SLEEP'), false);
+    } else {
+        change_select_time_status();
+    }
+}
+
+// -->
+</script>
+<div><input type="hidden" id="current_pane" value="6" /></div>
+<div class='left_menu'>
+<div class='title_back'>
+<div class='off'><a href="#content_anchor"><img src='/common/spacer.gif' alt="メニューをスキップして本文へ" /></a></div>
+<a href='./index_contents'><img src='/common/image_title.gif' width="210" height="75" alt='Atermロゴ' /></a>
+</div>
+<div class='product'>
+<span>A t e r m　W M 3 8 0 0 R</span>
+<br />
+A T E R M - 4 6 3 7 2 4
+</div>
+<div class ="left_save">
+<input type='hidden' name='SET_STATUS' id='SET_STATUS' value='' />
+<form name='system_save' id='system_save' action='./eco_mode_main' method='post'>
+<div>
+<a href='javascript:SaveBtnClick();'><img src='/common/save_btn.gif' alt='保存' id='SAVE_BUTTON' /></a><br />
+
+<br />［保存］ボタンをクリックすると、設定値の保存を行ったあと、再起動を行います。
+<input type='hidden' name='SAVE_CMD_ISSUE' value='YES' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='42934560914750918265098142750923865' />
+</div>
+</form>
+</div>
+<div class='menu' id='menu'>
+<div class='pane' id='pane2'>
+<a href='' class='folder' id='folder2'><img src='/common/right_arrow.gif' class='icon' id='icon2' alt='' />無線LAN設定</a>
+<div class='sub_pane' id='sub_pane2'>
+<a href="javascript:SetupAirClick('AIR_CARD','AIR_STATUS','AIR_STATUS_10','ECO_MODE_STATUS','DUAL_SUPPORT_STATUS','./air_main');" ><img src='/common/menu_dot.gif' alt='' />無線LAN設定</a><br />
+
+<a href="javascript:SetupAirClick('AIR_CARD','AIR_STATUS','AIR_STATUS_10','ECO_MODE_STATUS','DUAL_SUPPORT_STATUS','./mac_filter_main');" ><img src='/common/menu_dot.gif' alt='' />MACアドレスフィルタリング</a><br />
+<a href="javascript:SetupWPSClick('AIR_CARD','AIR_STATUS','AIR_STATUS_10','ECO_MODE_STATUS','DUAL_SUPPORT_STATUS','./wps_main');" ><img src='/common/menu_dot.gif' alt='' />WPS設定</a><br />
+
+</div>
+</div>
+<div class='pane' id='pane1'>
+<a href='' class='folder' id='folder1'><img src='/common/right_arrow.gif' class='icon' id='icon1' alt='' />公衆無線LAN設定</a>
+<div class='sub_pane' id='sub_pane1'>
+<a href='./basic_main'><img src='/common/menu_dot.gif' alt='' />基本設定</a><br />
+<a href='./wan_wl_main'><img src='/common/menu_dot.gif' alt='' />接続先設定</a><br />
+</div>
+</div>
+
+
+<div class='pane' id='pane6'>
+<a href='' class='folder' id='folder6'><img src='/common/right_arrow.gif' class='icon' id='icon6' alt='' />ECO設定</a>
+<div class='sub_pane' id='sub_pane6'>
+<a href='./eco_mode_main'><img src='/common/menu_dot.gif' alt='' />ECO設定</a><br />
+</div>
+</div>
+
+<div class='pane' id='pane3'>
+<a href='' class='folder' id='folder3'><img src='/common/right_arrow.gif' class='icon' id='icon3' alt='' />詳細設定</a>
+<div class='sub_pane' id='sub_pane3'>
+<a href='./lan_main'><img src='/common/menu_dot.gif' alt='' />LAN側設定</a><br />
+<a href="javascript:SetupDhcpExclusionClick('DHCP_MODE','DHCPE_ASSIGNABLE', './dhcp_exclusion_main');" ><img src='/common/menu_dot.gif' alt='' />DHCP除外設定</a><br />
+<a href="javascript:SetupDhcpAssignClick('DHCP_MODE', './dhcp_assign_main');" ><img src='/common/menu_dot.gif' alt='' />DHCP固定割当設定</a><br />
+<a href='./ipfilter_main'><img src='/common/menu_dot.gif' alt='' />パケットフィルタ設定</a><br />
+<a href='./ipnat_main'><img src='/common/menu_dot.gif' alt='' />ポートマッピング設定</a><br />
+<a href='./dnsroute_main'><img src='/common/menu_dot.gif' alt='' />DNSルーティング設定</a><br />
+
+<a href='./other_main'><img src='/common/menu_dot.gif' alt='' />その他の設定</a><br />
+</div>
+</div>
+<div class='pane' id='pane4'>
+<a href='' class='folder' id='folder4'><img src='/common/right_arrow.gif' class='icon' id='icon4' alt='' />メンテナンス</a>
+<div class='sub_pane' id='sub_pane4'>
+<a href='./password_main'><img src='/common/menu_dot.gif' alt='' />管理者パスワードの変更</a><br />
+<a href='./backup_main'><img src='/common/menu_dot.gif' alt='' />設定値の保存＆復元</a><br />
+<a href='./default_main'><img src='/common/menu_dot.gif' alt='' />設定値の初期化</a><br />
+<a href='./fw_main'><img src='/common/menu_dot.gif' alt='' />ファームウェア更新</a><br />
+<a href='./ping_main'><img src='/common/menu_dot.gif' alt='' />PINGテスト</a><br />
+<a href='./reboot_main'><img src='/common/menu_dot.gif' alt='' />再起動</a><br />
+</div>
+</div>
+<div class='pane' id='pane5'>
+<a href='' class='folder' id='folder5'><img src='/common/right_arrow.gif' class='icon' id='icon5' alt='' />情報</a>
+<div class='sub_pane' id='sub_pane5'>
+<a href='./info_main'><img src='/common/menu_dot.gif' alt='' />現在の状態</a><br />
+<a href='./log_main'><img src='/common/menu_dot.gif' alt='' />通信情報ログ</a><br />
+<a href="javascript:SetupUpnpClick('UPNP_STATUS');" ><img src='/common/menu_dot.gif' alt='' />UPnPの状態</a><br />
+
+</div>
+</div>
+
+
+
+<div class='pane' id='pane7'>
+<script type='text/javascript'>
+<!--
+function QrClick()
+{
+if (confirm('QRコードの生成に必要な本商品の機器情報をNECアクセステクニカ株式会社(以下「弊社」とします。)のサーバへ送信します。\nよろしいですか？\n※機器情報につきましては、弊社の取り扱い手続きに則り、適切な管理を行います。\n※サーバと通信を行うためインターネットに接続している必要があります。')) {
+gId('qr_submit').submit();
+}
+}
+//-->
+</script>
+<form name='qr_submit' id='qr_submit' action='https://display.qr.aterm.jp/cgi-bin/qr_create.cgi' method='post' target='blank'>
+<div class='qcode_btn'>
+<a href='javascript:QrClick();'><img src='/common/qr_button.gif' alt='設定用QRコードを表示' id='QRDATASUBMIT' /></a>
+</div>
+<div><input type='hidden' id='Pro' name='Pro' value='AtermWM3800R' /></div>
+<div><input type='hidden' id='MAC' name='MAC' value='53745725745654' /></div>
+<div><input type='hidden' id='1_S' name='1_S' value='7527457345' /></div>
+<div><input type='hidden' id='1_Net' name='1_Net' value='03' /></div>
+<div><input type='hidden' id='1_PW' name='1_PW' value='7235357235' /></div>
+<div><input type='hidden' id='1_Ki' name='1_Ki' value='0' /></div>
+<div><input type='hidden' id='1_Opt' name='1_Opt' value='01000000' /></div>
+<div><input type='hidden' id='2_S' name='2_S' value='2735724575' /></div>
+<div><input type='hidden' id='2_Net' name='2_Net' value='01' /></div>
+<div><input type='hidden' id='2_PW' name='2_PW' value='27457257' /></div>
+<div><input type='hidden' id='2_Ki' name='2_Ki' value='1' /></div>
+<div><input type='hidden' id='2_Opt' name='2_Opt' value='18000000' /></div>
+<div><input type='hidden' id='Rand' name='Rand' value='257457' /></div>
+<div><input type='hidden' id='SIGN' name='SIGN' value='5727457456' /></div>
+</form>
+
+	<div class="to_btn_area">
+		<form name='system_wimax' id='system_wimax' action='./eco_mode_main' method='post'>
+			<div>
+				<a href='javascript:WiMAXBtnClick();'><img src='/common/wimax_btn.gif' alt='WiMAX接続' id='WIMAX_BUTTON' /></a><br />
+				<div class='space2'></div>
+				<input type='hidden' name='WIMAX_CMD_ISSUE' value='YES' />
+				<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+				<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='42934560914750918265098142750923865' />
+			</div>
+		</form>
+	</div>
+	
+	<p class='left_help_space'><img src='/common/help_btn.gif' alt='ヘルプ' width='18' height='17' class='help_icon' />ヘルプ表示</p>
+</div>
+</div>
+<input type='hidden' id='ACTION_MODE'          name='ACTION_MODE'          value='local' />
+<input type='hidden' id='AIR_CARD'             name='AIR_CARD'             value='' />
+<input type='hidden' id='AIR_STATUS'           name='AIR_STATUS'           value='' />
+<input type='hidden' id='UPNP_STATUS'          name='UPNP_STATUS'          value='UPnP NoUse' />
+<input type='hidden' id='DHCP_MODE'            name='DHCP_MODE'            value='enable' />
+<input type='hidden' id='DHCPE_ASSIGNABLE'     name='DHCPE_ASSIGNABLE'     value='manual' />
+<input type='hidden' id='CONTENTS_FILTER'      name='CONTENTS_FILTER'      value='disable' />
+<input type='hidden' id='ECO_MODE_STATUS'      name='ECO_MODE_STATUS'      value='false' />
+<input type='hidden' id='AIR_STATUS_10'        name='AIR_STATUS_10'        value='' />
+<input type='hidden' id='DUAL_SUPPORT_STATUS'  name='DUAL_SUPPORT_STATUS'  value='' />
+<input type='hidden' id='ECO_MODE_STATUS_WLAN' name='ECO_MODE_STATUS_WLAN' value='false' />
+<input type='hidden' id='USE_CF'               name='USE_CF'               value='true' />
+
+</div>
+<div class='contents'>
+<div class='off'>現在のページの位置</div><div class='bread_crumb_list'>トップページ ＞ ECO設定 ＞ ECO設定</div>
+<div class='off'><a name='content_anchor' id='content_anchor'>本文ここから</a></div>
+<form name='eco_mode_main' id='eco_mode_main' action='./eco_mode_main_set' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<h1>ECO設定</h1>
+<!--#OK <div class='ok_msg'>設定内容を更新しました。<br />現在の設定内容を保存する場合は、左メニューの［保存］ボタンをクリックしてください。</div> -->
+<!--ERR <div class='err_ng_msg'>入力内容に誤りがあります。詳しくは各項目のメッセージを確認してください。</div> -->
+<!--#NG <div class='err_ng_msg'>設定に失敗しました。正しく設定されていない可能性がありますので本商品の再起動を行ってください。</div> -->
+<table class='table_common'>
+<tr>
+<td colspan='2'><h2>電池残量と充電<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の電池残量の表示及び充電に関する設定をします。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>電池残量<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '電池の残量を表示します。');return false;" /></td>
+<td class='small_item_td2'>［■■■■■■■□□□］（68％）</td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'>ロングライフ充電<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の電池容量が70%程度となる電池電圧で充電を停止します。ロングライフ充電を使用する場合は、チェックをします。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='ECO_CHARGE' id='ECO_CHARGE' value='0'  /><label for='ECO_CHARGE'>使用する</label></td>
+</tr><tr>
+<td colspan='2'><h2>USB給電設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のUSB給電に関する設定をします。');return false;" /></h2></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>給電停止電池残量<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'USB給電を行った時、本商品の電池残量の下限値を選択します。USB給電を使用しない場合は「給電しない」を選択してください。端末によっては設定した下限値まで給電しない場合があります。');return false;" /></td>
+<td class='small_item_td2'><select name='SUPLLY_SELECT' id='SUPLLY_SELECT' size='1'>
+<option value='20' selected='selected'>約 20%</option>
+<option value='40' >約 40%</option>
+<option value='60' >約 60%</option>
+<option value='100' >給電しない</option>
+</select></td>
+</tr><tr>
+<td colspan='2'><h2>自動省電力設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の省電力モード及びLEDに関する設定を行います。');return false;" /></h2></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>自動消灯時間<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'ディスプレイが自動消灯するまでの時間を選択します。');return false;" /></td>
+<td class='small_item_td2'><select name='ECO_LED_TIME' id='ECO_LED_TIME' size='1'>
+<option value='15' selected='selected'>15秒</option>
+<option value='30' >30秒</option>
+<option value='60' >60秒</option>
+</select></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>省電力状態切り替え機能<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '省電力状態切り替え機能のモードを選択します。本商品の電源をOFFする場合は、「電源OFF」を選択してください。本商品を電源OFFしないですぐに起動させたい場合は、「休止状態」または「ウェイティング」を選択してください。省電力状態切り替え機能を使用しない場合は、「使用しない」を選択してください。');return false;" /></td>
+<td class='small_item_td2'><select name='ECO_MODE_SELECT' id='ECO_MODE_SELECT' size='1'>
+<option value='sleep' >ウェイティング</option>
+<option value='stanby'>休止状態</option>
+<option value='poweroff' >電源OFF</option>
+<option value='none' selected='selected'>使用しない</option>
+</select></td>
+</tr>
+<tr class='small_item_tr'>
+<td class='small_item_td'>省電力状態切り替え設定時間<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '省電力状態切り替え機能の状態になるまでの時間を入力します。入力できる値は1〜60分です。通信の無い状態が、設定した時間に達すると省電力状態になります。ただし、無線LAN端末(子機)と通信している場合、専用ACアダプタ接続時、USBケーブル接続時、クレードル接続時(ACアダプタ未接続を含む)は、省電力状態切り替え機能は動作しません。なお、省電力切り替え機能は、自動消灯と関係なく動作します。');return false;" /></td>
+<td class='small_item_td2'>
+<input type='text' name='ECO_TIME_MM' id='ECO_TIME_MM' maxlength='2' size='2' value='10' />分
+</td>
+</tr>
+<tr><td colspan='2'><div class='message_red'>ECOタイマーを使用した場合、通信中であっても、本商品で約６０分間操作（ボタン操作、クレードル着脱、ACアダプタ／USBケーブルの抜き差し）を行わないと、強制的に休止状態になります。ただし、ウェイティング中は休止状態になりません。</div></td></tr><tr class='small_item_tr'>
+<td class='small_item_td'>ECOタイマー<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'ECOタイマーを使用する場合は、チェックをします。ECOタイマーとは、一定時間 (約60分固定) 経過後、強制的に本商品を休止状態にする機能です。</br>注意：本機能を使用した場合、通信中であっても、本商品の操作（ボタン操作、クレードル着脱、ACアダプタ／USBケーブルの抜き差し）を行わないと、強制的に休止状態になります。ただし、ウェイティング中は休止状態になりません。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='FORGET_CUT' id='FORGET_CUT' value='0'  /><label for='FORGET_CUT'>使用する</label></td>
+</tr><tr>
+<td colspan='2'><h2>休止状態設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の休止状態に関する設定を行います。');return false;" /></h2></td>
+</tr><tr class='small_item_tr'>
+<td class='small_item_td'>リモート起動<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'リモート起動を使用する場合は、チェックをします。本機能を使用する場合、Aterm WiMAX Tool for Androidから起動の操作を行うことができます。</br>※省電力状態切り替え機能にて「休止状態」の設定が必要です。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='BLUETOOTH_HIBE' id='BLUETOOTH_HIBE' value='0' /><label for='BLUETOOTH_HIBE'>使用する</label></td>
+</tr><tr>
+<td colspan='2'><h2>パワーセーブ通信設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のパワーセーブ通信に関する設定を行います。');return false;" /></h2></td>
+</tr><tr><td colspan='2'><div class='message_red'>無線LAN端末（子機）との通信で省電力動作を行う事により消費電力を少なくすることができます。</br>注意：本機能を使用した場合、使用している無線LAN端末（子機）によっては、つながりにくくなる場合があります。また、セカンダリSSIDは使用できなくなります。</div></td></tr><tr><td colspan='2'><div class='message_red'>本機能を使用した後に、本機能を解除すると、セカンダリSSIDの無線機能が有効となります。セカンダリSSIDを使用しない場合には、クイック設定Webの無線LAN設定 > 無線LAN設定ページにて、セカンダリSSIDを選択し、無線機能の「使用する」のチェックを外してください。</div></td></tr><tr class='small_item_tr'>
+<td class='small_item_td'>パワーセーブ通信<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'パワーセーブ通信を使用する場合は、チェックをします。本機能は、無線LAN端末（子機）との通信で省電力動作を行う事により消費電力を少なくすることができます。</br>注意：本機能を使用した場合、使用している無線LAN端末（子機）によっては、つながりにくくなる場合があります。また、セカンダリSSIDは使用できなくなります。</br>本機能を使用した後に、これを解除すると、セカンダリSSIDの無線機能が有効となります。セカンダリSSIDを使用しない場合には、クイック設定Webの無線LAN設定 > 無線LAN設定ページにて、セカンダリSSIDを選択し、無線機能の「使用する」のチェックを外してください。');return false;" /></td>
+<td class='small_item_td2'><input type='checkbox' name='POWER_SLEEP' id='POWER_SLEEP' value='0' checked='checked' /><label for='POWER_SLEEP'>使用する</label></td>
+</tr></table>
+<div class='button_item'><input type='submit' name='BUTTON_SET' id='BUTTON_SET' value='設定' /><input type='hidden' name='RTAP_MODE' id='RTAP_MODE' value='rt' />
+</div>
+<div class='button_item'>
+<input type='button' name='UPDATE_BUTTON' id='UPDATE_BUTTON' value='最新状態に更新' />
+</div>
+<hr />
+<div class='top_button'>
+<input type='button' value='トップページへ戻る' onclick='Back()' />
+</div>
+<div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='42934560914750918265098142750923865' />
+</div>
+</form>
+</div>
+<div id='help' style='position:absolute; top:100px; left:50px; width:12em; border-top:2px #b7c3dd solid; border-left:2px #b7c3dd solid; border-right:3px #4b5d83 solid; border-bottom:3px #4b5d83 solid; background-color: #f1f1f1; font-size:smaller; visibility : hidden;'>
+<!-- ヘルプで表示するブロック -->
+<div style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; border-bottom:2px #35589e solid;'><span style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; '>ヘルプ<img src='/common/close.gif' onmousedown='HelpHide();' style='position:absolute; top:1px; right:0px;' alt='' /></span></div>
+<div style='padding: 5px 5px 0px; '><span id='help_msg'>　</span><br /><br />
+<form>
+<div style='text-align: center; '><input type='button' value='閉じる' onclick='HelpHide();' onmousedown='mouseDownCansel= true;' /></div>
+</form>
+</div>
+</div>
+</body>
+</html>

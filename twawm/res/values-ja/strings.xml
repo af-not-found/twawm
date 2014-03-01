@@ -10,8 +10,9 @@
     <string name="pausing">一時停止中</string>
     <string name="pausing_long">アプリケーションは一時停止中です</string>
     <string name="bt_addr_saved">Bluetoothアドレスが保存されました。\n次回からリモート起動できます。</string>
-    <string name="send_log_short">レポート</string>
+    <string name="send_log_short">フィードバック</string>
     <string name="not_works_fine">うまく\n 動かない場合</string>
+    <string name="eco_charge">ロングライフ充電</string>
     <string name="others">その他</string>
     <string name="save">保存</string>
     <string name="exec">実行</string>
@@ -28,7 +29,7 @@
     <string name="wizard_text_password_not_init">管理画面パスワードが未設定です。管理画面を開いて設定して下さい。</string>
     <string name="wizard_text_input_password1">設定したパスワードを入力して下さい。\n※2013/9/3のファームウェア更新によって、スタンバイにパスワードが必要になりました。</string>
     <string name="wizard_text_input_password2">WMルーター管理画面パスワードを入力して下さい。\n※2013/9/3のファームウェア更新によって、スタンバイにパスワードが必要になりました。</string>
-    <string name="wizard_text_invalid_password">ログインできませんでした。再入力して下さい。</string>
+    <string name="wizard_text_invalid_password">ログインできませんでした。WMルーター管理画面パスワードを再入力して下さい。\n※Wi-Fiパスワード（WPA暗号化キー）ではありません。</string>
     <string name="wizard_text_fin">パスワードが確認できました。終了します。</string>
     <string name="wizard_button_next">次へ</string>
     <string name="wizard_button_dont_start_wizard_automatically">ウィザード無効化</string>

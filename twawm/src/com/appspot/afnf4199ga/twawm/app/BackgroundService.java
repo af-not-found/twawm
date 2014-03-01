@@ -35,6 +35,7 @@ import com.appspot.afnf4199ga.twawm.StateMachine;
 import com.appspot.afnf4199ga.twawm.StateMachine.STATE;
 import com.appspot.afnf4199ga.twawm.StateMachine.TRIGGER;
 import com.appspot.afnf4199ga.twawm.app.MainActivity.ACTIVITY_FLAG;
+import com.appspot.afnf4199ga.twawm.router.EcoModeControl;
 import com.appspot.afnf4199ga.twawm.router.RouterControl;
 import com.appspot.afnf4199ga.twawm.router.RouterControlByHttp;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
@@ -56,6 +57,8 @@ public class BackgroundService extends Service {
     private int shortIntervalCount = 0;
     private boolean receiverRegisted = false;
     private BluetoothHelper btHelper = null;
+    private Boolean ecoCharge = null;
+    private int onlineCheckCompleteCount = 0;
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -254,7 +257,7 @@ public class BackgroundService extends Service {
         state.perform(success ? TRIGGER.STANDBY_OK : TRIGGER.STANDBY_NG);
     }
 
-    public void onOnlineCheckComplete(TRIGGER result) {
+    public void onOnlineCheckComplete(TRIGGER result, boolean becomeOnline) {
 
         // オンラインの場合、またはWMルーターでない場合
         if (result == TRIGGER.ONLINE || result == TRIGGER.NOT_WM) {
@@ -289,7 +292,12 @@ public class BackgroundService extends Service {
         // 状態遷移
         state.perform(result);
 
-        // ロック中で、WMルータでなければ
+        // 100回ごと、または今回オンラインになった場合に、ロングライフ充電状態を取得
+        if (++onlineCheckCompleteCount % 100 == 0 || becomeOnline) {
+            EcoModeControl.changeEcoMode(null);
+        }
+
+        // スイッチロック中で、WMルータでなければ
         if (state.isRouterSwitchLocked() && result == TRIGGER.NOT_WM) {
             // リモート起動に時間がかかるのでもう一度ロックしておく			
             state.lockRouterSwitch();
@@ -481,6 +489,12 @@ public class BackgroundService extends Service {
             Logger.i("switching terminated : target not found");
             return null;
         }
+    }
+
+    public void onEcoModeControlFinished(Boolean ecoCharge) {
+        //Logger.i("onEcoModeControlFinished : " + ecoMode);
+        this.ecoCharge = ecoCharge;
+        UIAct.postActivityButton(null, null, null, null, ecoCharge);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -982,4 +996,9 @@ public class BackgroundService extends Service {
         shortIntervalCheck = false;
         shortIntervalCount = 0;
     }
+
+    public Boolean getEcoCharge() {
+        return ecoCharge;
+    }
+
 }

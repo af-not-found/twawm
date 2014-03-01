@@ -1,8 +1,11 @@
 package com.appspot.afnf4199ga.twawm.router;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URI;
+import java.util.regex.Matcher;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolException;
 import org.apache.http.auth.AuthScope;
@@ -20,98 +23,164 @@ import org.apache.http.protocol.HttpContext;
 import android.content.Context;
 
 import com.appspot.afnf4199ga.twawm.Const;
+import com.appspot.afnf4199ga.twawm.app.MyPreferenceActivity;
+import com.appspot.afnf4199ga.utils.Logger;
+import com.appspot.afnf4199ga.utils.MyStringUtlis;
 
 public class MyHttpClient extends DefaultHttpClient {
 
-	private Context context;
+    static final String NOT_SITE_LOCAL_ADDR = "NOT_SITE_LOCAL_ADDR";
 
-	public MyHttpClient(HttpParams httpParams) {
-		super(httpParams);
-	}
+    private Context context;
 
-	static MyHttpClient createClient(Context context) {
+    public MyHttpClient(HttpParams httpParams) {
+        super(httpParams);
+    }
 
-		// タイムアウト設定
-		HttpParams httpParams = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(httpParams, Const.ROUTER_HTTP_TIMEOUT);
-		HttpConnectionParams.setSoTimeout(httpParams, Const.ROUTER_HTTP_TIMEOUT);
+    static MyHttpClient createClient(Context context) {
 
-		// インスタンス生成
-		MyHttpClient httpClient = new MyHttpClient(httpParams);
-		httpClient.context = context;
+        // タイムアウト設定
+        HttpParams httpParams = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(httpParams, Const.ROUTER_HTTP_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpParams, Const.ROUTER_HTTP_TIMEOUT);
 
-		// リダイレクトを拒否するリダイレクトハンドラ設定
-		httpClient.setRedirectHandler(new RedirectHandler() {
-			@Override
-			public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
-				return false;
-			}
+        // インスタンス生成
+        MyHttpClient httpClient = new MyHttpClient(httpParams);
+        httpClient.context = context;
 
-			@Override
-			public URI getLocationURI(HttpResponse response, HttpContext context) throws ProtocolException {
-				return null;
-			}
-		});
+        // リダイレクトを拒否するリダイレクトハンドラ設定
+        httpClient.setRedirectHandler(new RedirectHandler() {
+            @Override
+            public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
+                return false;
+            }
 
-		return httpClient;
-	}
+            @Override
+            public URI getLocationURI(HttpResponse response, HttpContext context) throws ProtocolException {
+                return null;
+            }
+        });
 
-	enum AuthType {
-		NONE, DEFAULT
-	}
+        return httpClient;
+    }
 
-	public HttpResponse executeWithAuth(HttpRequestBase method, AuthType authType) throws ClientProtocolException, IOException {
+    enum AuthType {
+        NONE, DEFAULT
+    }
 
-		// 認証有り
-		if (authType == AuthType.DEFAULT) {
+    public HttpResponse executeWithAuth(HttpRequestBase method, AuthType authType) throws ClientProtocolException, IOException {
 
-			// smart-user判断
-			boolean smart = false;
-			URI uri = method.getURI();
-			String path = uri.getPath();
+        // 認証有り
+        if (authType == AuthType.DEFAULT) {
 
-			// RMTMAINに対するアクセスの場合は、smart-user
-			if (isRmtMainPath(path)) {
-				smart = true;
-			}
+            // smart-user判断
+            boolean smart = false;
+            URI uri = method.getURI();
+            String path = uri.getPath();
 
-			// Credentials生成
-			String user, pass;
-			if (smart) {
-				user = Const.ROUTER_BASIC_AUTH_USERNAME;
-				pass = Const.ROUTER_BASIC_AUTH_PASSWORD;
-			}
-			else {
-				user = Const.ROUTER_BASIC_AUTH_USERNAME2;
-				pass = Const.getPrefRouterControlPassword(context);
-			}
-			Credentials credentials = new UsernamePasswordCredentials(user, pass);
+            // RMTMAINに対するアクセスの場合は、smart-user
+            if (isRmtMainPath(path)) {
+                smart = true;
+            }
 
-			// Basic認証設定
-			AuthScope scope = new AuthScope(uri.getHost(), Const.ROUTER_PORT);
-			getCredentialsProvider().setCredentials(scope, credentials);
-		}
-		// 認証無し
-		else {
-			getCredentialsProvider().clear();
-		}
+            // Credentials生成
+            String user, pass;
+            if (smart) {
+                user = Const.ROUTER_BASIC_AUTH_USERNAME;
+                pass = Const.ROUTER_BASIC_AUTH_PASSWORD;
+            }
+            else {
+                user = Const.ROUTER_BASIC_AUTH_USERNAME2;
+                pass = Const.getPrefRouterControlPassword(context);
+            }
+            Credentials credentials = new UsernamePasswordCredentials(user, pass);
 
-		// 実行
-		return execute(method);
-	}
+            // Basic認証設定
+            AuthScope scope = new AuthScope(uri.getHost(), Const.ROUTER_PORT);
+            getCredentialsProvider().setCredentials(scope, credentials);
+        }
+        // 認証無し
+        else {
+            getCredentialsProvider().clear();
+        }
 
-	static void close(MyHttpClient client) {
-		try {
-			if (client != null && client.getConnectionManager() != null) {
-				client.getConnectionManager().shutdown();
-			}
-		}
-		catch (Throwable e) {
-			// do nothing
-		}
-	}
+        // 実行
+        return execute(method);
+    }
 
-	protected static boolean isRmtMainPath(String path) {
-		return path != null && path.indexOf("/info_remote_") != -1;
-	}
+    static void close(MyHttpClient client) {
+        try {
+            if (client != null && client.getConnectionManager() != null) {
+                client.getConnectionManager().shutdown();
+            }
+        }
+        catch (Throwable e) {
+            // do nothing
+        }
+    }
+
+    static String getRouterIpAddr(InetLookupWrappter wrapper, String confRouterIpAddr) throws Throwable {
+        String routerIpAddr = null;
+
+        // ルーターIPアドレスが設定済ならそっちを優先
+        if (MyStringUtlis.isEmpty(confRouterIpAddr) == false) {
+            Matcher m = MyPreferenceActivity.IP_ADDR_PATTERN.matcher(confRouterIpAddr);
+            if (m.matches()) {
+                routerIpAddr = confRouterIpAddr;
+                // サイトローカルかどうかのチェックはしない
+            }
+            else {
+                Logger.w("RouterControlByHttp confRouterIpAddr format is invalid");
+                // 下のifブロックに入る
+            }
+        }
+
+        // 未設定の場合
+        if (MyStringUtlis.isEmpty(routerIpAddr)) {
+
+            // まずは正引き
+            InetAddress address = null;
+            try {
+                address = wrapper.getByName(Const.ROUTER_HOSTNAME);
+            }
+            catch (Throwable e) {
+                // do nothing
+            }
+
+            // nullの場合はNG
+            if (address == null) {
+                Logger.w("RouterControlByHttp resolved IP Addr is null");
+                return null;
+            }
+            // サイトローカルでない場合はNG（モバイルデータ通信環境を想定）
+            else if (address.isSiteLocalAddress() == false) {
+                Logger.w("RouterControlByHttp " + Const.ROUTER_HOSTNAME + " is not private address");
+                return NOT_SITE_LOCAL_ADDR;
+            }
+            // OKならrouterIpAddrを更新
+            else {
+                routerIpAddr = address.getHostAddress();
+            }
+        }
+
+        return routerIpAddr;
+    }
+
+    static void discardContent(HttpResponse response) {
+        try {
+            if (response != null) {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    entity.consumeContent();
+                }
+            }
+        }
+        catch (Throwable e) {
+            // do nothing
+        }
+    }
+
+    protected static boolean isRmtMainPath(String path) {
+        return path != null && path.indexOf("/info_remote_") != -1;
+    }
 }

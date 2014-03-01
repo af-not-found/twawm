@@ -268,8 +268,8 @@ gId('qr_submit').submit();
 </tr><tr class='small_item_tr'>
 <td class='small_item_td'>自動消灯時間<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'ディスプレイが自動消灯するまでの時間を選択します。');return false;" /></td>
 <td class='small_item_td2'><select name='ECO_LED_TIME' id='ECO_LED_TIME' size='1'>
-<option value='15' selected='selected'>15秒</option>
-<option value='30' >30秒</option>
+<option value='15' >15秒</option>
+<option value='30' selected='selected'>30秒</option>
 <option value='60' >60秒</option>
 </select></td>
 </tr><tr class='small_item_tr'>
@@ -284,7 +284,7 @@ gId('qr_submit').submit();
 <tr class='small_item_tr'>
 <td class='small_item_td'>省電力状態切り替え設定時間<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '省電力状態切り替え機能の状態になるまでの時間を入力します。入力できる値は1〜60分です。通信の無い状態が、設定した時間に達すると省電力状態になります。ただし、無線LAN端末(子機)と通信している場合、専用ACアダプタ接続時、USBケーブル接続時、クレードル接続時(ACアダプタ未接続を含む)は、省電力状態切り替え機能は動作しません。なお、省電力切り替え機能は、自動消灯と関係なく動作します。');return false;" /></td>
 <td class='small_item_td2'>
-<input type='text' name='ECO_TIME_MM' id='ECO_TIME_MM' maxlength='2' size='2' value='10' />分
+<input type='text' name='ECO_TIME_MM' id='ECO_TIME_MM' maxlength='2' size='2' value='30' />分
 </td>
 </tr>
 <tr><td colspan='2'><div class='message_red'>ECOタイマーを使用した場合、通信中であっても、本商品で約６０分間操作（ボタン操作、クレードル着脱、ACアダプタ／USBケーブルの抜き差し）を行わないと、強制的に休止状態になります。ただし、ウェイティング中は休止状態になりません。</div></td></tr><tr class='small_item_tr'>

@@ -10,8 +10,9 @@
     <string name="pausing">Pausing</string>
     <string name="pausing_long">Application is pausing</string>
     <string name="bt_addr_saved">Bluetooth address saved.\nFrom now on, you can resume router by Bluetooth.</string>
-    <string name="send_log_short">Report</string>
+    <string name="send_log_short">Feedback</string>
     <string name="not_works_fine">FAQ</string>
+    <string name="eco_charge">limit battery charging</string>
     <string name="others">Others</string>
     <string name="save">Save</string>
     <string name="exec">Execute</string>
