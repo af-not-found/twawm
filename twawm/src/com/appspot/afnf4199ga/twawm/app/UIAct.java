@@ -42,7 +42,7 @@ public class UIAct extends Handler {
             if (parent != null) {
                 parent.uiactSetRouterToggleButton(enableRouterToggle, suppCompleted);
                 parent.uiactSetWifiToggleButton(enableWifiToggle, wifiEnabled);
-                parent.uiactSetEcoChargeToggleButton(ecoCharge);
+                parent.uiactSetEcoChargeToggleButton(suppCompleted, ecoCharge);
             }
         }
     }
@@ -53,7 +53,7 @@ public class UIAct extends Handler {
             if (AndroidUtils.isUIThread(parent)) {
                 parent.uiactSetRouterToggleButton(enableRouterToggle, suppCompleted);
                 parent.uiactSetWifiToggleButton(enableWifiToggle, wifiEnabled);
-                parent.uiactSetEcoChargeToggleButton(ecoCharge);
+                parent.uiactSetEcoChargeToggleButton(suppCompleted, ecoCharge);
             }
             else {
                 instance.post(new UpdateActivityButtonRunnable(enableRouterToggle, enableWifiToggle, wifiEnabled, suppCompleted,

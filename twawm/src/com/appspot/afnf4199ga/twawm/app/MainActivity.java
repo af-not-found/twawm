@@ -474,11 +474,11 @@ public class MainActivity extends Activity {
         workingToggle.setEnabled(enable);
     }
 
-    public void uiactSetEcoChargeToggleButton(Boolean ecoCharge) {
+    public void uiactSetEcoChargeToggleButton(Boolean suppCompleted, Boolean ecoCharge) {
         //Logger.v("uiactSetEcoChargeToggleButton ecoCharge=" + ecoCharge);
 
         ToggleButton ecoChargeButton = ((ToggleButton) (findViewById(R.id.toggleEcoCharge)));
-        if (ecoCharge == null) {
+        if (suppCompleted == null || suppCompleted.booleanValue() == false || ecoCharge == null) {
             ecoChargeButton.setEnabled(false);
             ecoChargeButton.setChecked(false);
         }

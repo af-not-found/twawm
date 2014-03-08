@@ -494,7 +494,10 @@ public class BackgroundService extends Service {
     public void onEcoModeControlFinished(Boolean ecoCharge) {
         //Logger.i("onEcoModeControlFinished : " + ecoMode);
         this.ecoCharge = ecoCharge;
-        UIAct.postActivityButton(null, null, null, null, ecoCharge);
+
+        boolean wifiEnabled = AndroidUtils.isWifiEnabled(getWifi());
+        boolean suppCompleted = wifiEnabled && isSupplicantCompleted();
+        UIAct.postActivityButton(null, null, wifiEnabled, suppCompleted, ecoCharge);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
