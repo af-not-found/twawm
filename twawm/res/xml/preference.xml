@@ -107,7 +107,7 @@
                 <intent
                     android:action="android.intent.action.VIEW"
                     android:targetClass="com.appspot.afnf4199ga.twawm.ctl.CustomizeActionsActivity"
-                    android:targetPackage="com.appspot.afnf4199ga.twawm" />
+                    android:targetPackage="net.afnf.and.twawm2" />
             </PreferenceScreen>
         </PreferenceCategory>
     </PreferenceScreen>
@@ -160,7 +160,7 @@
                 <intent
                     android:action="android.intent.action.VIEW"
                     android:targetClass="com.appspot.afnf4199ga.twawm.app.InitialConfigurationWizardActivity"
-                    android:targetPackage="com.appspot.afnf4199ga.twawm" />
+                    android:targetPackage="net.afnf.and.twawm2" />
             </PreferenceScreen>
 
             <!-- ウィザードを自動起動しない -->

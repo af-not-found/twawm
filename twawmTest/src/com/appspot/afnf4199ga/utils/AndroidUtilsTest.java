@@ -3,14 +3,14 @@ package com.appspot.afnf4199ga.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
+
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
 
 public class AndroidUtilsTest extends DexmakerInstrumentationTestCase {
 

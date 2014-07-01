@@ -15,6 +15,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.RedirectHandler;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -60,6 +61,10 @@ public class MyHttpClient extends DefaultHttpClient {
                 return null;
             }
         });
+
+        // リトライが有効になっていると、NAD11のスタンバイ後のBT復帰で、即スタンバイに入ってしまう
+        // リトライ分がリセットされずに残っていて、復帰後に処理されてしまう模様
+        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
 
         return httpClient;
     }

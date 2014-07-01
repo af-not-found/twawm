@@ -17,23 +17,27 @@
     <string name="save">保存</string>
     <string name="exec">実行</string>
     <string name="cancel">キャンセル</string>
+    <string name="mode_high_speed">WiMAX 2+ (HS)</string>
+    <string name="mode_no_limit">WiMAX (NL)</string>
+    <string name="wifi_spot_on">Wi-Fi Spot ON</string>
+    <string name="wifi_spot_off">Wi-Fi Spot OFF</string>
     <string name="invalid_format">[警告] 入力フォーマットが不正です</string>
     <string name="router_ip_addr_not_set">[警告] ルーターIPアドレスが設定されていません</string>
     <string name="bt_error_need_to_reboot">[警告] Bluetoothエラー発生、端末の再起動が必要かも？</string>
 
     <!-- 初期設定ウィザード -->
     <string name="wizard_title">初期設定ウィザード</string>
-    <string name="wizard_text_init">これからtwawmの初期設定を行います。この作業は5分程度で終わります。</string>
-    <string name="wizard_text_connection">WiFiを有効にしてから、WMルーターに接続してください。</string>
-    <string name="wizard_text_input_router_ip">WMルーターに接続できません。ルーターIPアドレスを入力して下さい。\n 例) 192.168.0.1</string>
+    <string name="wizard_text_init">これからtwawm2の初期設定を行います。この作業は5分程度で終わります。</string>
+    <string name="wizard_text_connection">Wi-Fiを有効にしてから、対応ルーターに接続してください。</string>
+    <string name="wizard_text_input_router_ip">ルーターに接続できません。ルーターIPアドレスを入力して下さい。\n 例) 192.168.179.1</string>
     <string name="wizard_text_password_not_init">管理画面パスワードが未設定です。管理画面を開いて設定して下さい。</string>
-    <string name="wizard_text_input_password1">設定したパスワードを入力して下さい。\n※2013/9/3のファームウェア更新によって、スタンバイにパスワードが必要になりました。</string>
-    <string name="wizard_text_input_password2">WMルーター管理画面パスワードを入力して下さい。\n※2013/9/3のファームウェア更新によって、スタンバイにパスワードが必要になりました。</string>
-    <string name="wizard_text_invalid_password">ログインできませんでした。WMルーター管理画面パスワードを再入力して下さい。\n※Wi-Fiパスワード（WPA暗号化キー）ではありません。</string>
+    <string name="wizard_text_input_password1">設定したパスワードを入力して下さい。</string>
+    <string name="wizard_text_input_password2">ルーター管理画面パスワードを入力して下さい。</string>
+    <string name="wizard_text_invalid_password">ログインできませんでした。ルーター管理画面パスワードを再入力して下さい。\n※Wi-Fiパスワード（WPA暗号化キー）ではありません。</string>
     <string name="wizard_text_fin">パスワードが確認できました。終了します。</string>
     <string name="wizard_button_next">次へ</string>
     <string name="wizard_button_dont_start_wizard_automatically">ウィザード無効化</string>
-    <string name="wizard_button_wifi">WiFi設定を開く</string>
+    <string name="wizard_button_wifi">Wi-Fi設定を開く</string>
     <string name="wizard_button_router">管理画面を開く</string>
     <string name="wizard_button_fin">終了</string>
     <string name="wizard_dialog_loading">確認中…</string>
@@ -58,8 +62,8 @@
     <string name="service_started_long">サービスが開始されました</string>
     <string name="standby_ok_long">スタンバイ成功</string>
     <string name="standby_ng_long">スタンバイ失敗</string>
-    <string name="ap_not_found_long">WiFiアクセスポイント検出失敗</string>
-    <string name="not_wm_long">Aterm WMルーターではありません</string>
+    <string name="ap_not_found_long">Wi-Fiアクセスポイント検出失敗</string>
+    <string name="not_wm_long">対応ルーターではありません</string>
     <string name="watchdog_timeout_long">操作タイムアウト</string>
     <string name="bluetooth_failed_long">リモート起動に失敗しました</string>
     <string name="switching_router">ルーター切り替え中</string>
@@ -84,7 +88,7 @@
     <string name="menu_online_check_category">ステータスチェック設定</string>
     <string name="menu_online_check_interval_sec_title">ステータスチェック間隔</string>
     <string name="menu_online_check_interval_sec_summay">オンライン状態・電波強度・バッテリー残をチェックする間隔を秒で指定</string>
-    <string name="menu_online_check_interval_sec_dialog_title">ステータスチェック間隔 [秒] (推奨設定=120)</string>
+    <string name="menu_online_check_interval_sec_dialog_title">ステータスチェック間隔 [秒] (推奨設定=60)</string>
     <string name="menu_online_check_dns_timeout_sec_dialog_title">DNSタイムアウト [秒] (推奨設定=4)</string>
     <string name="menu_online_check_dns_timeout_sec_summay">オンライン状態チェックのためのDNSルックアップタイムアウトを秒で指定</string>
     <string name="menu_online_check_dns_timeout_sec_title">DNSタイムアウト</string>
@@ -101,7 +105,7 @@
     <string name="menu_widget_str_color_title">文字色</string>
     <string name="menu_widget_background_title">背景</string>
     <string name="menu_widget_click_action_title">ウィジェットをタップしたときの挙動</string>
-    <string name="menu_widget_click_action_wifi_disabled_title">WiFi無効時</string>
+    <string name="menu_widget_click_action_wifi_disabled_title">Wi-Fi無効時</string>
     <string name="menu_widget_click_action_online_title">オンライン時</string>
     <string name="menu_widget_click_action_offline_title">その他</string>
     <string name="menu_widget_click_action_customize_title">一覧のカスタマイズ</string>
@@ -110,13 +114,13 @@
     <!-- ウィジェットタップ設定 アクション -->
     <string name="menu_widget_click_action__none_label">なにもしない</string>
     <string name="menu_widget_click_action__check_label">オンラインチェック</string>
-    <string name="menu_widget_click_action__resume_label">リモート起動 + WiFi ON</string>
+    <string name="menu_widget_click_action__resume_label">リモート起動 + Wi-Fi ON</string>
     <string name="menu_widget_click_action__resume_switch_label">リモート起動 + ルーター切り替え</string>
     <string name="menu_widget_click_action__switch_label">ルーター切り替え</string>
     <string name="menu_widget_click_action__standby_label">ルータースタンバイ</string>
-    <string name="menu_widget_click_action__wifi_on_label">WiFi ON</string>
-    <string name="menu_widget_click_action__wifi_off_label">WiFi OFF</string>
-    <string name="menu_widget_click_action__restart_label">WiFi再起動</string>
+    <string name="menu_widget_click_action__wifi_on_label">Wi-Fi ON</string>
+    <string name="menu_widget_click_action__wifi_off_label">Wi-Fi OFF</string>
+    <string name="menu_widget_click_action__restart_label">Wi-Fi再起動</string>
     <string name="menu_widget_click_action__wimax_recn_label">WiMAX再接続</string>
     <string name="menu_widget_click_action__reboot_wm_label">ルーター再起動</string>
     <string name="menu_widget_click_action__stop_service_label">サービス停止</string>
@@ -126,14 +130,14 @@
     <string name="menu_ap_conn_category">ルーター設定</string>
     <string name="menu_ap_ip_addr_title">ルーターIPアドレス</string>
     <string name="menu_ap_ip_addr_summary">ルーター切り替えを行う場合やDNSを変更する場合に設定してください</string>
-    <string name="menu_ap_ip_addr_dialog_title">ルーターLAN側IPアドレス (例)192.168.0.1</string>
+    <string name="menu_ap_ip_addr_dialog_title">ルーターLAN側IPアドレス (例)192.168.179.1</string>
     <string name="menu_ap_conn_timeout_sec_title">接続タイムアウト [秒]</string>
     <string name="menu_ap_conn_timeout_sec_summay">ルーターへの接続タイムアウトを秒で指定</string>
     <string name="menu_ap_conn_timeout_sec_dialog_title">ルーターへの接続タイムアウト [秒] (推奨設定=20)</string>
     <string name="menu_ap_conn_retry_limit_title">再接続回数</string>
     <string name="menu_ap_conn_retry_limit_summay">ルーターへの再接続上限回数を設定します</string>
-    <string name="menu_disable_wifi_when_ap_conn_failed_title">接続失敗時にWiFi無効</string>
-    <string name="menu_disable_wifi_when_ap_conn_failed_summay">WiFiアクセスポイントに接続できない場合、WiFiを無効にします</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_title">接続失敗時にWi-Fi無効</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_summay">Wi-Fiアクセスポイントに接続できない場合、Wi-Fiを無効にします</string>
     <string name="menu_wizard_category">初期設定ウィザード</string>
     <string name="menu_wizard_title">ウィザード起動</string>
     <string name="menu_wizard_summary">初期設定ウィザードを起動します</string>
@@ -148,13 +152,13 @@
     <string name="menu_action_after_suspend_title">スタンバイ後の挙動</string>
     <string name="menu_statusbar_notify_title">ステータスバー通知</string>
     <string name="menu_statusbar_notify_summay">ステータスバーへの通知タイミングを選択します(要再起動)</string>
-    <string name="menu_start_service_when_wifi_enabled_title">WiFi有効時に開始</string>
-    <string name="menu_start_service_when_wifi_enabled_summay">OS側でのWiFi有効化を感知して、サービスを開始します</string>
+    <string name="menu_start_service_when_wifi_enabled_title">Wi-Fi有効時に開始</string>
+    <string name="menu_start_service_when_wifi_enabled_summay">OS側でのWi-Fi有効化を感知して、サービスを開始します</string>
     <string name="menu_enable_logging_title">ログ出力を有効にする</string>
     <string name="menu_enable_logging_summary">以下に出力されます。古いログは7日で自動削除されます。\n</string>
 
     <!-- スタンバイ後の挙動 -->
-    <string name="menu_action_after_suspend__wifioff_stop_service_label">WiFiオフ、サービス停止</string>
+    <string name="menu_action_after_suspend__wifioff_stop_service_label">Wi-Fiオフ、サービス停止</string>
     <string name="menu_action_after_suspend__stop_service_label">サービス停止</string>
     <string name="menu_action_after_suspend__do_nothing_label">なにもしない</string>
     

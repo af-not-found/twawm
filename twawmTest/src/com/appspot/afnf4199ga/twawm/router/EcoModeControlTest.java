@@ -1,6 +1,7 @@
 package com.appspot.afnf4199ga.twawm.router;
 
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
+
 import com.appspot.afnf4199ga.utils.MyTestUtils;
 
 public class EcoModeControlTest extends DexmakerInstrumentationTestCase {

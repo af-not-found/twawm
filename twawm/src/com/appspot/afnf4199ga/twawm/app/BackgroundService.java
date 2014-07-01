@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.afnf.and.twawm2.R;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -30,7 +31,6 @@ import android.support.v4.app.NotificationCompat;
 import com.appspot.afnf4199ga.twawm.BluetoothHelper;
 import com.appspot.afnf4199ga.twawm.Const;
 import com.appspot.afnf4199ga.twawm.OnlineChecker;
-import com.appspot.afnf4199ga.twawm.R;
 import com.appspot.afnf4199ga.twawm.StateMachine;
 import com.appspot.afnf4199ga.twawm.StateMachine.STATE;
 import com.appspot.afnf4199ga.twawm.StateMachine.TRIGGER;
@@ -38,10 +38,13 @@ import com.appspot.afnf4199ga.twawm.app.MainActivity.ACTIVITY_FLAG;
 import com.appspot.afnf4199ga.twawm.router.EcoModeControl;
 import com.appspot.afnf4199ga.twawm.router.RouterControl;
 import com.appspot.afnf4199ga.twawm.router.RouterControlByHttp;
+import com.appspot.afnf4199ga.twawm.router.RouterControlByHttp.CTRL;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
 import com.appspot.afnf4199ga.utils.MyUncaughtExceptionHandler;
+
+// FIXME wifi disconnectedでoffline検出されない？
 
 public class BackgroundService extends Service {
 
@@ -292,9 +295,12 @@ public class BackgroundService extends Service {
         // 状態遷移
         state.perform(result);
 
-        // 100回ごと、または今回オンラインになった場合に、ロングライフ充電状態を取得
-        if (++onlineCheckCompleteCount % 100 == 0 || becomeOnline) {
-            EcoModeControl.changeEcoMode(null);
+        // WMシリーズのみ
+        if (RouterControlByHttp.isNad() == false) {
+            // 100回ごと、または今回オンラインになった場合に、ロングライフ充電状態を取得
+            if (++onlineCheckCompleteCount % 100 == 0 || becomeOnline) {
+                EcoModeControl.changeEcoMode(null);
+            }
         }
 
         // スイッチロック中で、WMルータでなければ
@@ -497,7 +503,7 @@ public class BackgroundService extends Service {
 
         boolean wifiEnabled = AndroidUtils.isWifiEnabled(getWifi());
         boolean suppCompleted = wifiEnabled && isSupplicantCompleted();
-        UIAct.postActivityButton(null, null, wifiEnabled, suppCompleted, ecoCharge);
+        UIAct.postActivityButton(null, null, wifiEnabled, suppCompleted, ecoCharge, null, null);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -675,7 +681,7 @@ public class BackgroundService extends Service {
         // WiMAX再接続
         else if (MyStringUtlis.eqauls(action, getString(R.string.menu_widget_click_action__wimax_recn))) {
             // ファームウェアバージョンが古い場合は実行しない
-            if (RouterControlByHttp.isFirmwareVersionOld()) {
+            if (RouterControlByHttp.isWm3800FirmwareVersionOld()) {
                 UIAct.toast(getString(R.string.wimax_recn_failed_frmver));
             }
             else if (state.isWmReachableState()) {
@@ -687,7 +693,7 @@ public class BackgroundService extends Service {
         else if (MyStringUtlis.eqauls(action, getString(R.string.menu_widget_click_action__reboot_wm))) {
             if (state.isWmReachableState()) {
                 terminateOnlineCheck();
-                RouterControl.execRouterReboot();
+                RouterControl.execRouterCtrl(CTRL.REBOOT_WM);
             }
         }
         // サービス停止
@@ -699,6 +705,7 @@ public class BackgroundService extends Service {
         else if (MyStringUtlis.eqauls(action, getString(R.string.menu_widget_click_action__choose))) {
             MainActivity.startActivity(this, ACTIVITY_FLAG.ACTION_DIALOG);
         }
+        // FIXME NAD11アクション追加
     }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

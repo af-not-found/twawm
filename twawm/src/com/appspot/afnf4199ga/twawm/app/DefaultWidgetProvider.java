@@ -1,5 +1,6 @@
 package com.appspot.afnf4199ga.twawm.app;
 
+import net.afnf.and.twawm2.R;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -10,7 +11,6 @@ import android.net.wifi.WifiManager;
 import android.widget.RemoteViews;
 
 import com.appspot.afnf4199ga.twawm.Const;
-import com.appspot.afnf4199ga.twawm.R;
 import com.appspot.afnf4199ga.twawm.StateMachine;
 import com.appspot.afnf4199ga.twawm.TwawmUtils;
 import com.appspot.afnf4199ga.utils.AndroidUtils;

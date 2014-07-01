@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.appspot.afnf4199ga.twawm"
+    package="net.afnf.and.twawm2"
     android:installLocation="internalOnly"
-    android:versionCode="44"
-    android:versionName="0.4.2" >
+    android:versionCode="47"
+    android:versionName="0.5.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -12,10 +12,10 @@
 
     <supports-screens
         android:anyDensity="true"
-        android:xlargeScreens="true"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true" />
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -26,39 +26,39 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <!-- android:configChanges="orientation|screenSize|keyboardHidden" -->
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/twawm"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".app.MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:name="com.appspot.afnf4199ga.twawm.app.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.MyPreferenceActivity"
+            android:name="com.appspot.afnf4199ga.twawm.app.MyPreferenceActivity"
             android:exported="false" />
         <activity
-            android:name=".ctl.CustomizeActionsActivity"
+            android:name="com.appspot.afnf4199ga.twawm.ctl.CustomizeActionsActivity"
             android:exported="false" />
         <activity
-            android:name=".app.InfoActivity"
+            android:name="com.appspot.afnf4199ga.twawm.app.InfoActivity"
             android:exported="false" />
         <activity
-            android:name=".app.LogSendActivity"
+            android:name="com.appspot.afnf4199ga.twawm.app.LogSendActivity"
             android:exported="false" />
         <activity
-            android:name=".app.InitialConfigurationWizardActivity"
+            android:name="com.appspot.afnf4199ga.twawm.app.InitialConfigurationWizardActivity"
             android:exported="false" />
 
         <!-- センシティブな情報を送信・返送しないのでexportedは未指定 -->
-        <receiver android:name=".app.DefaultWidgetProvider" >
+        <receiver android:name="com.appspot.afnf4199ga.twawm.app.DefaultWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

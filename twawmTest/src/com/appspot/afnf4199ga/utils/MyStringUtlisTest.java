@@ -1,6 +1,6 @@
 package com.appspot.afnf4199ga.utils;
 
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
 
 public class MyStringUtlisTest extends DexmakerInstrumentationTestCase {
 

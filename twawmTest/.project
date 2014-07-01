@@ -3,7 +3,7 @@
 	<name>twawmTest</name>
 	<comment></comment>
 	<projects>
-		<project>Twawm</project>
+		<project>twawm</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

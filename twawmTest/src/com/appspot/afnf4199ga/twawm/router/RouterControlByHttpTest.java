@@ -1,11 +1,13 @@
 package com.appspot.afnf4199ga.twawm.router;
 
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
+
+import com.appspot.afnf4199ga.twawm.router.RouterInfo.COM_TYPE;
 import com.appspot.afnf4199ga.utils.MyTestUtils;
 
 public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
 
-    public void testUpdateRouterInfo1() {
+    public void testUpdateRouterInfo11() {
         String content = MyTestUtils.getResourceAsString("/test-data/info_remote_main/3600_1.htm");
         RouterInfo routerInfo = new RouterInfo();
         RouterControlByHttp.parseContent(content, routerInfo);
@@ -16,13 +18,16 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(4, routerInfo.antennaLevel);
         assertEquals("-67", routerInfo.rssiText);
         assertEquals("22", routerInfo.cinrText);
-        assertEquals("12:34:56:78:90:ab:cd", routerInfo.bluetoothAddress);
+        assertEquals("12:34:56:78:90:AB:CD", routerInfo.bluetoothAddress);
         assertEquals("C5479B515C1AA739336C801F2E1B4FEF", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
         assertEquals(false, routerInfo.notInitialized);
         assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
     }
 
-    public void testUpdateRouterInfo2() {
+    public void testUpdateRouterInfo12() {
         String content = MyTestUtils.getResourceAsString("/test-data/info_remote_main/3600_2.htm");
         RouterInfo routerInfo = new RouterInfo();
         RouterControlByHttp.parseContent(content, routerInfo);
@@ -33,13 +38,16 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(0, routerInfo.antennaLevel);
         assertEquals("-7", routerInfo.rssiText);
         assertEquals("232", routerInfo.cinrText);
-        assertNull(routerInfo.bluetoothAddress);
+        assertEquals(null, routerInfo.bluetoothAddress);
         assertEquals("C5479B515C1AA739336C801F2E1B4F00", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
         assertEquals(false, routerInfo.notInitialized);
         assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
     }
 
-    public void testUpdateRouterInfo3() {
+    public void testUpdateRouterInfo13() {
         String content = MyTestUtils.getResourceAsString("/test-data/info_remote_main/3800_1.htm");
         RouterInfo routerInfo = new RouterInfo();
         RouterControlByHttp.parseContent(content, routerInfo);
@@ -50,13 +58,16 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(4, routerInfo.antennaLevel);
         assertEquals("67", routerInfo.rssiText);
         assertEquals("-332", routerInfo.cinrText);
-        assertNull(routerInfo.bluetoothAddress);
+        assertEquals(null, routerInfo.bluetoothAddress);
         assertEquals("C5479B515C1AA739336C801F2E1B4FEF", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
         assertEquals(false, routerInfo.notInitialized);
         assertEquals(false, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
     }
 
-    public void testUpdateRouterInfo4() {
+    public void testUpdateRouterInfo21() {
         String content = MyTestUtils.getResourceAsString("/test-data/info_btn/3800_1.htm");
         RouterInfo routerInfo = new RouterInfo();
         RouterControlByHttp.parseContent(content, routerInfo);
@@ -67,13 +78,60 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(4, routerInfo.antennaLevel);
         assertEquals("-65", routerInfo.rssiText);
         assertEquals("25", routerInfo.cinrText);
-        assertEquals("1a:88:72:63:62:ab", routerInfo.bluetoothAddress);
+        assertEquals("1A:88:72:63:62:AB", routerInfo.bluetoothAddress);
         assertEquals("7E27D5C477DC911EF64659825B5D3552", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
         assertEquals(false, routerInfo.notInitialized);
         assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
     }
 
-    public void testUpdateRouterInfo5() {
+    public void testUpdateRouterInfo22() {
+        String content = MyTestUtils.getResourceAsString("/test-data/info_btn/nad11.htm", false);
+        RouterInfo routerInfo = new RouterInfo();
+        routerInfo.nad = true;
+
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(0, routerInfo.battery);
+        assertEquals(false, routerInfo.charging);
+        assertEquals(0, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals("0000000000000000000000002222222222b", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo23() {
+        String content = MyTestUtils.getResourceAsString("/test-data/index_contents_pass/nad11.htm", false);
+        RouterInfo routerInfo = new RouterInfo();
+        routerInfo.nad = true;
+
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals("NAD11", routerInfo.routerName);
+        assertEquals(0, routerInfo.battery);
+        assertEquals(false, routerInfo.charging);
+        assertEquals(0, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals("22:33:44:FF:BB:A0", routerInfo.bluetoothAddress);
+        assertEquals("0000000000000000000000001111111111a", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comSetting);
+        assertEquals(Boolean.TRUE, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo31() {
         String content = MyTestUtils.getResourceAsString("/test-data/pass_not_init/3800_1.htm");
         RouterInfo routerInfo = new RouterInfo();
         RouterControlByHttp.parseContent(content, routerInfo);
@@ -88,6 +146,49 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
         assertEquals(true, routerInfo.notInitialized);
         assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo32() {
+        String content = MyTestUtils.getResourceAsString("/test-data/pass_not_init/nad11.htm", false);
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(0, routerInfo.battery);
+        assertEquals(false, routerInfo.charging);
+        assertEquals(0, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(true, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NA, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo41() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_online.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(64, routerInfo.battery);
+        assertEquals(true, routerInfo.charging);
+        assertEquals(3, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
     }
 
     public void testIsNotAuthedOfWmRouter() {

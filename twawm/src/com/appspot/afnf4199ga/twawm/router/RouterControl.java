@@ -1,9 +1,10 @@
 package com.appspot.afnf4199ga.twawm.router;
 
+import net.afnf.and.twawm2.R;
+
 import com.appspot.afnf4199ga.twawm.BluetoothHelper;
 import com.appspot.afnf4199ga.twawm.Const;
 import com.appspot.afnf4199ga.twawm.OnlineChecker;
-import com.appspot.afnf4199ga.twawm.R;
 import com.appspot.afnf4199ga.twawm.app.BackgroundService;
 import com.appspot.afnf4199ga.twawm.app.MainActivity;
 import com.appspot.afnf4199ga.twawm.app.MainActivity.ACTIVITY_FLAG;
@@ -32,7 +33,7 @@ public class RouterControl {
                 int ret = RouterControlByHttp.exec(service, CTRL.STANDBY, routerInfo);
 
                 // 失敗したらリトライ
-                if (ret == RouterControlByHttp.CTRL_STANBY_FAILED) {
+                if (ret == RouterControlByHttp.CTRL_FAILED) {
                     Logger.i("router STANDBY failed, ret=" + ret + ", retring...");
                     RouterControlByHttp.resetPrevious();
                     ret = RouterControlByHttp.exec(service, CTRL.STANDBY, routerInfo);
@@ -71,22 +72,11 @@ public class RouterControl {
             // 正常
             switch (ret) {
             case RouterControlByHttp.CTRL_OK:
-                String btAddrForLog;
-                if (MyStringUtlis.isEmpty(routerInfo.bluetoothAddress)) {
-                    btAddrForLog = "<null>";
-                }
-                else if (BluetoothHelper.isValidBluetoothAddress(routerInfo.bluetoothAddress)) {
-                    btAddrForLog = "<valid>";
-                }
-                else {
-                    btAddrForLog = "<invalid>";
-                }
-                Logger.i("router GET_INFO, ret=" + ret + ", batt=" + routerInfo.getBatteryText() + ", ant="
-                        + routerInfo.antennaLevel + ", bt=" + btAddrForLog + ", stby=" + routerInfo.hasStandbyButton);
+                Logger.i("router GET_INFO, ret=" + ret + ", " + routerInfo);
 
-                // 有効なアドレスで、かつ設定が空の場合
+                // 有効なアドレスで、かつ設定と異なる場合
                 if (BluetoothHelper.isValidBluetoothAddress(routerInfo.bluetoothAddress)
-                        && MyStringUtlis.isEmpty(Const.getPrefBluetoothAddress(service))) {
+                        && MyStringUtlis.eqauls(routerInfo.bluetoothAddress, Const.getPrefBluetoothAddress(service)) == false) {
                     // BTアドレス更新
                     Logger.v("updatePrefBluetoothAddress called");
                     Const.updatePrefBluetoothAddress(service, routerInfo.bluetoothAddress);
@@ -145,7 +135,7 @@ public class RouterControl {
                     // 待ち
                     AndroidUtils.sleep(2000);
 
-                    //  ※INFOBTN系と通常画面はセッションが分離されているので、resetPreviousが必要
+                    // ※INFOBTN系と通常画面はセッションが分離されているので、resetPreviousが必要
                     RouterControlByHttp.resetPrevious();
 
                     // 接続
@@ -157,7 +147,7 @@ public class RouterControl {
                     RouterControlByHttp.resetPrevious();
 
                     // オンラインチェックを遅延実行
-                    service.startOnlineCheck(Const.ONLINE_CHECK_DELAY_AFTER_WIMAX_RECN_OR_REBOOT_WM);
+                    service.startOnlineCheck(Const.ONLINE_CHECK_DELAY_AFTER_CTRL);
                 }
                 catch (Throwable e) {
                     Logger.w("RouterControl execWimaxReconnection failed", e);
@@ -167,8 +157,8 @@ public class RouterControl {
         thread.start();
     }
 
-    public static void execRouterReboot() {
-        Logger.i("RouterControl execRouterReboot");
+    public static void execRouterCtrl(final CTRL ctrl) {
+        Logger.i("RouterControl execRouterCtrl");
 
         Thread thread = new Thread() {
             public void run() {
@@ -176,14 +166,18 @@ public class RouterControl {
                 try {
                     BackgroundService service = BackgroundService.getInstance();
                     if (service == null) {
-                        Logger.e("service is null on RouterControl.execRouterReboot");
+                        Logger.e("service is null on RouterControl.execRouterCtrl");
                         return;
                     }
 
-                    // 再起動
-                    UIAct.toast(service.getString(R.string.reboot_wmrouter));
+                    // toast
+                    if (ctrl == CTRL.REBOOT_WM) {
+                        UIAct.toast(service.getString(R.string.reboot_wmrouter));
+                    }
+
+                    // 実行
                     RouterInfo routerInfo = new RouterInfo();
-                    int ret = RouterControlByHttp.exec(service, CTRL.REBOOT_WM, routerInfo);
+                    int ret = RouterControlByHttp.exec(service, ctrl, routerInfo);
                     if (ret != RouterControlByHttp.CTRL_OK) {
                         UIAct.toast(service.getString(R.string.failed));
                     }
@@ -191,8 +185,8 @@ public class RouterControl {
                     // 一時的にオフラインにする
                     service.getStateMachine().setOfflineTemporarily();
 
-                    // オンラインチェックを遅延実行→AP無しになる
-                    service.startOnlineCheck(Const.ONLINE_CHECK_DELAY_AFTER_WIMAX_RECN_OR_REBOOT_WM);
+                    // オンラインチェックを遅延実行→AP無しになるのを回避するため
+                    service.startOnlineCheck(Const.ONLINE_CHECK_DELAY_AFTER_CTRL);
                 }
                 catch (Throwable e) {
                     Logger.w("RouterControl execRouterReboot failed", e);

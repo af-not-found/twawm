@@ -2,9 +2,10 @@ package com.appspot.afnf4199ga.twawm.router;
 
 import java.net.InetAddress;
 
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
+
 import org.mockito.Mockito;
 
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
 import com.appspot.afnf4199ga.twawm.Const;
 
 public class MyHttpClientTest extends DexmakerInstrumentationTestCase {

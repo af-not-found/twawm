@@ -2,6 +2,7 @@ package com.appspot.afnf4199ga.twawm.app;
 
 import java.util.ArrayList;
 
+import net.afnf.and.twawm2.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,16 +16,20 @@ import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.appspot.afnf4199ga.twawm.Const;
-import com.appspot.afnf4199ga.twawm.R;
 import com.appspot.afnf4199ga.twawm.ctl.CustomizeActionsActivity;
 import com.appspot.afnf4199ga.twawm.ctl.ListItem;
 import com.appspot.afnf4199ga.twawm.router.EcoModeControl;
+import com.appspot.afnf4199ga.twawm.router.RouterControl;
+import com.appspot.afnf4199ga.twawm.router.RouterControlByHttp;
+import com.appspot.afnf4199ga.twawm.router.RouterControlByHttp.CTRL;
+import com.appspot.afnf4199ga.twawm.router.RouterInfo.COM_TYPE;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
@@ -49,23 +54,23 @@ public class MainActivity extends Activity {
         // 下線設定
         TextPaint textPaint = ((TextView) findViewById(R.id.textNotWorksFine)).getPaint();
         textPaint.setUnderlineText(true);
+
+        // UI初期化
+        UIAct.init(this);
+
+        // WifiManager初期化
+        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        // UI初期化
-        UIAct.init(this);
-
         // ウィジェット初期化（changeStyleで代用）
         DefaultWidgetProvider.changeStyle(this);
 
-        // WifiManager初期化
-        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         boolean wifiEnabled = AndroidUtils.isWifiEnabled(wifi);
         boolean suppCompleted = wifiEnabled && BackgroundService.isSupplicantCompleted(wifi);
-
         BackgroundService service = BackgroundService.getInstance();
 
         // 動作中
@@ -85,7 +90,7 @@ public class MainActivity extends Activity {
                 startService(srvIntent);
             }
 
-            UIAct.postActivityButton(true, true, wifiEnabled, suppCompleted, ecoCharge);
+            UIAct.postActivityButton(true, true, wifiEnabled, suppCompleted, ecoCharge, null, null);
         }
         // 一時停止中
         else {
@@ -278,6 +283,31 @@ public class MainActivity extends Activity {
         EcoModeControl.changeEcoMode(btn.isChecked());
     }
 
+    public void onToggleComMode(View view) {
+        BackgroundService service = BackgroundService.getInstance();
+        if (service != null) {
+            // ボタン無効化
+            uiactToggleComModeToggleButton(false);
+            // オンラインチェック中止
+            service.terminateOnlineCheck();
+            // 通信モード切替
+            RouterControl.execRouterCtrl(service.getStateMachine().isComSettingHS() ? CTRL.NAD_COM_NL : CTRL.NAD_COM_HS);
+        }
+    }
+
+    public void onToggleWifiSpot(View view) {
+        BackgroundService service = BackgroundService.getInstance();
+        if (service != null) {
+            // ボタン無効化
+            uiactToggleWifiSpotToggleButton(false);
+            // オンラインチェック中止
+            service.terminateOnlineCheck();
+            // Wi-Fiスポットモード切替
+            RouterControl.execRouterCtrl(service.getStateMachine().isWifiSpotEnabled() ? CTRL.NAD_WIFI_SPOT_OFF
+                    : CTRL.NAD_WIFI_SPOT_ON);
+        }
+    }
+
     public void onWizard(View view) {
         InitialConfigurationWizardActivity.startWizard(this);
     }
@@ -406,7 +436,7 @@ public class MainActivity extends Activity {
     protected void updateAsWorking(boolean wifiEnabled, boolean suppCompleted) {
 
         // UI更新
-        UIAct.postActivityButton(true, true, wifiEnabled, suppCompleted, null);
+        UIAct.postActivityButton(true, true, wifiEnabled, suppCompleted, null, null, null);
         UIAct.postActivityInfo(R.drawable.antena_gray, getString(R.string.processing), null, null);
 
         // ウィジェット更新
@@ -416,7 +446,7 @@ public class MainActivity extends Activity {
     public static void updateAsWorkingOrPausing(Context context, boolean working) {
 
         // UI更新
-        UIAct.postActivityButton(false, false, null, null, null);
+        UIAct.postActivityButton(false, false, null, null, null, null, null);
         UIAct.postActivityInfo(R.drawable.antena_gray, context.getString(working ? R.string.processing : R.string.pausing_en),
                 null, null);
 
@@ -469,8 +499,18 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void uiactToggleWorkingToggleButton(Boolean enable) {
+    public void uiactToggleWorkingToggleButton(boolean enable) {
         ToggleButton workingToggle = (ToggleButton) findViewById(R.id.toggleWorking);
+        workingToggle.setEnabled(enable);
+    }
+
+    public void uiactToggleComModeToggleButton(boolean enable) {
+        ToggleButton workingToggle = (ToggleButton) findViewById(R.id.toggleComMode);
+        workingToggle.setEnabled(enable);
+    }
+
+    public void uiactToggleWifiSpotToggleButton(boolean enable) {
+        ToggleButton workingToggle = (ToggleButton) findViewById(R.id.toggleWifiSpot);
         workingToggle.setEnabled(enable);
     }
 
@@ -488,4 +528,38 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void uiactSetNadToggleButton(Boolean suppCompleted, COM_TYPE comSetting, Boolean wifiSpot) {
+
+        ToggleButton bm = ((ToggleButton) (findViewById(R.id.toggleComMode)));
+        if (suppCompleted == null || suppCompleted.booleanValue() == false) {
+            bm.setEnabled(false);
+        }
+        else if (comSetting != null && comSetting != COM_TYPE.NA) {
+            bm.setEnabled(true);
+            bm.setChecked(comSetting == COM_TYPE.HIGH_SPEED);
+        }
+
+        ToggleButton bw = ((ToggleButton) (findViewById(R.id.toggleWifiSpot)));
+        if (suppCompleted == null || suppCompleted.booleanValue() == false) {
+            bw.setEnabled(false);
+        }
+        else if (wifiSpot != null) {
+            bw.setEnabled(true);
+            bw.setChecked(wifiSpot.booleanValue());
+        }
+
+        toggleNadLayout();
+    }
+
+    public void toggleNadLayout() {
+        // WM/NAD切り替え
+        if (RouterControlByHttp.isNad()) {
+            findViewById(R.id.layoutWm).getLayoutParams().height = 0;
+            findViewById(R.id.layoutNad).getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+        }
+        else {
+            findViewById(R.id.layoutWm).getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+            findViewById(R.id.layoutNad).getLayoutParams().height = 0;
+        }
+    }
 }

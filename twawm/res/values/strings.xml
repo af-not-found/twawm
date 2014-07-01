@@ -17,19 +17,23 @@
     <string name="save">Save</string>
     <string name="exec">Execute</string>
     <string name="cancel">Cancel</string>
+    <string name="mode_high_speed">WiMAX 2+ (HS)</string>
+    <string name="mode_no_limit">WiMAX (NL)</string>
+    <string name="wifi_spot_on">Wi-Fi Spot ON</string>
+    <string name="wifi_spot_off">Wi-Fi Spot OFF</string>
     <string name="invalid_format">[Warning] Inputed value format is invalid</string>
     <string name="router_ip_addr_not_set">[Warning] Router IP address is not set</string>
     <string name="bt_error_need_to_reboot">[Warning] Bluetooth error occurred. Need to reboot.</string>
 
     <!-- 初期設定ウィザード -->
     <string name="wizard_title">Configuration wizard</string>
-    <string name="wizard_text_init">Starting initial configuration wizard for twawm. It will only take 5 minutes.</string>
-    <string name="wizard_text_connection">Please enable Wi-Fi, then connect to WM router.</string>
-    <string name="wizard_text_input_router_ip">Couldn\'t connect to WM router. Input router IP Address.</string>
+    <string name="wizard_text_init">Starting initial configuration wizard for twawm2. It will only take 5 minutes.</string>
+    <string name="wizard_text_connection">Please enable Wi-Fi, then connect to router.</string>
+    <string name="wizard_text_input_router_ip">Couldn\'t connect to router. Input router IP Address.</string>
     <string name="wizard_text_password_not_init">Admin password is not initialized. Open admin page to set.</string>
-    <string name="wizard_text_input_password1">Input the admin password of WM router.</string>
-    <string name="wizard_text_input_password2">Input the admin password of WM router.</string>
-    <string name="wizard_text_invalid_password">Couldn\'t login to admin page of WM router. Input the password again.</string>
+    <string name="wizard_text_input_password1">Input the admin password of router.</string>
+    <string name="wizard_text_input_password2">Input the admin password of router.</string>
+    <string name="wizard_text_invalid_password">Couldn\'t login to admin page of router. Input the password again.</string>
     <string name="wizard_text_fin">Password is confirmed. Complete.</string>
     <string name="wizard_button_next">Next</string>
     <string name="wizard_button_dont_start_wizard_automatically">Disable wizard</string>
@@ -58,8 +62,8 @@
     <string name="service_started_long">Service started</string>
     <string name="standby_ok_long">Standby OK</string>
     <string name="standby_ng_long">Standby NG</string>
-    <string name="ap_not_found_long">WiFi access point not found</string>
-    <string name="not_wm_long">Connected router is not Aterm WM</string>
+    <string name="ap_not_found_long">Wi-Fi access point not found</string>
+    <string name="not_wm_long">Connected router is not target router</string>
     <string name="watchdog_timeout_long">Operation timeout</string>
     <string name="bluetooth_failed_long">Router resuming failed</string>
     <string name="switching_router">Switching router now</string>
@@ -84,7 +88,7 @@
     <string name="menu_online_check_category">Status check settings</string>
     <string name="menu_online_check_interval_sec_title">Status check interval</string>
     <string name="menu_online_check_interval_sec_summay">Specify online/antenna/battery check interval in seconds</string>
-    <string name="menu_online_check_interval_sec_dialog_title">Status check interval [sec] (recommend=120)</string>
+    <string name="menu_online_check_interval_sec_dialog_title">Status check interval [sec] (recommend=60)</string>
     <string name="menu_online_check_dns_timeout_sec_dialog_title">DNS lookup timeout [sec] (recommend=4)</string>
     <string name="menu_online_check_dns_timeout_sec_summay">DNS lookup timeout for online check</string>
     <string name="menu_online_check_dns_timeout_sec_title">DNS lookup timeout</string>
@@ -101,7 +105,7 @@
     <string name="menu_widget_str_color_title">Widget string color</string>
     <string name="menu_widget_background_title">Widget background</string>
     <string name="menu_widget_click_action_title">Select action when widget is tapped</string>
-    <string name="menu_widget_click_action_wifi_disabled_title">On WiFi disabled</string>
+    <string name="menu_widget_click_action_wifi_disabled_title">On Wi-Fi disabled</string>
     <string name="menu_widget_click_action_online_title">On online</string>
     <string name="menu_widget_click_action_offline_title">Others</string>
     <string name="menu_widget_click_action_customize_title">Customize actions</string>
@@ -110,13 +114,13 @@
     <!-- ウィジェットタップ設定 アクション -->
     <string name="menu_widget_click_action__none_label">Do nothing</string>
     <string name="menu_widget_click_action__check_label">Online check</string>
-    <string name="menu_widget_click_action__resume_label">Resume router and WiFi ON</string>
+    <string name="menu_widget_click_action__resume_label">Resume router and Wi-Fi ON</string>
     <string name="menu_widget_click_action__resume_switch_label">Resume and Switch router</string>
     <string name="menu_widget_click_action__switch_label">Switch router</string>
     <string name="menu_widget_click_action__standby_label">Standby router</string>
-    <string name="menu_widget_click_action__wifi_on_label">WiFi ON</string>
-    <string name="menu_widget_click_action__wifi_off_label">WiFi OFF</string>
-    <string name="menu_widget_click_action__restart_label">Restart WiFi</string>
+    <string name="menu_widget_click_action__wifi_on_label">Wi-Fi ON</string>
+    <string name="menu_widget_click_action__wifi_off_label">Wi-Fi OFF</string>
+    <string name="menu_widget_click_action__restart_label">Restart Wi-Fi</string>
     <string name="menu_widget_click_action__wimax_recn_label">Reconnect WiMAX</string>
     <string name="menu_widget_click_action__reboot_wm_label">Reboot router</string>
     <string name="menu_widget_click_action__stop_service_label">Stop service</string>
@@ -126,14 +130,14 @@
     <string name="menu_ap_conn_category">Router settings</string>
     <string name="menu_ap_ip_addr_title">Router IP address</string>
     <string name="menu_ap_ip_addr_summary">If you change DNS IP address, this IP address must be set.</string>
-    <string name="menu_ap_ip_addr_dialog_title">Router LAN-side IP address, ex)192.168.0.1</string>
+    <string name="menu_ap_ip_addr_dialog_title">Router LAN-side IP address, ex)192.168.179.1</string>
     <string name="menu_ap_conn_timeout_sec_title">Connection timeout</string>
     <string name="menu_ap_conn_timeout_sec_summay">Specify router connection timeout in seconds</string>
     <string name="menu_ap_conn_timeout_sec_dialog_title">Router Connection timeout [sec] (recommend=20)</string>
     <string name="menu_ap_conn_retry_limit_title">Re-Connection limit</string>
     <string name="menu_ap_conn_retry_limit_summay">Retry limit for router</string>
-    <string name="menu_disable_wifi_when_ap_conn_failed_title">Disable WiFi if no AP</string>
-    <string name="menu_disable_wifi_when_ap_conn_failed_summay">Disable WiFi if cannot find access point</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_title">Disable Wi-Fi if no AP</string>
+    <string name="menu_disable_wifi_when_ap_conn_failed_summay">Disable Wi-Fi if cannot find access point</string>
     <string name="menu_wizard_category">Configuration wizard</string>
     <string name="menu_wizard_title">Start wizard</string>
     <string name="menu_wizard_summary">Start initial configuration wizard</string>
@@ -148,13 +152,13 @@
     <string name="menu_action_after_suspend_title">Select action after suspend</string>
     <string name="menu_statusbar_notify_title">Statusbar notify</string>
     <string name="menu_statusbar_notify_summay">Select timing to display information on statusbar (needs reboot when changed)</string>
-    <string name="menu_start_service_when_wifi_enabled_title">Start service when WiFi ON</string>
-    <string name="menu_start_service_when_wifi_enabled_summay">Start service when deteched that WiFi is enabled</string>
+    <string name="menu_start_service_when_wifi_enabled_title">Start service when Wi-Fi ON</string>
+    <string name="menu_start_service_when_wifi_enabled_summay">Start service when deteched that Wi-Fi is enabled</string>
     <string name="menu_enable_logging_title">Enable logging</string>
     <string name="menu_enable_logging_summary">Output directly is following. Logs older than 7days are deleted automatically.\n</string>
 
     <!-- スタンバイ後の挙動 -->
-    <string name="menu_action_after_suspend__wifioff_stop_service_label">WiFi OFF and stop service</string>
+    <string name="menu_action_after_suspend__wifioff_stop_service_label">Wi-Fi OFF and stop service</string>
     <string name="menu_action_after_suspend__stop_service_label">Stop service</string>
     <string name="menu_action_after_suspend__do_nothing_label">Do nothing</string>
     

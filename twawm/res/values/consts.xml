@@ -1,16 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 画面共通文字列 -->
-    <string name="app_name" translatable="false">twawm</string>
-    <string name="app_subname" translatable="false">for WM3800R/WM3600R</string>
+    <string name="app_name" translatable="false">twawm2</string>
+    <string name="app_subname" translatable="false">for NAD11/WM3800R/WM3600R</string>
     <string name="app_version" translatable="false">ver</string>
     <string name="deleloper" translatable="false">by afnf</string>
     <string name="wiki_url" translatable="false">http://seesaawiki.jp/twawm/</string>
-    <string name="title_activity_main" translatable="false">twawm</string>
+    <string name="title_activity_main" translatable="false">twawm2</string>
 
     <!-- ウィジェット共通文字列 -->
-    <string name="wifi_on" translatable="false">WiFi ON</string>
-    <string name="wifi_off" translatable="false">WiFi OFF</string>
+    <string name="wifi_on" translatable="false">Wi-Fi ON</string>
+    <string name="wifi_off" translatable="false">Wi-Fi OFF</string>
     <string name="batt_charging" translatable="false">Charging</string>
     <string name="pausing_en" translatable="false">Pausing</string>
     <string name="processing" translatable="false">…</string>
@@ -29,7 +29,7 @@
     <!-- 一般設定 -->
 
     <!-- ステータスチェック設定 -->
-    <string name="dv_menu_online_check_interval_sec" translatable="false">120</string>
+    <string name="dv_menu_online_check_interval_sec" translatable="false">60</string>
     <string name="dv_menu_online_check_dns_timeout_sec" translatable="false">4</string>
     <string name="dv_menu_online_check_count_after_offline" translatable="false">15</string>
     <string name="dv_menu_online_check_interval_sec_after_offline" translatable="false">8</string>

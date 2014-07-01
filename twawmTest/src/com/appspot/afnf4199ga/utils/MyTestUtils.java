@@ -9,15 +9,19 @@ import com.appspot.afnf4199ga.twawm.Const;
 
 public class MyTestUtils {
 
-	public static String getResourceAsString(String path) {
-		InputStream resourceAsStream = MyTestUtils.class.getResourceAsStream(path);
-		String content = null;
-		try {
-			content = IOUtils.toString(resourceAsStream, Const.ROUTER_PAGE_CHARSET);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return content;
-	}
+    public static String getResourceAsString(String path) {
+        return getResourceAsString(path, true);
+    }
+
+    public static String getResourceAsString(String path, boolean eucjp) {
+        InputStream resourceAsStream = MyTestUtils.class.getResourceAsStream(path);
+        String content = null;
+        try {
+            content = IOUtils.toString(resourceAsStream, eucjp ? Const.ROUTER_PAGE_CHARSET_WM : Const.ROUTER_PAGE_CHARSET_NAD);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
 }

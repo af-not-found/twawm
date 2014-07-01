@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
+
 import org.mockito.Mockito;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
-
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
 
 public class BackgroundServiceTest extends DexmakerInstrumentationTestCase {
 

@@ -115,7 +115,7 @@ public class EcoModeControl extends Thread {
 
             // 成功時
             if (entity != null && statusCode == HttpStatus.SC_OK) {
-                String content = EntityUtils.toString(entity, Const.ROUTER_PAGE_CHARSET);
+                String content = EntityUtils.toString(entity, RouterControlByHttp.getPageCharset());
                 entity.consumeContent();
                 success = parseContent(content);
             }
@@ -179,26 +179,7 @@ public class EcoModeControl extends Thread {
                 }
 
                 // select
-                {
-                    Elements inputs = doc.select("#eco_mode_main select");
-                    if (inputs != null) {
-                        Iterator<Element> iterator = inputs.iterator();
-                        while (iterator.hasNext()) {
-                            Element e = (Element) iterator.next();
-                            String name = MyStringUtlis.normalize(e.attr("name"));
-                            if (MyStringUtlis.isEmpty(name) == false) {
-
-                                Elements options = e.select("option[selected=selected]");
-                                if (options != null && options.size() >= 1) {
-                                    Element option = options.get(0);
-                                    String value = MyStringUtlis.normalize(option.attr("value"));
-                                    //Logger.i(name + ":" + value);
-                                    currentValues.add(new BasicNameValuePair(name, value));
-                                }
-                            }
-                        }
-                    }
-                }
+                currentValues.addAll(RouterControlByHttp.getPulldownValues(doc, "#eco_mode_main select"));
 
                 return true;
             }

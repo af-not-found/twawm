@@ -4,9 +4,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collections;
 
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
 import android.os.Build;
 
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
 

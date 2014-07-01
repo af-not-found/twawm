@@ -2,7 +2,7 @@ package com.appspot.afnf4199ga.twawm.ctl;
 
 import java.util.ArrayList;
 
-import com.appspot.afnf4199ga.DexmakerInstrumentationTestCase;
+import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
 
 public class CustomizeActionsActivityTest extends DexmakerInstrumentationTestCase {
 

@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import net.afnf.and.twawm2.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -36,7 +37,7 @@ public class Const {
     public static final String INTENT_EX_DO_ACTION = INTENT_PREFIX + ".EX_DO_ACTION";
     public static final String INTENT_EX_INIT_WIZARD = INTENT_PREFIX + ".PASS_NOT_INITIALIZED";
 
-    public static final long ONLINE_CHECK_DELAY_AFTER_WIMAX_RECN_OR_REBOOT_WM = 7000;
+    public static final long ONLINE_CHECK_DELAY_AFTER_CTRL = 7000;
     public static final int WATCH_DOG_TIMEOUT_MS = 15000;
     public static final long WD_TEXT_LOCK_TIME_MS = 10000;
     public static final long ROUTER_SWITCH_LOCK_TIME_MS = 60000;
@@ -44,12 +45,14 @@ public class Const {
     public static final long NOTIFY_DELAY_AFTER_BT_DISABLING = 2000;
 
     public static final String ROUTER_HOSTNAME = "aterm.me";
-    public static final String ROUTER_IPADDR = "192.168.0.1";
+    public static final String ROUTER_IPADDR = "192.168.179.1";
     public static final int ROUTER_PORT = 80;
     public static final int ROUTER_HTTP_TIMEOUT = 12000;
     public static final int ROUTER_SESSION_TIMEOUT = 260000;
     public static final String ROUTER_URL_INFO_RMTMAIN = "/index.cgi/info_remote_main";
     public static final String ROUTER_URL_INFO_INFOBTN = "/index.cgi/info_btn";
+    public static final String ROUTER_URL_INFO_IDXCT = "/index.cgi/index_contents_pass";
+    public static final String ROUTER_URL_INFO_STS_XML = "/index.cgi/status_get.xml";
     public static final String ROUTER_URL_STANDBY_RMTMAIN = "/index.cgi/info_remote_main_standby";
     public static final String ROUTER_URL_STANDBY_INFOBTN = "/index.cgi/info_btn_standby";
     public static final String ROUTER_URL_STANDBY_BT_RMTMAIN = "/index.cgi/info_remote_main_btstandby";
@@ -61,8 +64,10 @@ public class Const {
     public static final String ROUTER_URL_REBOOT_WM_INFOBTN = "/index.cgi/info_btn_reboot";
     public static final String ROUTER_URL_ECO_MAIN = "/index.cgi/eco_mode_main";
     public static final String ROUTER_URL_ECO_POST = "/index.cgi/eco_mode_main_set";
+    public static final String ROUTER_URL_NAD_LOCAL_SET = "/index.cgi/index_contents_local_set";
 
-    public static final String ROUTER_PAGE_CHARSET = "euc-jp";
+    public static final String ROUTER_PAGE_CHARSET_WM = "euc-jp";
+    public static final String ROUTER_PAGE_CHARSET_NAD = "UTF-8";
     public static final String ROUTER_PAGE_SESSIONID_NAME = "SESSION_ID";
     public static final String ROUTER_BASIC_AUTH_USERNAME = "smart-user";
     public static final String ROUTER_BASIC_AUTH_PASSWORD = "smart-user";

@@ -1,4 +1,4 @@
-package com.appspot.afnf4199ga;
+package net.afnf.and.twawm2;
 
 import android.test.InstrumentationTestCase;
 

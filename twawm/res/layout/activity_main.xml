@@ -40,7 +40,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutButton1"
+        android:id="@+id/layoutButtonCommon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -64,7 +64,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutButton2"
+        android:id="@+id/layoutSub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -92,9 +92,9 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/link" />
     </LinearLayout>
-    
+
     <LinearLayout
-        android:id="@+id/layoutButton3"
+        android:id="@+id/layoutWm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -115,7 +115,33 @@
             android:enabled="false"
             android:onClick="onToggleEcoCharge"
             android:text="@string/processing" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layoutNad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal|center_vertical" >
+
+        <ToggleButton
+            android:id="@+id/toggleComMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="onToggleComMode"
+            android:textOff="@string/mode_no_limit"
+            android:textOn="@string/mode_high_speed" />
+
+        <ToggleButton
+            android:id="@+id/toggleWifiSpot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:enabled="false"
+            android:onClick="onToggleWifiSpot"
+            android:textOff="@string/wifi_spot_off"
+            android:textOn="@string/wifi_spot_on" />
     </LinearLayout>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import net.afnf.and.twawm2.R;
 import android.content.Context;
 import android.util.SparseIntArray;
 
@@ -14,6 +15,7 @@ import com.appspot.afnf4199ga.twawm.app.BackgroundService.ConnectivityState;
 import com.appspot.afnf4199ga.twawm.app.DefaultWidgetProvider;
 import com.appspot.afnf4199ga.twawm.app.UIAct;
 import com.appspot.afnf4199ga.twawm.router.RouterInfo;
+import com.appspot.afnf4199ga.twawm.router.RouterInfo.COM_TYPE;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
@@ -34,6 +36,9 @@ public class StateMachine {
     private int wdImageId;
     private String wdText;
     private long lockRouterSwitchUntil;
+    private COM_TYPE comState;
+    private COM_TYPE comSetting;
+    private Boolean wifiSpotEnabled;
 
     // 放電速度
     protected final int RATE_SIZE = 5;
@@ -45,7 +50,7 @@ public class StateMachine {
     protected long prevUpdateTime = -1;
     private static final int BATT_SAVE_THRESHOLD = 15 * 60 * 1000 + 1; // 15分
     private static final double BATT_RATE_THRESHOLD_MIN = 4; // 4%/h → 25h
-    private static final double BATT_RATE_THRESHOLD_MAX = 21; // 21%/h → 4.76h
+    private static final double BATT_RATE_THRESHOLD_MAX = 25; // 25%/h → 4h
 
     public static enum STATE {
         /** online */
@@ -286,6 +291,10 @@ public class StateMachine {
         this.wdImageId = R.drawable.antena_gray;
         this.wdText = service.getString(wifiEnable ? R.string.processing : R.string.wifi_off);
         this.lockRouterSwitchUntil = -1;
+        this.comState = COM_TYPE.NA;
+        this.comSetting = COM_TYPE.NA;
+        this.wifiSpotEnabled = null;
+
     }
 
     private static HashMap<Character, Integer> stateCharMap = new HashMap<Character, Integer>();
@@ -526,7 +535,8 @@ public class StateMachine {
         UIAct.postActivityInfo(wdImageId, wdText, triggerName, getState().name());
         boolean wifiEnabled = AndroidUtils.isWifiEnabled(service.getWifi());
         boolean suppCompleted = wifiEnabled && service.isSupplicantCompleted();
-        UIAct.postActivityButton(isStableState(), isStableState(), wifiEnabled, suppCompleted, service.getEcoCharge());
+        UIAct.postActivityButton(isStableState(), isStableState(), wifiEnabled, suppCompleted, service.getEcoCharge(),
+                comSetting, wifiSpotEnabled);
     }
 
     public void setStateToWifiRestart() {
@@ -541,6 +551,11 @@ public class StateMachine {
         wdText = service.getString(R.string.processing);
         wdImageId = R.drawable.antena_gray;
         notifyImageId = R.drawable.notif_antena_gray;
+
+        comState = COM_TYPE.NA;
+        comSetting = COM_TYPE.NA;
+        wifiSpotEnabled = null;
+
         service.disableWifi();
         reflesh(false);
     }
@@ -620,6 +635,11 @@ public class StateMachine {
             stopBattCalc(service, now);
         }
 
+        // NADシリーズでN/A以外なら、通信モード追加
+        if (routerInfo != null && routerInfo.nad && routerInfo.comState != COM_TYPE.NA) {
+            notifyText += "(" + routerInfo.comState.toString() + ")";
+        }
+
         // ロック外ならwdTextを更新
         String battNotifyText = "";
         if (isTextLocked() == false) {
@@ -672,6 +692,19 @@ public class StateMachine {
             else { // inetReachable == false
                 wdImageId = R.drawable.antena_white;
                 notifyImageId = R.drawable.notif_antena_white;
+            }
+        }
+
+        // 通信モード、Wi-Fiスポット使用
+        if (routerInfo != null && routerInfo.nad) {
+            if (routerInfo.comState != COM_TYPE.NA) {
+                comState = routerInfo.comState;
+            }
+            if (routerInfo.comSetting != COM_TYPE.NA) {
+                comSetting = routerInfo.comSetting;
+            }
+            if (routerInfo.wifiSpotEnabled != null) {
+                wifiSpotEnabled = routerInfo.wifiSpotEnabled;
             }
         }
 
@@ -910,8 +943,20 @@ public class StateMachine {
         netState = NETWORK_STATE.OFFLINE;
         current = STATE.OFFLINE;
         wdImageId = R.drawable.antena_white;
+        comState = COM_TYPE.NA;
+        comSetting = COM_TYPE.NA;
+        wifiSpotEnabled = null;
+
         // UI更新
         reflesh(false);
+    }
+
+    public boolean isComSettingHS() {
+        return comSetting == COM_TYPE.HIGH_SPEED;
+    }
+
+    public boolean isWifiSpotEnabled() {
+        return wifiSpotEnabled != null && wifiSpotEnabled == true;
     }
 
     //	public int getNotifyImageId() {

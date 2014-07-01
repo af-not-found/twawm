@@ -24,7 +24,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import com.appspot.afnf4199ga.twawm.Const;
-import com.appspot.afnf4199ga.twawm.R;
+import net.afnf.and.twawm2.R;
 
 public class AndroidUtils {
 

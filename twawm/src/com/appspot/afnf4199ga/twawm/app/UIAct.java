@@ -3,6 +3,7 @@ package com.appspot.afnf4199ga.twawm.app;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.appspot.afnf4199ga.twawm.router.RouterInfo.COM_TYPE;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 
@@ -28,14 +29,18 @@ public class UIAct extends Handler {
         private Boolean wifiEnabled;
         private Boolean suppCompleted;
         private Boolean ecoCharge;
+        private COM_TYPE comSetting;
+        private Boolean wifiSpot;
 
         public UpdateActivityButtonRunnable(Boolean enableRouterToggle, Boolean enableWifiToggle, Boolean wifiEnabled,
-                Boolean suppCompleted, Boolean ecoCharge) {
+                Boolean suppCompleted, Boolean ecoCharge, COM_TYPE comSetting, Boolean wifiSpot) {
             this.enableRouterToggle = enableRouterToggle;
             this.enableWifiToggle = enableWifiToggle;
             this.wifiEnabled = wifiEnabled;
             this.suppCompleted = suppCompleted;
             this.ecoCharge = ecoCharge;
+            this.comSetting = comSetting;
+            this.wifiSpot = wifiSpot;
         }
 
         public void run() {
@@ -43,21 +48,23 @@ public class UIAct extends Handler {
                 parent.uiactSetRouterToggleButton(enableRouterToggle, suppCompleted);
                 parent.uiactSetWifiToggleButton(enableWifiToggle, wifiEnabled);
                 parent.uiactSetEcoChargeToggleButton(suppCompleted, ecoCharge);
+                parent.uiactSetNadToggleButton(suppCompleted, comSetting, wifiSpot);
             }
         }
     }
 
     public static void postActivityButton(Boolean enableRouterToggle, Boolean enableWifiToggle, Boolean wifiEnabled,
-            Boolean suppCompleted, Boolean ecoCharge) {
+            Boolean suppCompleted, Boolean ecoCharge, COM_TYPE comSetting, Boolean wifiSpot) {
         if (parent != null) {
             if (AndroidUtils.isUIThread(parent)) {
                 parent.uiactSetRouterToggleButton(enableRouterToggle, suppCompleted);
                 parent.uiactSetWifiToggleButton(enableWifiToggle, wifiEnabled);
                 parent.uiactSetEcoChargeToggleButton(suppCompleted, ecoCharge);
+                parent.uiactSetNadToggleButton(suppCompleted, comSetting, wifiSpot);
             }
             else {
                 instance.post(new UpdateActivityButtonRunnable(enableRouterToggle, enableWifiToggle, wifiEnabled, suppCompleted,
-                        ecoCharge));
+                        ecoCharge, comSetting, wifiSpot));
             }
         }
     }
@@ -106,13 +113,35 @@ public class UIAct extends Handler {
 
     public static void postDelayedEnableWorkingToggleButton() {
         if (parent != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    AndroidUtils.sleep(2000);
-                    instance.post(new EnableWorkingToggleButtonRunnable());
-                }
-            }).start();
+            instance.postDelayed(new EnableWorkingToggleButtonRunnable(), 2000);
+        }
+    }
+
+    static class EnableComModeToggleButtonRunnable implements Runnable {
+        public void run() {
+            if (parent != null) {
+                parent.uiactToggleComModeToggleButton(true);
+            }
+        }
+    }
+
+    public static void postDelayedEnableComModeToggleButton() {
+        if (parent != null) {
+            instance.postDelayed(new EnableComModeToggleButtonRunnable(), 8000);
+        }
+    }
+
+    static class EnableWifiSpotToggleButtonRunnable implements Runnable {
+        public void run() {
+            if (parent != null) {
+                parent.uiactToggleWifiSpotToggleButton(true);
+            }
+        }
+    }
+
+    public static void postDelayedEnableWifiSpotToggleButton() {
+        if (parent != null) {
+            instance.postDelayed(new EnableWifiSpotToggleButtonRunnable(), 8000);
         }
     }
 
