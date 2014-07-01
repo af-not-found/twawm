@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='ja' lang='ja'>
+<head>
+<!-- 雀の往来 -->
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<meta http-equiv='Content-Script-Type' content='text/javascript' />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>クイック設定Web</title>
+<script src="/common/help.js"></script>
+<script src="/common/respond.min.js"></script>
+<link rel="stylesheet" href="/common/html5-doctor-reset-stylesheet.min.css">
+<link rel="stylesheet" href="/common/common.css">
+</head>
+<body onload='init_func()'>
+<script type="text/javascript" src='/common/cgi.js'></script>
+<div class='wrap'>
+<div class='contents clearfix'><script src="/common/menu.js"></script>
+<noscript>
+<div class='contents clearfix'><div class="status clearfix">
+<div class="logo">&nbsp;</div>
+</div>
+<div class="hr_5a5a5a clearfix">&nbsp;</div>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div class="headline clearfix"><h1 class='alert'><span>JavaScript無効(JavaScript disable)</span></h1>
+<div>
+<p class='alert'>
+ご利用のWWWブラウザは、JavaScript(アクティブスクリプト)が有効になっていません。<br />JavaScript(アクティブスクリプト)を有効に設定してください。<br/>
+Please enable javascript.
+</p>
+</div>
+</div>
+<div class="footer clearfix">
+<div class="hr_5a5a5a clearfix">&nbsp;</div>
+</div>
+</div>
+</noscript>
+<script type='text/javascript'>
+<!--
+
+
+function WizardClick()
+{
+    if (true == confirm('Webウィザードを起動します。\nよろしいですか？\n＜ご注意＞\n本商品が未契約の場合に、Webウィザードを起動します。\n契約済みの場合は、Webウィザードは起動せず、クイック設定Web　メニュー画面を起動します。') ){
+        SubmitGuard();
+        gId('form_wiz').submit();
+    }
+}
+
+function profile_disc_click()
+{
+    gId('BTN_CLICK').value = 'profile';
+    SubmitGuard();
+    gId('main_form').submit();
+}
+
+function wan_type_click()
+{
+    gId('BTN_CLICK').value = 'wan2';
+    SubmitGuard();
+    gId('main_form').submit();
+}
+
+function wifi_disc_click()
+{
+    gId('BTN_CLICK').value = 'wifi';
+    SubmitGuard();
+    gId('main_form').submit();
+}
+
+
+/* ページの初期化 */
+function Init_Page()
+{
+    /* 動作モードの不一致でガード処理から飛ばされてきた場合は、警告ダイアログを表示する */
+    if (-1 != document.URL.indexOf('?action_mode=false')) {
+        alert('設定内容が他で更新されていることを検出しました。再度同じ操作を行ってください。');
+        Back();
+    }
+}
+
+//-->
+</script>
+<div class='menu'>
+<form name='system_save' id='system_save' action="./index_contents" method="post">
+<button type='button' onclick='SaveBtnClick();' id='save_btn'><b>保存</b></button>
+<div class='menu_message'>現在の設定内容を保存する場合は、<b>[保存]</b>ボタンをクリックしてください。</div>
+<input type='hidden' name='SAVE_CMD_ISSUE' value='YES' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='0000000000000000000000001111111111a' />
+</form>
+<div class='hr_5a5a5a clearfix'>&nbsp;</div>
+<button type="button" onclick='Back()'><span>詳細設定TOPへ</span></button>
+
+<div class="hr_5a5a5a clearfix">&nbsp;</div>
+<form name='chg_form' id='chg_form' action='./index_contents_local_en' method='post'>
+<button type="submit" onclick="chg_lang_click()"><span>English</span></button>
+<button type="button" onclick="SubmitGuard();location.href='./sm_index_contents_local'"><span>モバイル用ページへ</span></button>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='0000000000000000000000001111111111a' />
+</form>
+<input type='hidden' id='ACTION_MODE'          name='ACTION_MODE'          value='local' />
+<input type='hidden' id='AIR_CARD'             name='AIR_CARD'             value='' />
+<input type='hidden' id='AIR_STATUS'           name='AIR_STATUS'           value='' />
+<input type='hidden' id='UPNP_STATUS'          name='UPNP_STATUS'          value='UPnP NoUse' />
+<input type='hidden' id='DHCP_MODE'            name='DHCP_MODE'            value='enable' />
+<input type='hidden' id='DHCPE_ASSIGNABLE'     name='DHCPE_ASSIGNABLE'     value='manual' />
+<input type='hidden' id='CONTENTS_FILTER'      name='CONTENTS_FILTER'      value='disable' />
+<input type='hidden' id='ECO_MODE_STATUS'      name='ECO_MODE_STATUS'      value='false' />
+<input type='hidden' id='AIR_STATUS_10'        name='AIR_STATUS_10'        value='' />
+<input type='hidden' id='DUAL_SUPPORT_STATUS'  name='DUAL_SUPPORT_STATUS'  value='' />
+<input type='hidden' id='ECO_MODE_STATUS_WLAN' name='ECO_MODE_STATUS_WLAN' value='false' />
+<input type='hidden' id='USE_CF'               name='USE_CF'               value='false' />
+<input type='hidden' id='LANG_SELECT'          name='LANG_SELECT'          value='ja' />
+</div>
+<div class='clearfix lf'><div class='status clearfix'>
+<!-- #PRODUCT_NAME -->
+<div class="logo lf">&nbsp;</div>
+<div class="rt">
+<p>
+<img src="/common/wimax_0.png" width="39" height="39" id='ANT_BTN_0' style='display:none'/>
+<img src="/common/wimax_1.png" width="39" height="39" id='ANT_BTN_1' style='display:none'/>
+<img src="/common/wimax_2.png" width="39" height="39" id='ANT_BTN_2' style='display:none'/>
+<img src="/common/wimax_3.png" width="39" height="39" id='ANT_BTN_3' style='display:none'/>
+<img src="/common/wimax_4.png" width="39" height="39" id='ANT_BTN_4' style='display:none'/>
+<img src="/common/wimax_max.png" width="39" height="39" id='ANT_BTN_5' style='display:none'/>
+<img src="/common/wimax2plus_0.png" width="39" height="39" id='ANT_BTN2_0' style='display:none'/>
+<img src="/common/wimax2plus_1.png" width="39" height="39" id='ANT_BTN2_1' style='display:none'/>
+<img src="/common/wimax2plus_2.png" width="39" height="39" id='ANT_BTN2_2' style='display:none'/>
+<img src="/common/wimax2plus_3.png" width="39" height="39" id='ANT_BTN2_3' style='display:none'/>
+<img src="/common/wimax2plus_max.png" width="39" height="39" id='ANT_BTN2_4' style='display:none'/>
+<span id='wan_sta'>&nbsp;</span>
+</p>
+<p>
+<img src="/common/wifi_max.png" id='WIFI_BTN' width="39" height="39" style='display:none'/>
+<span id='wifi_sta'>WiFi</span>
+</p>
+<p>
+<img src="/common/battery_0.png" width="39" height="39" id='BATT_BTN_0' style='display:none'/>
+<img src="/common/battery_1.png" width="39" height="39" id='BATT_BTN_1' style='display:none'/>
+<img src="/common/battery_2.png" width="39" height="39" id='BATT_BTN_2' style='display:none'/>
+<img src="/common/battery_3.png" width="39" height="39" id='BATT_BTN_3' style='display:none'/>
+<img src="/common/battery_4.png" width="39" height="39" id='BATT_BTN_4' style='display:none'/>
+<img src="/common/battery_max.png" width="39" height="39" id='BATT_BTN_5' style='display:none'/>
+<img src="/common/battery_ch.png" width="39" height="39" class='batt_ch' id='BATT_BTN_CH' style='display:none;'/>
+<span id='batt_sta'>&nbsp;</span>
+</p>
+</div>
+</div>
+<div class='header clearfix'>
+<!-- #PRODUCT_NAME -->
+<h1><span>クイック設定Web</span></h1>
+<div>
+<p class="lf">左メニューから詳細設定ボタンを押して、設定をスタートしましょう。</p>
+<p class="rt"><img src='/common/help_mark.png' class='icon_help' />：ヘルプ表示</p>
+</div>
+</div><div class="io_form">
+<!--#OK 
+<div class="contents_top clearfix">&nbsp;</div><div class="ok_msg"><ul><li class="message">設定内容を更新しました。現在の設定内容を保存する場合は、左メニューの［保存］ボタンをクリックしてください。</li></ul></div><div class="contents_btm clearfix">&nbsp;</div>
+ -->
+<!--ERR 
+<div class="contents_top clearfix">&nbsp;</div><div class="ok_msg"><ul><li class="message">入力内容に誤りがあります。詳しくは各項目のメッセージを確認してください。</li></ul></div><div class="contents_btm clearfix">&nbsp;</div>
+ -->
+<!--#NG 
+<div class="contents_top clearfix">&nbsp;</div><div class="ok_msg"><ul><li class="message">設定に失敗しました。正しく設定されていない可能性がありますので本製品の再起動を行ってください。</li></ul></div><div class="contents_btm clearfix">&nbsp;</div>
+ -->
+<div class="contents_top clearfix">&nbsp;</div>
+<div><form name='show_form' id='show_form' action='./index_contents_local_set' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div class="headline clearfix"><h2 class='lf'>装置情報</h2>
+
+<button type="button" class="rt" onclick="location.href='./index_contents'"><span class="icon_update">最新状態に更新</span></button></div><ul><li class='label'>
+機種名
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品で使用する製品名を表示します。');return false;" /></li>
+<li class="value">
+NAD11</li>
+<li class='label'>
+ファームウェアバージョン
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品で使用するファームウェアのバージョンを表示します。');return false;" /></li>
+<li class="value">
+1.7.0</li>
+<li class='label'>
+接続ステータス
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品の接続ステータスを表示します。');return false;" /></li>
+<li class="value">
+インターネット利用可能(WiMAX)</li>
+<li class='label'>
+プロファイル
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品で接続するプロファイルを表示します。');return false;" /></li>
+<li class="value">
+Internet
+</li><li class='label'>
+送受信データ通信量
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品の送受信のデータ通信量を表示します。データ通信量の目安を確認することができます。正確なデータ通信量及び料金を確認するためにはお手元の請求書をご確認ください。');return false;" /></li>
+<li class="value">
+[□□□□□ □□□□□](53.91KB/7GB)</li>
+<li class='label'>
+接続時間
+<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品の接続時間を表示します。Wi-Fiスポット接続では時間をカウントしません。');return false;" /></li>
+<li class="value">
+0:30:41</li>
+</ul><div>
+<input type='hidden' name='PRODUCT_NAME' id='PRODUCT_NAME' value='NAD11' />
+</div>
+<div>
+<input type='hidden' name='VERSION' id='VERSION' value='1.7.0' />
+</div>
+<div>
+<input type='hidden' name='WANLAN_STATUS' id='WANLAN_STATUS' value='インターネット利用可能(WiMAX)' />
+</div>
+<div>
+<input type='hidden' name='DATA_TRAFFIC' id='DATA_TRAFFIC' value='53.91KB' />
+</div>
+<div>
+<input type='hidden' name='DATA_LIMIT' id='DATA_LIMIT' value='7GB' />
+</div>
+<div>
+<input type='hidden' name='CON_TIME' id='CON_TIME' value='0:59:41' />
+</div>
+<div>
+<input type='hidden' name='BATT_REST' id='BATT_REST' value='63' />
+</div>
+<div>
+<input type='hidden' name='BATT_CHARGE' id='BATT_CHARGE' value='0' />
+</div>
+<div>
+<input type='hidden' name='WIFI_ON' id='WIFI_ON' value='1' />
+</div>
+<div>
+<input type='hidden' name='WIFI_CHILD' id='WIFI_CHILD' value='1' />
+</div>
+<div>
+<input type='hidden' name='WAN_LEVEL' id='WAN_LEVEL' value='2' />
+</div>
+<div>
+<input type='hidden' name='WAN_TYPE' id='WAN_TYPE' value='WiMAX' />
+</div>
+<div>
+<input type='hidden' name='WAN_IP_MASK' id='WAN_IP_MASK' value='    10.11.12.13/32' />
+</div>
+<div>
+<input type='hidden' name='WLANSLEEP' id='WLANSLEEP' value='disable' />
+</div>
+<div>
+<input type='hidden' name='BLUETOOTH_NAME' id='BLUETOOTH_NAME' value='123abc-bt' />
+</div>
+<div>
+<input type='hidden' name='BLUETOOTH_LE_NAME' id='BLUETOOTH_LE_NAME' value='' />
+</div>
+<div>
+<input type='hidden' name='BLUETOOTH_MAC' id='BLUETOOTH_MAC' value='22:33:44:ff:bb:a0' />
+</div>
+<div>
+<input type='hidden' name='DATA_NOTICE_SET' id='DATA_NOTICE_SET' value='1' />
+</div>
+<div>
+<input type='hidden' name='DATA_NOTICE_COUNT' id='DATA_NOTICE_COUNT' value='5' />
+</div>
+<div>
+<input type='hidden' name='COM_MODE_VAL' id='COM_MODE_VAL' value='no-limit' />
+</div>
+<div>
+<input type='hidden' name='WAN_DOMAIN' id='WAN_DOMAIN' value='' />
+</div>
+<div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='0000000000000000000000001111111111a' />
+</div>
+</form>
+</div>
+<div class="contents_btm clearfix">&nbsp;</div><div class="contents_top clearfix">&nbsp;</div>
+<div><form name='main_form' id='main_form' action='./index_contents_local_set' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div class="headline clearfix"><h2 class='lf'>簡易設定</h2>
+
+</div><ul><li class='input_label'>
+プロファイルの設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/mark_help.png' onclick="HelpShow(event, '使用するプロファイルを選択します。プロファイルはWiMAX 2+接続時に使用します。');return false;" /></li>
+<li class='input_value'>
+<select name='SELECT_PROFILE' id='SELECT_PROFILE'>
+
+<option value='1' selected='selected'>Internet</option>
+
+<!--
+<option value='2' >no setup</option>
+-->
+<!--
+<option value='3' >no setup</option>
+-->
+<!--
+<option value='4' >no setup</option>
+-->
+<!--
+<option value='5' >no setup</option>
+-->
+</select>
+<button class="btn_s" onclick='profile_disc_click()' id='PROFILE_DISC'>設定</button>
+</li><li class='input_label'>
+通信モード設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/mark_help.png' onclick="HelpShow(event, '通信モードを選択します。ハイスピードモードでは、WiMAX/WiMAX 2+に接続することができます。ノーリミットモードではWiMAXに接続することができます。');return false;" /></li>
+<li class='input_value'>
+<select name='COM_MODE_SEL' id='COM_MODE_SEL'>
+<option value='1' >ハイスピードモード</option>
+<option value='2' selected='selected'>ノーリミットモード</option>
+</select>
+<button class="btn_s" onclick='wan_type_click()' id='PROFILE_DISC'>設定</button>
+</li><li class='input_label'>
+Wi-Fiスポット<input type='image' class='help' alt='help' value='ヘルプ' src='/common/mark_help.png' onclick="HelpShow(event, '本製品のWi-Fiスポットを使用する場合は、チェックをします。本機能を使用する場合、《無線LAN設定》画面の［送信出力］の設定によらず、無線LANの送信出力が100%固定になります。また、本機能を使用する場合、セカンダリSSIDが使用できなくなります。');return false;" /></li>
+<li class='input_value'>
+<input type='checkbox' name='WIFI_MODE' id='WIFI_MODE' value='on' checked='checked' /><label for='WIFI_MODE'>使用する</label>
+<button class="btn_s" onclick='wifi_disc_click()' id='PROFILE_DISC'>設定</button>
+</li></ul><div>
+<input type='hidden' name='BTN_CLICK' id='BTN_CLICK' value='' />
+</div>
+<div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='0000000000000000000000001111111111a' />
+</div>
+</form>
+</div>
+<div class="contents_btm clearfix">&nbsp;</div></div>
+<div class="footer clearfix"><div class="hr_5a5a5a clearfix">&nbsp;</div>
+<div class="btn_area">
+<button type="button" onclick='Back()'>詳細設定TOPへ</button>
+</div><div class='copyright'>
+Copyright(c) NEC Corporation 2001-2014<br />Copyright(c) NEC AccessTechnica,Ltd. 2001-2014
+</div>
+</div>
+<div id='help' style='position:absolute; top:100px; left:50px; width:12em; border-top:2px #b7c3dd solid; border-left:2px #b7c3dd solid; border-right:3px #4b5d83 solid; border-bottom:3px #4b5d83 solid; background-color: #f1f1f1; font-size:smaller; visibility : hidden;'>
+<!-- ヘルプで表示するブロック -->
+<div style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; border-bottom:2px #35589e solid;'><span style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; '>ヘルプ<img src='/common/close.gif' onmousedown='HelpHide();' style='position:absolute; top:1px; right:0px;' alt='' /></span></div>
+<div style='padding: 5px 5px 0px; '><span id='help_msg'>　</span><br /><br />
+<form>
+<div style='text-align: center; '><input type='button' value='閉じる' onclick='HelpHide();' onmousedown='mouseDownCansel= true;' /></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

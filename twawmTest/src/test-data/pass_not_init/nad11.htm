@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='ja' lang='ja'>
+<head>
+<!-- 雀の往来 -->
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<meta http-equiv='Content-Script-Type' content='text/javascript' />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>クイック設定Web</title>
+<script src="/common/help.js"></script>
+<script src="/common/respond.min.js"></script>
+<link rel="stylesheet" href="/common/html5-doctor-reset-stylesheet.min.css">
+<link rel="stylesheet" href="/common/common.css">
+</head>
+<body onload='init_func()'>
+<script type="text/javascript" src='/common/cgi.js'></script>
+<div class='wrap'>
+<div class='contents clearfix'><script src="/common/menu.js"></script>
+<noscript>
+<div class='contents clearfix'><div class="status clearfix">
+<div class="logo">&nbsp;</div>
+</div>
+<div class="hr_5a5a5a clearfix">&nbsp;</div>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div class="headline clearfix"><h1 class='alert'><span>JavaScript無効(JavaScript disable)</span></h1>
+<div>
+<p class='alert'>
+ご利用のWWWブラウザは、JavaScript(アクティブスクリプト)が有効になっていません。<br />JavaScript(アクティブスクリプト)を有効に設定してください。<br/>
+Please enable javascript.
+</p>
+</div>
+</div>
+<div class="footer clearfix">
+<div class="hr_5a5a5a clearfix">&nbsp;</div>
+</div>
+</div>
+</noscript>
+<script type="text/javascript">
+<!--
+
+
+/* イベントの設定 */
+function Init_Event()
+{
+    gId('wizard_password').onsubmit = function(){
+        if (gId('INIT_PASSWD').value == ''){
+            alert('［パスワード］が入力されていません。');
+            return false;
+        }
+        if (gId('INIT_RETRY_PASSWD').value == ''){
+            alert('［パスワード再入力］が入力されていません。');
+            return false;
+        }
+        SubmitGuard();
+        return true;
+    }
+}
+
+// -->
+</script>
+ <div><input type="hidden" id="current_pane" value="5" /></div>
+<div class='menu'>
+</div>
+<div class='clearfix lf'><div class='status clearfix'>
+<!-- #PRODUCT_NAME -->
+<div class="logo lf">&nbsp;</div>
+<div class="rt">
+<p>
+<img src="/common/wimax_0.png" width="39" height="39" id='ANT_BTN_0' style='display:none'/>
+<img src="/common/wimax_1.png" width="39" height="39" id='ANT_BTN_1' style='display:none'/>
+<img src="/common/wimax_2.png" width="39" height="39" id='ANT_BTN_2' style='display:none'/>
+<img src="/common/wimax_3.png" width="39" height="39" id='ANT_BTN_3' style='display:none'/>
+<img src="/common/wimax_4.png" width="39" height="39" id='ANT_BTN_4' style='display:none'/>
+<img src="/common/wimax_max.png" width="39" height="39" id='ANT_BTN_5' style='display:none'/>
+<img src="/common/wimax2plus_0.png" width="39" height="39" id='ANT_BTN2_0' style='display:none'/>
+<img src="/common/wimax2plus_1.png" width="39" height="39" id='ANT_BTN2_1' style='display:none'/>
+<img src="/common/wimax2plus_2.png" width="39" height="39" id='ANT_BTN2_2' style='display:none'/>
+<img src="/common/wimax2plus_3.png" width="39" height="39" id='ANT_BTN2_3' style='display:none'/>
+<img src="/common/wimax2plus_max.png" width="39" height="39" id='ANT_BTN2_4' style='display:none'/>
+<span id='wan_sta'>&nbsp;</span>
+</p>
+<p>
+<img src="/common/wifi_max.png" id='WIFI_BTN' width="39" height="39" style='display:none'/>
+<span id='wifi_sta'>WiFi</span>
+</p>
+<p>
+<img src="/common/battery_0.png" width="39" height="39" id='BATT_BTN_0' style='display:none'/>
+<img src="/common/battery_1.png" width="39" height="39" id='BATT_BTN_1' style='display:none'/>
+<img src="/common/battery_2.png" width="39" height="39" id='BATT_BTN_2' style='display:none'/>
+<img src="/common/battery_3.png" width="39" height="39" id='BATT_BTN_3' style='display:none'/>
+<img src="/common/battery_4.png" width="39" height="39" id='BATT_BTN_4' style='display:none'/>
+<img src="/common/battery_max.png" width="39" height="39" id='BATT_BTN_5' style='display:none'/>
+<img src="/common/battery_ch.png" width="39" height="39" class='batt_ch' id='BATT_BTN_CH' style='display:none;'/>
+<span id='batt_sta'>&nbsp;</span>
+</p>
+</div>
+</div>
+<div class='header clearfix'>
+<h1><span>クイック設定Web ： 管理者パスワード初期設定</span></h1>
+<div>
+<p class="lf">管理者パスワードを設定して下さい。</p>
+<p class="rt"><img src='/common/help_mark.png' class='icon_help' />：ヘルプ表示</p>
+</div>
+</div><div class="io_form">
+<!--#OK 
+<div class="contents_top clearfix">&nbsp;</div><div class="ok_msg"><ul><li class="message">設定内容を更新しました。現在の設定内容を保存する場合は、左メニューの［保存］ボタンをクリックしてください。</li></ul></div><div class="contents_btm clearfix">&nbsp;</div>
+ -->
+<!--ERR 
+<div class="contents_top clearfix">&nbsp;</div><div class="ok_msg"><ul><li class="message">入力内容に誤りがあります。詳しくは各項目のメッセージを確認してください。</li></ul></div><div class="contents_btm clearfix">&nbsp;</div>
+ -->
+<!--#NG 
+<div class="contents_top clearfix">&nbsp;</div><div class="ok_msg"><ul><li class="message">設定に失敗しました。正しく設定されていない可能性がありますので本製品の再起動を行ってください。</li></ul></div><div class="contents_btm clearfix">&nbsp;</div>
+ -->
+<div class="contents_top clearfix">&nbsp;</div>
+<div><form name='wizard_password' id='wizard_password' action='/index.cgi/wizard_password_set' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<div class="headline clearfix"><h2 class='lf'>管理者パスワードの初期設定</h2>
+
+</div><ul><li class='message'>本製品は、第三者による不意のアクセスや設定変更を防止するため、管理者パスワードを入力して初めてアクセスできるようになっています。パスワードで使用できるのは、半角英数字と記号です。（?と全角文字、一部の特殊記号は使用できません。）名前や生年月日など、他人から類推されやすい単語を用いることは避けてください。 </li><li class='input_label'>
+パスワード<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '本製品の設定を行うための管理者パスワードを入力します。半角英数字、-（ハイフン）、_（アンダースコア）を使用して64文字以内で入力してください。Enter the password in 64 or less characters using alphanumeric characters - (hyphen) and _(underscore).');return false;" /></li>
+<li class='input_value'>
+<input type='password' autocomplete='off' name='INIT_PASSWD' id='INIT_PASSWD' maxlength='64' size='40' value='' />
+</li><li class='input_label'>
+パスワード再入力<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_mark.png' onclick="HelpShow(event, '確認のため、設定するパスワードを再入力します。Re-enter the new password for verification purposes.');return false;" /></li>
+<li class='input_value'>
+<input type='password' autocomplete='off' name='INIT_RETRY_PASSWD' id='INIT_RETRY_PASSWD' maxlength='64' size='40' value='' />
+</li></ul><div class="btn_area clearfix">
+<button type="submit" class="mode rt" name='UPDATE_BUTTON' id='UPDATE_BUTTON'>設定</button>
+</div><div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='61268410A4216148E74242359506B8D9' />
+</div>
+</form>
+</div>
+<div class="contents_btm clearfix">&nbsp;</div></div>
+<div class="footer clearfix"></div>
+<div id='help' style='position:absolute; top:100px; left:50px; width:12em; border-top:2px #b7c3dd solid; border-left:2px #b7c3dd solid; border-right:3px #4b5d83 solid; border-bottom:3px #4b5d83 solid; background-color: #f1f1f1; font-size:smaller; visibility : hidden;'>
+<!-- ヘルプで表示するブロック -->
+<div style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; border-bottom:2px #35589e solid;'><span style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; '>ヘルプ<img src='/common/close.gif' onmousedown='HelpHide();' style='position:absolute; top:1px; right:0px;' alt='' /></span></div>
+<div style='padding: 5px 5px 0px; '><span id='help_msg'>　</span><br /><br />
+<form>
+<div style='text-align: center; '><input type='button' value='閉じる' onclick='HelpHide();' onmousedown='mouseDownCansel= true;' /></div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>
