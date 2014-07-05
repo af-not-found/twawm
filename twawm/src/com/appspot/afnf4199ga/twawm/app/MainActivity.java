@@ -437,7 +437,7 @@ public class MainActivity extends Activity {
 
         // UI更新
         UIAct.postActivityButton(true, true, wifiEnabled, suppCompleted, null, null, null);
-        UIAct.postActivityInfo(R.drawable.antena_gray, getString(R.string.processing), null, null);
+        UIAct.postActivityInfo(R.drawable.icon_wimax_gray_batt_na, getString(R.string.processing), null, null);
 
         // ウィジェット更新
         DefaultWidgetProvider.updateAsWorkingOrPausing(this, true);
@@ -447,8 +447,8 @@ public class MainActivity extends Activity {
 
         // UI更新
         UIAct.postActivityButton(false, false, null, null, null, null, null);
-        UIAct.postActivityInfo(R.drawable.antena_gray, context.getString(working ? R.string.processing : R.string.pausing_en),
-                null, null);
+        UIAct.postActivityInfo(R.drawable.icon_wimax_gray_batt_na,
+                context.getString(working ? R.string.processing : R.string.pausing_en), null, null);
 
         // ウィジェット更新
         DefaultWidgetProvider.updateAsWorkingOrPausing(context, working);

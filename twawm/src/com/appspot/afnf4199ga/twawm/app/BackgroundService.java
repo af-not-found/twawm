@@ -112,7 +112,7 @@ public class BackgroundService extends Service {
 
                 // フォアグラウンド起動
                 startForeground(Const.NOTIF_ID_MAIN,
-                        createNotification(R.drawable.notif_antena_gray, getString(R.string.service_started_long)));
+                        createNotification(R.drawable.ntficon_wimax_gray_batt_na, getString(R.string.service_started_long)));
             }
         }
         // 一時停止中
@@ -242,7 +242,7 @@ public class BackgroundService extends Service {
 
         // 失敗した場合は通知
         if (success == false) {
-            postNotify(R.drawable.notif_antena_gray, getString(R.string.bluetooth_failed_long));
+            postNotify(R.drawable.ntficon_wimax_gray_batt_na, getString(R.string.bluetooth_failed_long));
         }
 
         // 終了処理
@@ -319,7 +319,7 @@ public class BackgroundService extends Service {
 
             // 通知
             Logger.i("switching started");
-            postNotify(R.drawable.notif_antena_gray, getString(R.string.switching_router));
+            postNotify(R.drawable.ntficon_wimax_gray_batt_na, getString(R.string.switching_router));
 
             // 10秒待ってスキャン要求
             new Thread(new Runnable() {
@@ -767,6 +767,12 @@ public class BackgroundService extends Service {
                         stopWatchdog();
                         resetShortInterval();
                         state.perform(TRIGGER.BC_SUPPLICANT_COMPLETE);
+                    }
+                    else if (AndroidUtils.isActionEquals(intent, WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)) {
+                        SupplicantState newstate = intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE);
+                        if (newstate != null && (newstate == SupplicantState.DISCONNECTED || newstate == SupplicantState.DORMANT)) {
+                            state.perform(TRIGGER.BC_SUPPLICANT_DISCONNECTED);
+                        }
                     }
                 }
                 // スキャン結果

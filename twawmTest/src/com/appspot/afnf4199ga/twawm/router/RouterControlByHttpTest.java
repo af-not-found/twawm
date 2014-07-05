@@ -95,7 +95,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         RouterControlByHttp.parseContent(content, routerInfo);
 
         assertEquals(null, routerInfo.routerName);
-        assertEquals(0, routerInfo.battery);
+        assertEquals(-1, routerInfo.battery);
         assertEquals(false, routerInfo.charging);
         assertEquals(0, routerInfo.antennaLevel);
         assertEquals(null, routerInfo.rssiText);
@@ -117,7 +117,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         RouterControlByHttp.parseContent(content, routerInfo);
 
         assertEquals("NAD11", routerInfo.routerName);
-        assertEquals(0, routerInfo.battery);
+        assertEquals(-1, routerInfo.battery);
         assertEquals(false, routerInfo.charging);
         assertEquals(0, routerInfo.antennaLevel);
         assertEquals(null, routerInfo.rssiText);
@@ -137,7 +137,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         RouterControlByHttp.parseContent(content, routerInfo);
 
         assertEquals(null, routerInfo.routerName);
-        assertEquals(0, routerInfo.battery);
+        assertEquals(-1, routerInfo.battery);
         assertEquals(false, routerInfo.charging);
         assertEquals(0, routerInfo.antennaLevel);
         assertEquals(null, routerInfo.rssiText);
@@ -157,7 +157,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         RouterControlByHttp.parseContent(content, routerInfo);
 
         assertEquals(null, routerInfo.routerName);
-        assertEquals(0, routerInfo.battery);
+        assertEquals(-1, routerInfo.battery);
         assertEquals(false, routerInfo.charging);
         assertEquals(0, routerInfo.antennaLevel);
         assertEquals(null, routerInfo.rssiText);

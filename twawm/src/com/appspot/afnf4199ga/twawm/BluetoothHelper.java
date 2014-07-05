@@ -221,7 +221,7 @@ public class BluetoothHelper {
         // リトライ回数設定
         BT_RESUME_TYPE btResumeType = Const.getPrefBtResumeType(service);
         int retry = TwawmUtils.getBtRetryCount(btResumeType);
-        Logger.i("Bluetooth startConnecting, BtResumeType=" + btResumeType.name() + ", retry=" + retry);
+        Logger.i("Bluetooth startConnecting, type=" + btResumeType.name() + ", retry=" + retry);
 
         for (int i = 0; i < retry; i++) {
             Logger.i("tring=" + i);
@@ -241,12 +241,25 @@ public class BluetoothHelper {
                 else if (i == 1) {
 
                     // bluetoothSocketが取れるまでループを回す
-                    Method m = remoteDevice.getClass().getMethod("createRfcommSocket", new Class[] { int.class });
                     int channel = 0;
-                    while (bluetoothSocket == null && channel < 30) {
-                        bluetoothSocket = (BluetoothSocket) m.invoke(remoteDevice, ++channel);
+                    try {
+                        Method m = remoteDevice.getClass().getMethod("createRfcommSocket", new Class[] { int.class });
+                        while (bluetoothSocket == null && channel < 10) {
+                            bluetoothSocket = (BluetoothSocket) m.invoke(remoteDevice, ++channel);
+                        }
                     }
-                    Logger.i(" channel=" + channel);
+                    catch (Throwable e) {
+                        Logger.i(" error=" + e.toString());
+                    }
+
+                    if (bluetoothSocket != null) {
+                        Logger.i(" channel=" + channel);
+                    }
+                    // 取れなければSSPを使う
+                    else {
+                        Logger.i(" using SSP");
+                        bluetoothSocket = remoteDevice.createRfcommSocketToServiceRecord(Const.BLUETOOTH_UUID);
+                    }
                 }
 
                 // 3回目はinsecure

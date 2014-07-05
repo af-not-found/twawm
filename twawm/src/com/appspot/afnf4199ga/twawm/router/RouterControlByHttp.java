@@ -524,7 +524,7 @@ public class RouterControlByHttp {
                 find = matcher.find(matcher.end());
             }
 
-            //    data[0]  ->  充電レベル 0～100
+            //    data[0]  ->  バッテリー残 0～100
             //    data[1]  ->  アンテナレベル 0～6
             //    data[2]  ->  WAN通信状態 1:HS, 2:NL, 3:Wi-Fi
             //    data[3]  ->  通信モード設定？ 1:HS, 2:NL

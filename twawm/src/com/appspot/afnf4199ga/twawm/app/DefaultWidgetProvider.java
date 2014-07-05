@@ -38,7 +38,8 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
 
             // WifiOFFまたは処理中
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_default);
-            rv.setImageViewResource(R.id.widgetImage, wifi_disabled ? R.drawable.antena_gray : R.drawable.antena_white);
+            rv.setImageViewResource(R.id.widgetImage, wifi_disabled ? R.drawable.icon_wimax_gray_batt_na
+                    : R.drawable.icon_wimax_white_batt_na);
             rv.setTextViewText(R.id.widgetText, context.getString(wifi_disabled ? R.string.wifi_off : R.string.processing));
 
             // updateAppWidget
@@ -210,7 +211,7 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_default);
-        rv.setImageViewResource(R.id.widgetImage, R.drawable.antena_gray);
+        rv.setImageViewResource(R.id.widgetImage, R.drawable.icon_wimax_gray_batt_na);
         rv.setTextViewText(R.id.widgetText, context.getString(working ? R.string.processing : R.string.pausing_en));
 
         // updateAppWidget

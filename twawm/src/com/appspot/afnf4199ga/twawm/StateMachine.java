@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.afnf.and.twawm2.R;
 import android.content.Context;
-import android.util.SparseIntArray;
 
 import com.appspot.afnf4199ga.twawm.app.BackgroundService;
 import com.appspot.afnf4199ga.twawm.app.BackgroundService.ConnectivityState;
@@ -29,6 +28,7 @@ public class StateMachine {
     // 状態
     private NETWORK_STATE netState;
     private int antennaLevel;
+    private int batteryLevel;
     private int apConnFailedCount;
     private long lockTextUntil;
     private int notifyImageId;
@@ -132,6 +132,8 @@ public class StateMachine {
         STANDBY_OK,
         /** スタンバイ失敗 */
         STANDBY_NG,
+        /** supplicant切断 */
+        BC_SUPPLICANT_DISCONNECTED,
         /** BC：W_disanabling */
         BC_WIFI_DISABLING,
         /** BC：W_disanabled */
@@ -149,36 +151,36 @@ public class StateMachine {
     }
 
     public static final String[] STATE_ARRAY = {
-            "ay-d-----0123-c---4",
-            "ay-d-----0123-c---4",
-            "ay-d----a0123-----4",
-            "-5-d----a0123-----4",
-            "-y8----9-----------",
-            "----6-8----------d-",
-            "-----78----------d-",
-            "------8----------d-",
-            "-------9---------d-",
-            "--------a----z---d-",
-            "---------012zz----4",
-            "-------------4----8",
-            "-------------3-x3-4",
-            "-------------4----4" };
+            "ay-d-----0123-c--a-4",
+            "ay-d-----0123-c--a-4",
+            "ay-d----a0123------4",
+            "-5-d----a0123------4",
+            "-y8----9------------",
+            "----6-8-----------d-",
+            "-----78-----------d-",
+            "------8-----------d-",
+            "-------9----------d-",
+            "--------a----z----d-",
+            "---------012zz-----4",
+            "-------------4-----8",
+            "-------------3-x3--4",
+            "-------------4-----4" };
 
     public static final String[] ACTION_ARRAY = {
-            "CY-D-----WW##-S---A",
-            "CY-D-----WW##-S---A",
-            "CY-D----CWW##-----A",
-            "-M-D----CWW##-----A",
-            "-YE----P-----------",
-            "----N-E----------#-",
-            "-----BE----------#-",
-            "------E----------#-",
-            "-------P---------#-",
-            "--------C----Z---#-",
-            "---------WW#ZZ----A",
-            "-------------D----E",
-            "-------------#-X#-A",
-            "-------------#----A" };
+            "CY-D-----WW##-S--C-A",
+            "CY-D-----WW##-S--C-A",
+            "CY-D----CWW##------A",
+            "-M-D----CWW##------A",
+            "-YE----P------------",
+            "----N-E-----------#-",
+            "-----BE-----------#-",
+            "------E-----------#-",
+            "-------P----------#-",
+            "--------C----Z----#-",
+            "---------WW#ZZ-----A",
+            "-------------D-----E",
+            "-------------#-X#--A",
+            "-------------#-----A" };
 
     public static final int[] ANNTENA_LEVEL_BY_STATE = {
             //
@@ -235,6 +237,7 @@ public class StateMachine {
             -1, // スタンバイボタン押下
             R.string.standby_ok, // スタンバイ成功
             R.string.standby_ng, // スタンバイ失敗
+            -1, // "BC：S_disconected
             -1, // BC：W_disanabling
             -1 // BC：W_disanabled
     };
@@ -258,6 +261,7 @@ public class StateMachine {
             -1, // スタンバイボタン押下
             R.string.standby_ok_long, // スタンバイ成功
             R.string.standby_ng_long, // スタンバイ失敗
+            -1, // "BC：S_disconected
             -1, // BC：W_disanabling
             -1 // BC：W_disanabled
     };
@@ -285,10 +289,11 @@ public class StateMachine {
 
         this.apConnFailedCount = 0;
         this.antennaLevel = -2;
+        this.batteryLevel = -1;
         this.lockTextUntil = -1;
-        this.notifyImageId = R.drawable.notif_antena_gray;
+        this.notifyImageId = R.drawable.ntficon_wimax_gray_batt_na;
         this.triggerName = service.getString(R.string.processing);
-        this.wdImageId = R.drawable.antena_gray;
+        this.wdImageId = R.drawable.icon_wimax_gray_batt_na;
         this.wdText = service.getString(wifiEnable ? R.string.processing : R.string.wifi_off);
         this.lockRouterSwitchUntil = -1;
         this.comState = COM_TYPE.NA;
@@ -313,31 +318,6 @@ public class StateMachine {
         stateCharMap.put('b', 11);
         stateCharMap.put('c', 12);
         stateCharMap.put('d', 13);
-    }
-
-    private static SparseIntArray wdAntenaImageMap = new SparseIntArray(10);
-    static {
-        wdAntenaImageMap.put(6, R.drawable.antena_green_5);
-        wdAntenaImageMap.put(5, R.drawable.antena_green_4);
-        wdAntenaImageMap.put(4, R.drawable.antena_green_3);
-        wdAntenaImageMap.put(3, R.drawable.antena_green_2);
-        wdAntenaImageMap.put(2, R.drawable.antena_green_1);
-        wdAntenaImageMap.put(1, R.drawable.antena_green_0);
-        wdAntenaImageMap.put(0, R.drawable.antena_white);
-        wdAntenaImageMap.put(-1, R.drawable.antena_white);
-        wdAntenaImageMap.put(-2, R.drawable.antena_gray);
-    }
-    private static SparseIntArray notifAntenaImageMap = new SparseIntArray(10);
-    static {
-        notifAntenaImageMap.put(6, R.drawable.notif_antena_green_4);
-        notifAntenaImageMap.put(5, R.drawable.notif_antena_green_3);
-        notifAntenaImageMap.put(4, R.drawable.notif_antena_green_2);
-        notifAntenaImageMap.put(3, R.drawable.notif_antena_green_2);
-        notifAntenaImageMap.put(2, R.drawable.notif_antena_green_0);
-        notifAntenaImageMap.put(1, R.drawable.notif_antena_green_0);
-        notifAntenaImageMap.put(0, R.drawable.notif_antena_white);
-        notifAntenaImageMap.put(-1, R.drawable.notif_antena_white);
-        notifAntenaImageMap.put(-2, R.drawable.notif_antena_gray);
     }
 
     public void perform(TRIGGER trigger) {
@@ -451,8 +431,9 @@ public class StateMachine {
             // 次状態がオンラインチェック状態でない場合は更新
             if (isOnlineCheckableState() == false) {
                 antennaLevel = ANNTENA_LEVEL_BY_STATE[nextStateInt];
-                wdImageId = wdAntenaImageMap.get(antennaLevel);
-                notifyImageId = notifAntenaImageMap.get(antennaLevel);
+                boolean inetReachable = nextStateInt == STATE.ONLINE.ordinal();
+                notifyImageId = IconSelector.selectNotifyIcon(antennaLevel, batteryLevel, inetReachable, comState);
+                wdImageId = IconSelector.selectWdIcon(antennaLevel, batteryLevel, inetReachable, comState);
             }
 
             // ロック開始
@@ -546,11 +527,12 @@ public class StateMachine {
             return;
         }
 
+        batteryLevel = -1;
         apConnFailedCount = 0;
         setState(STATE.RECCONECT_WIFI_DISABLE_WAIT);
         wdText = service.getString(R.string.processing);
-        wdImageId = R.drawable.antena_gray;
-        notifyImageId = R.drawable.notif_antena_gray;
+        wdImageId = R.drawable.icon_wimax_gray_batt_na;
+        notifyImageId = R.drawable.ntficon_wimax_gray_batt_na;
 
         comState = COM_TYPE.NA;
         comSetting = COM_TYPE.NA;
@@ -576,6 +558,12 @@ public class StateMachine {
 
         boolean prevOnline = netState == NETWORK_STATE.ONLINE;
 
+        // antennaLevel解釈
+        antennaLevel = -2;
+        if (routerInfo != null) {
+            antennaLevel = routerInfo.antennaLevel;
+        }
+
         // ConnectivityState.COMPLETE_WIFI以外ならAP無し
         ConnectivityState connectivityState = service.getConnectivityState();
         if (connectivityState != ConnectivityState.COMPLETE_WIFI) {
@@ -586,7 +574,7 @@ public class StateMachine {
                 netState = NETWORK_STATE.NOT_WM_ROUTER;
             }
             else {
-                if (inetReachable) {
+                if (inetReachable && antennaLevel >= 1) {
                     netState = NETWORK_STATE.ONLINE;
                 }
                 else {
@@ -641,6 +629,7 @@ public class StateMachine {
         }
 
         // ロック外ならwdTextを更新
+        batteryLevel = -1;
         String battNotifyText = "";
         if (isTextLocked() == false) {
             if (routerInfo == null) {
@@ -648,6 +637,7 @@ public class StateMachine {
                 battNotifyText = wdText;
             }
             else {
+                batteryLevel = routerInfo.battery;
                 if (MyStringUtlis.isEmpty(remain)) {
                     wdText = "batt=" + routerInfo.getBatteryText();
                     battNotifyText = wdText;
@@ -660,11 +650,7 @@ public class StateMachine {
         }
         notifyText += ", " + battNotifyText;
 
-        // antennaLevel解釈
-        antennaLevel = -2;
-        if (routerInfo != null) {
-            antennaLevel = routerInfo.antennaLevel;
-        }
+        // アンテナテキスト
         if (0 <= antennaLevel && antennaLevel <= 6) {
             notifyText += ", ant=" + antennaLevel + "/6";
         }
@@ -672,30 +658,8 @@ public class StateMachine {
             notifyText += ", ant=N/A";
         }
 
-        // AP_NOT_FOUNDなら灰色
-        if (netState == NETWORK_STATE.AP_NOT_FOUND) {
-            wdImageId = R.drawable.antena_gray;
-            notifyImageId = R.drawable.notif_antena_gray;
-        }
-        else {
-            // 正常ならアンテナレベルからアイコン作成
-            if (inetReachable && routerReachable) {
-                wdImageId = wdAntenaImageMap.get(antennaLevel);
-                notifyImageId = notifAntenaImageMap.get(antennaLevel);
-            }
-            // オンラインなら緑0
-            else if (inetReachable) {
-                wdImageId = R.drawable.antena_green_0;
-                notifyImageId = R.drawable.notif_antena_green_0;
-            }
-            // オフラインは白アイコン
-            else { // inetReachable == false
-                wdImageId = R.drawable.antena_white;
-                notifyImageId = R.drawable.notif_antena_white;
-            }
-        }
-
         // 通信モード、Wi-Fiスポット使用
+        comState = COM_TYPE.NA;
         if (routerInfo != null && routerInfo.nad) {
             if (routerInfo.comState != COM_TYPE.NA) {
                 comState = routerInfo.comState;
@@ -706,6 +670,22 @@ public class StateMachine {
             if (routerInfo.wifiSpotEnabled != null) {
                 wifiSpotEnabled = routerInfo.wifiSpotEnabled;
             }
+        }
+
+        // 正常ならアンテナレベルからアイコン作成
+        if (inetReachable && routerReachable) {
+            notifyImageId = IconSelector.selectNotifyIcon(antennaLevel, batteryLevel, inetReachable, comState);
+            wdImageId = IconSelector.selectWdIcon(antennaLevel, batteryLevel, inetReachable, comState);
+        }
+        // AP_NOT_FOUNDなら灰色
+        else if (netState == NETWORK_STATE.AP_NOT_FOUND || routerReachable == false) {
+            wdImageId = R.drawable.icon_wimax_gray_batt_na;
+            notifyImageId = R.drawable.ntficon_wimax_gray_batt_na;
+        }
+        // オフラインは白アイコン
+        else {
+            notifyImageId = IconSelector.selectNotifyIcon(0, batteryLevel, false, comState);
+            wdImageId = IconSelector.selectWdIcon(0, batteryLevel, false, comState);
         }
 
         // オンラインチェック完了をコールバック
@@ -909,7 +889,7 @@ public class StateMachine {
                 || current == STATE.WIFI_DISABLED;
     }
 
-    private boolean isOnlineCheckableState() {
+    public boolean isOnlineCheckableState() {
         return current == STATE.ONLINE || current == STATE.OFFLINE;
     }
 
@@ -941,8 +921,9 @@ public class StateMachine {
 
     public void setOfflineTemporarily() {
         netState = NETWORK_STATE.OFFLINE;
+        batteryLevel = -1;
         current = STATE.OFFLINE;
-        wdImageId = R.drawable.antena_white;
+        wdImageId = R.drawable.icon_wimax_white_batt_na;
         comState = COM_TYPE.NA;
         comSetting = COM_TYPE.NA;
         wifiSpotEnabled = null;
