@@ -44,8 +44,6 @@ import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
 import com.appspot.afnf4199ga.utils.MyUncaughtExceptionHandler;
 
-// FIXME wifi disconnectedでoffline検出されない？
-
 public class BackgroundService extends Service {
 
     private static BackgroundService instance;
