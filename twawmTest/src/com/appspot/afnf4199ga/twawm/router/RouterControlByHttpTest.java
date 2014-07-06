@@ -172,7 +172,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
     }
 
     public void testUpdateRouterInfo41() {
-        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_online.xml");
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_hs_ant3.xml");
         RouterInfo routerInfo = new RouterInfo();
         RouterControlByHttp.parseContent(content, routerInfo);
 
@@ -180,6 +180,86 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(64, routerInfo.battery);
         assertEquals(true, routerInfo.charging);
         assertEquals(3, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.HIGH_SPEED, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo42() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_hs_ant4.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(64, routerInfo.battery);
+        assertEquals(true, routerInfo.charging);
+        assertEquals(4, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.HIGH_SPEED, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo43() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_nl_ant3.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(64, routerInfo.battery);
+        assertEquals(true, routerInfo.charging);
+        assertEquals(3, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo44() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_nl_ant4.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(64, routerInfo.battery);
+        assertEquals(false, routerInfo.charging);
+        assertEquals(4, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo45() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_nl_ant5.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(8, routerInfo.battery);
+        assertEquals(false, routerInfo.charging);
+        assertEquals(5, routerInfo.antennaLevel);
         assertEquals(null, routerInfo.rssiText);
         assertEquals(null, routerInfo.cinrText);
         assertEquals(null, routerInfo.bluetoothAddress);

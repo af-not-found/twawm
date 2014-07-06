@@ -431,9 +431,8 @@ public class StateMachine {
             // 次状態がオンラインチェック状態でない場合は更新
             if (isOnlineCheckableState() == false) {
                 antennaLevel = ANNTENA_LEVEL_BY_STATE[nextStateInt];
-                boolean inetReachable = nextStateInt == STATE.ONLINE.ordinal();
-                notifyImageId = IconSelector.selectNotifyIcon(antennaLevel, batteryLevel, inetReachable, comState);
-                wdImageId = IconSelector.selectWdIcon(antennaLevel, batteryLevel, inetReachable, comState);
+                notifyImageId = IconSelector.selectNotifyIcon(antennaLevel, batteryLevel, netState, comState);
+                wdImageId = IconSelector.selectWdIcon(antennaLevel, batteryLevel, netState, comState);
             }
 
             // ロック開始
@@ -564,6 +563,20 @@ public class StateMachine {
             antennaLevel = routerInfo.antennaLevel;
         }
 
+        // 通信モード、Wi-Fiスポット使用
+        comState = COM_TYPE.NA;
+        if (routerInfo != null && routerInfo.nad) {
+            if (routerInfo.comState != COM_TYPE.NA) {
+                comState = routerInfo.comState;
+            }
+            if (routerInfo.comSetting != COM_TYPE.NA) {
+                comSetting = routerInfo.comSetting;
+            }
+            if (routerInfo.wifiSpotEnabled != null) {
+                wifiSpotEnabled = routerInfo.wifiSpotEnabled;
+            }
+        }
+
         // ConnectivityState.COMPLETE_WIFI以外ならAP無し
         ConnectivityState connectivityState = service.getConnectivityState();
         if (connectivityState != ConnectivityState.COMPLETE_WIFI) {
@@ -574,7 +587,9 @@ public class StateMachine {
                 netState = NETWORK_STATE.NOT_WM_ROUTER;
             }
             else {
-                if (inetReachable && antennaLevel >= 1) {
+                // inetReachableかつ、アンテナ1以上の場合だけオンラインにする
+                // Wi-Fiスポットの場合はアンテナレベル無視
+                if (inetReachable && (antennaLevel >= 1 || comState == COM_TYPE.WIFI_SPOT)) {
                     netState = NETWORK_STATE.ONLINE;
                 }
                 else {
@@ -650,43 +665,28 @@ public class StateMachine {
         }
         notifyText += ", " + battNotifyText;
 
-        // アンテナテキスト
-        if (0 <= antennaLevel && antennaLevel <= 6) {
-            notifyText += ", ant=" + antennaLevel + "/6";
-        }
-        else {
-            notifyText += ", ant=N/A";
-        }
-
-        // 通信モード、Wi-Fiスポット使用
-        comState = COM_TYPE.NA;
-        if (routerInfo != null && routerInfo.nad) {
-            if (routerInfo.comState != COM_TYPE.NA) {
-                comState = routerInfo.comState;
+        // アンテナテキスト（Wi-Fiスポットの場合は表示しない）
+        if (comState != COM_TYPE.WIFI_SPOT) {
+            int max = 6; // WMシリーズはmax6
+            if (routerInfo != null && routerInfo.nad) {
+                if (comState == COM_TYPE.HIGH_SPEED) {
+                    max = 4;
+                }
+                if (comState == COM_TYPE.NO_LIMIT) {
+                    max = 5;
+                }
             }
-            if (routerInfo.comSetting != COM_TYPE.NA) {
-                comSetting = routerInfo.comSetting;
+            if (0 <= antennaLevel && antennaLevel <= 6) {
+                notifyText += ", ant=" + antennaLevel + "/" + max;
             }
-            if (routerInfo.wifiSpotEnabled != null) {
-                wifiSpotEnabled = routerInfo.wifiSpotEnabled;
+            else {
+                notifyText += ", ant=N/A";
             }
         }
 
-        // 正常ならアンテナレベルからアイコン作成
-        if (inetReachable && routerReachable) {
-            notifyImageId = IconSelector.selectNotifyIcon(antennaLevel, batteryLevel, inetReachable, comState);
-            wdImageId = IconSelector.selectWdIcon(antennaLevel, batteryLevel, inetReachable, comState);
-        }
-        // AP_NOT_FOUNDなら灰色
-        else if (netState == NETWORK_STATE.AP_NOT_FOUND || routerReachable == false) {
-            wdImageId = R.drawable.icon_wimax_gray_batt_na;
-            notifyImageId = R.drawable.ntficon_wimax_gray_batt_na;
-        }
-        // オフラインは白アイコン
-        else {
-            notifyImageId = IconSelector.selectNotifyIcon(0, batteryLevel, false, comState);
-            wdImageId = IconSelector.selectWdIcon(0, batteryLevel, false, comState);
-        }
+        // アイコン作成
+        notifyImageId = IconSelector.selectNotifyIcon(antennaLevel, batteryLevel, netState, comState);
+        wdImageId = IconSelector.selectWdIcon(antennaLevel, batteryLevel, netState, comState);
 
         // オンラインチェック完了をコールバック
         service.onOnlineCheckComplete(nextTrigger, becomeOnline);

@@ -525,12 +525,37 @@ public class RouterControlByHttp {
             }
 
             //    data[0]  ->  バッテリー残 0～100
-            //    data[1]  ->  アンテナレベル 0～6
+            //    data[1]  ->  アンテナレベル 0～4(HS)、0～5(NL)
             //    data[2]  ->  WAN通信状態 1:HS, 2:NL, 3:Wi-Fi
             //    data[3]  ->  通信モード設定？ 1:HS, 2:NL
             //    data[4]  ->  0:充電中, 1:放電中
             //    data[5]  ->  Wi-Fiクライアント数
             //    data[6]  ->  NAD11側のWi-Fiが 1:ONか0:OFFか
+
+            //            // 通信モード毎のアンテナレベル補正
+            //            if (routerInfo.comState == COM_TYPE.HIGH_SPEED) {
+            //                switch (routerInfo.antennaLevel) {
+            //                case 4:
+            //                    routerInfo.antennaLevel = 6;
+            //                    break;
+            //                case 3:
+            //                    routerInfo.antennaLevel = 4;
+            //                    break;
+            //                }
+            //            }
+            //            else if (routerInfo.comState == COM_TYPE.NO_LIMIT) {
+            //                switch (routerInfo.antennaLevel) {
+            //                case 5:
+            //                    routerInfo.antennaLevel = 6;
+            //                    break;
+            //                case 4:
+            //                    routerInfo.antennaLevel = 5;
+            //                    break;
+            //                case 3:
+            //                    routerInfo.antennaLevel = 4;
+            //                    break;
+            //                }
+            //            }
 
             return;
         }
@@ -584,6 +609,7 @@ public class RouterControlByHttp {
                                             if (td0txt.indexOf("電波状態") != -1) {
                                                 routerInfo.antennaLevel = MyStringUtlis.toInt(
                                                         MyStringUtlis.normalize(td1txt.replace("レベル：", "")), -1);
+                                                routerInfo.comState = COM_TYPE.NA;  // WMシリーズの場合はNAとする
                                             }
                                             else if (td0txt.indexOf("rssi") != -1) {
                                                 routerInfo.rssiText = MyStringUtlis.normalize(MyStringUtlis.subStringBefore(

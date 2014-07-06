@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.afnf.and.twawm2"
     android:installLocation="internalOnly"
-    android:versionCode="49"
-    android:versionName="0.5.3" >
+    android:versionCode="50"
+    android:versionName="0.5.4" >
 
     <uses-sdk
         android:minSdkVersion="8"

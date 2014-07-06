@@ -9,7 +9,14 @@ import com.appspot.afnf4199ga.utils.MyStringUtlis;
 public class RouterInfo {
 
     public static enum COM_TYPE {
-        NA, HIGH_SPEED, NO_LIMIT, WIFI_SPOT;
+        /** WMシリーズの場合はNAとなる */
+        NA,
+        /** NAD HS */
+        HIGH_SPEED,
+        /** NAD NL */
+        NO_LIMIT,
+        /** NAD Wi-Fiスポット */
+        WIFI_SPOT;
 
         public static COM_TYPE ordinalOf(int ordinal) {
             Iterator<COM_TYPE> ite = EnumSet.allOf(COM_TYPE.class).iterator();
