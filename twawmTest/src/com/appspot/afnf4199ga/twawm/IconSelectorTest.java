@@ -142,15 +142,15 @@ public class IconSelectorTest extends TestCase {
 
         {
             NETWORK_STATE ns = NETWORK_STATE.ONLINE;
-            assertEquals(R.drawable.ntficon_wifi_green_batt_000, IconSelector.selectNotifyIcon(1, 0, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_010, IconSelector.selectNotifyIcon(1, 10, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_020, IconSelector.selectNotifyIcon(1, 20, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_040, IconSelector.selectNotifyIcon(2, 40, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_060, IconSelector.selectNotifyIcon(3, 60, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_070, IconSelector.selectNotifyIcon(4, 71, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_080, IconSelector.selectNotifyIcon(5, 89, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_100, IconSelector.selectNotifyIcon(6, 100, ns, ot));
-            assertEquals(R.drawable.ntficon_wifi_green_batt_na, IconSelector.selectNotifyIcon(6, -1, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_1_batt_000, IconSelector.selectNotifyIcon(1, 0, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_1_batt_010, IconSelector.selectNotifyIcon(1, 10, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_1_batt_020, IconSelector.selectNotifyIcon(1, 20, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_2_batt_040, IconSelector.selectNotifyIcon(2, 40, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_3_batt_060, IconSelector.selectNotifyIcon(3, 60, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_4_batt_070, IconSelector.selectNotifyIcon(4, 71, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_5_batt_080, IconSelector.selectNotifyIcon(5, 89, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_6_batt_100, IconSelector.selectNotifyIcon(6, 100, ns, ot));
+            assertEquals(R.drawable.ntficon_wifi_green_6_batt_na, IconSelector.selectNotifyIcon(6, -1, ns, ot));
         }
 
         {
@@ -314,15 +314,15 @@ public class IconSelectorTest extends TestCase {
 
         {
             NETWORK_STATE ns = NETWORK_STATE.ONLINE;
-            assertEquals(R.drawable.icon_wifi_green_batt_000, IconSelector.selectWdIcon(1, 0, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_010, IconSelector.selectWdIcon(1, 10, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_020, IconSelector.selectWdIcon(1, 20, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_040, IconSelector.selectWdIcon(2, 40, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_060, IconSelector.selectWdIcon(3, 60, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_070, IconSelector.selectWdIcon(4, 71, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_080, IconSelector.selectWdIcon(5, 89, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_100, IconSelector.selectWdIcon(6, 100, ns, ot));
-            assertEquals(R.drawable.icon_wifi_green_batt_na, IconSelector.selectWdIcon(6, -1, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_1_batt_000, IconSelector.selectWdIcon(1, 0, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_1_batt_010, IconSelector.selectWdIcon(1, 10, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_1_batt_020, IconSelector.selectWdIcon(1, 20, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_2_batt_040, IconSelector.selectWdIcon(2, 40, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_3_batt_060, IconSelector.selectWdIcon(3, 60, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_4_batt_070, IconSelector.selectWdIcon(4, 71, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_5_batt_080, IconSelector.selectWdIcon(5, 89, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_6_batt_100, IconSelector.selectWdIcon(6, 100, ns, ot));
+            assertEquals(R.drawable.icon_wifi_green_6_batt_na, IconSelector.selectWdIcon(6, -1, ns, ot));
         }
 
         {

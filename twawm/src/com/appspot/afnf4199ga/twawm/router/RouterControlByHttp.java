@@ -591,6 +591,10 @@ public class RouterControlByHttp {
                 {
                     // WMシリーズ
                     if (routerInfo.nad == false) {
+
+                        // WMシリーズのWiMAXはNAとする
+                        routerInfo.comState = COM_TYPE.NA;
+
                         Elements trs = doc.select(".table_common .small_item_info_tr");
                         if (trs != null) {
                             Iterator<Element> iterator = trs.iterator();
@@ -609,7 +613,6 @@ public class RouterControlByHttp {
                                             if (td0txt.indexOf("電波状態") != -1) {
                                                 routerInfo.antennaLevel = MyStringUtlis.toInt(
                                                         MyStringUtlis.normalize(td1txt.replace("レベル：", "")), -1);
-                                                routerInfo.comState = COM_TYPE.NA;  // WMシリーズの場合はNAとする
                                             }
                                             else if (td0txt.indexOf("rssi") != -1) {
                                                 routerInfo.rssiText = MyStringUtlis.normalize(MyStringUtlis.subStringBefore(
@@ -622,6 +625,11 @@ public class RouterControlByHttp {
                                             else if (td0txt.indexOf("macアドレス(bluetooth)") != -1) {
                                                 if (MyStringUtlis.isEmpty(td1txt) == false) {
                                                     routerInfo.bluetoothAddress = td1txt.toUpperCase(Locale.US);
+                                                }
+                                            }
+                                            else if (td0txt.indexOf("接続状態") != -1) {
+                                                if (MyStringUtlis.isEmpty(td1txt) == false && td1txt.indexOf("公衆無線LAN") != -1) {
+                                                    routerInfo.comState = COM_TYPE.WIFI_SPOT;
                                                 }
                                             }
                                             else if (td0txt.indexOf("電池残量") != -1) {

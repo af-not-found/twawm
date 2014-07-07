@@ -88,6 +88,26 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
     }
 
     public void testUpdateRouterInfo22() {
+        String content = MyTestUtils.getResourceAsString("/test-data/info_btn/3800_2_spot.htm");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals("Aterm WM3800R", routerInfo.routerName);
+        assertEquals(65, routerInfo.battery);
+        assertEquals(false, routerInfo.charging);
+        assertEquals(5, routerInfo.antennaLevel);
+        assertEquals("-65", routerInfo.rssiText);
+        assertEquals("25", routerInfo.cinrText);
+        assertEquals("1A:88:72:63:62:AB", routerInfo.bluetoothAddress);
+        assertEquals("7E27D5C477DC911EF64659825B5D3552", RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.WIFI_SPOT, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo23() {
         String content = MyTestUtils.getResourceAsString("/test-data/info_btn/nad11.htm", false);
         RouterInfo routerInfo = new RouterInfo();
         routerInfo.nad = true;
@@ -109,7 +129,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(null, routerInfo.wifiSpotEnabled);
     }
 
-    public void testUpdateRouterInfo23() {
+    public void testUpdateRouterInfo24() {
         String content = MyTestUtils.getResourceAsString("/test-data/index_contents_pass/nad11.htm", false);
         RouterInfo routerInfo = new RouterInfo();
         routerInfo.nad = true;
@@ -267,6 +287,46 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(false, routerInfo.notInitialized);
         assertEquals(true, routerInfo.hasStandbyButton);
         assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo46() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_spot_ant3.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(64, routerInfo.battery);
+        assertEquals(true, routerInfo.charging);
+        assertEquals(3, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.WIFI_SPOT, routerInfo.comState);
+        assertEquals(COM_TYPE.NA, routerInfo.comSetting);
+        assertEquals(null, routerInfo.wifiSpotEnabled);
+    }
+
+    public void testUpdateRouterInfo47() {
+        String content = MyTestUtils.getResourceAsString("/test-data/status_get/nad11_spot_ant5.xml");
+        RouterInfo routerInfo = new RouterInfo();
+        RouterControlByHttp.parseContent(content, routerInfo);
+
+        assertEquals(null, routerInfo.routerName);
+        assertEquals(64, routerInfo.battery);
+        assertEquals(true, routerInfo.charging);
+        assertEquals(5, routerInfo.antennaLevel);
+        assertEquals(null, routerInfo.rssiText);
+        assertEquals(null, routerInfo.cinrText);
+        assertEquals(null, routerInfo.bluetoothAddress);
+        assertEquals(null, RouterControlByHttp.hiddenMap.get("SESSION_ID"));
+        assertEquals(false, routerInfo.notInitialized);
+        assertEquals(true, routerInfo.hasStandbyButton);
+        assertEquals(COM_TYPE.WIFI_SPOT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
     }

@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='EUC-JP'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='ja' lang='ja'>
+<head>
+<!-- 雀の往来 -->
+<meta http-equiv='Content-Type' content='text/html; charset=EUC-JP' />
+<meta http-equiv='Content-Script-Type' content='text/javascript' />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<title>[情報] - [現在の状態(外部アプリケーション用)]</title>
+<link rel='stylesheet' type='text/css' href='/common/info.css' />
+<link rel='stylesheet' type='text/css' href='/common/common.css' />
+<script type='text/javascript' src='/common/menu.js'></script>
+<script type='text/javascript' src='/common/help.js'></script>
+
+
+</head>
+<body onload='init_func()'>
+<noscript>
+</noscript>
+<script type="text/javascript" src='/common/cgi.js'>
+</script>
+<script type="text/javascript">
+<!--
+
+
+function ping_set_click()
+{
+    if(gId('WEB_PING').checked){
+        alert('Ping応答を許可します。'); 
+        gId('WEB_PING2').value = 'on';
+        SubmitGuard();
+        gId('info_btn_start').submit();
+    } else {
+        alert('Ping応答を禁止します。'); 
+        gId('WEB_PING2').value = 'off';
+        SubmitGuard();
+        gId('info_btn_stop').submit();
+    }
+}
+
+
+function wimax_disc_click()
+{
+    SubmitGuard();
+    gId('info_btn_wimax').submit();
+}
+
+function wifi_disc_click()
+{
+    SubmitGuard();
+    gId('info_btn_wifi').submit();
+}
+
+function wan_priority_click()
+{
+    SubmitGuard();
+    gId('info_btn_priority').submit();
+}
+
+function remote_reboot_click()
+{
+    SubmitGuard();
+    gId('info_btn_reboot').submit();
+}
+
+function remote_standby_click()
+{
+    SubmitGuard();
+    gId('info_btn_standby').submit();
+}
+
+function remote_btstandby_click()
+{
+    SubmitGuard();
+    gId('info_btn_btstandby').submit();
+}
+
+
+/* イベントの設定 */
+function Init_Event()
+{
+    gId('UPDATE_BUTTON').onclick = function(){
+        Reload();
+    }
+}
+
+// -->
+</script>
+
+<div>
+<input type=hidden id='DHCP_ENABLE' name='DHCP_ENABLE' value='enable' />
+<input type=hidden id='WEB_PING2' name='WEB_PING2' value='' />
+</div>
+<div><input type="hidden" id="current_pane" value="5" /></div>
+<div class='left_menu'>
+<div class='title_back'>
+<div class='off'><a href="#content_anchor"><img src='/common/spacer.gif' alt="メニューをスキップして本文へ" /></a></div>
+<a href='./index_contents'><img src='/common/image_title.gif' width="210" height="75" alt='Atermロゴ' /></a>
+</div>
+<div class='product'>
+<span>A t e r m　W M 3 8 0 0 R</span>
+<br />
+A T E R M - 1 2 3 4 5 6
+</div>
+<div class='pane' id='pane7'>
+
+<p class='left_help_space'><img src='/common/help_btn.gif' alt='ヘルプ' width='18' height='17' class='help_icon' />ヘルプ表示</p>
+</div>
+<input type='hidden' id='ACTION_MODE' name='ACTION_MODE' value='local' />
+<input type='hidden' id='AIR_CARD'    name='AIR_CARD'    value='' />
+<input type='hidden' id='UPNP_STATUS' name='UPNP_STATUS' value='UPnP NoUse' />
+<input type='hidden' id='DHCP_MODE'   name='DHCP_MODE'   value='enable' />
+<input type='hidden' id='DHCPE_ASSIGNABLE' name='DHCPE_ASSIGNABLE' value='manual' />
+<input type='hidden' id='CONTENTS_FILTER' name='CONTENTS_FILTER' value='disable' />
+</div>
+<div class='contents'>
+<div class='off'>現在のページの位置</div><div class='bread_crumb_list'>トップページ ＞ 情報 ＞ 現在の状態(外部アプリケーション用)</div>
+<div class='off'><a name='content_anchor' id='content_anchor'>本文ここから</a></div>
+<form name='form_main' id='form_main' action='./info_btn' method='post'>
+<div class='sp_posi'><input type='image' alt=' ' src='/common/spacer.gif' onMouseDown=return; /></div>
+<h1>現在の状態(外部アプリケーション用)</h1>
+<table class='table_common'>
+<tr>
+<td colspan='2'><h2>装置情報<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の装置情報を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>装置名<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の装置名を表示します。');return false;" /></td>
+<td class='small_item_td2'>ATERM-123456</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>ファームウェアバージョン<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品で使用するファームウェアのバージョンを表示します。');return false;" /></td>
+<td class='small_item_td2'>1.2.0</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>ファームウェア更新通知<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のファームウェア更新通知を表示します。');return false;" /></td>
+<td class='small_item_td2'>新ファームウェアはありません</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>電池残量<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の電池の残量を表示します。');return false;" /></td>
+<td class='small_item_td2'>［■■■■■■■□□□］（65％）</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>優先接続先設定<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のWAN側の優先接続先を表示します。');return false;" /></td>
+<td class='small_item_td2'>WiMAXサービス優先</td>
+</tr>
+<tr>
+<td colspan='2'><h2>WiMAX情報<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のWiMAX情報を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>BSID<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'BSIDを表示します。');return false;" /></td>
+<td class='small_item_td2'>***</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>RSSI<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '受信レベル（RSSI）を表示します。');return false;" /></td>
+<td class='small_item_td2'>-65 (0xffffffbf)</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>CINR<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '受信レベル（CINR）を表示します。');return false;" /></td>
+<td class='small_item_td2'>25 (0x19)</td>
+</tr>
+<tr>
+<td colspan='2'><h2>無線情報(aaaaaaaa)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の無線情報を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>使用チャネル<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANで使用するチャネルを表示します。');return false;" /></td>
+<td class='small_item_td2' colspan='2'>3</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>ネットワーク名(SSID)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANのネットワーク名(SSID)を表示します。');return false;" /></td>
+<td class='small_item_td2' colspan='2'>aaaaaaaa</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>WiFi WAN側連動<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'WiFi WAN側連動の使用状態を表示します。');return false;" /></td>
+<td class='small_item_td2'>disable</td>
+</tr>
+<tr>
+<td colspan='2'><h2>無線情報(bbbbbbb)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の無線情報を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>使用チャネル<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANで使用するチャネルを表示します。');return false;" /></td>
+<td class='small_item_td2' colspan='2'>通信機能停止</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>ネットワーク名(SSID)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '無線LANのネットワーク名(SSID)を表示します。');return false;" /></td>
+<td class='small_item_td2' colspan='2'>通信機能停止</td>
+</tr>
+<tr>
+<td colspan='2'><h2>Bluetooth情報<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のBluetooth情報を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>Bluetooth名<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, 'Bluetooth名を表示します。');return false;" /></td>
+<td class='small_item_td2' colspan='2'>642723-bt</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>MACアドレス(Bluetooth)<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品で使用するBluetooth側のMACアドレスを表示します。');return false;" /></td>
+<td class='small_item_td2' colspan='2'>1a:88:72:63:62:ab</td>
+</tr>
+<tr>
+<td colspan='2'><h2>接続状態<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の接続状態を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>動作モード<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のWAN側への接続方式（動作モード）を表示します。');return false;" /></td>
+<td class='small_item_td2'>ローカルルータ</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>接続状態<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のWAN側の接続状態を表示します。');return false;" /></td>
+<td class='small_item_td2'>インターネット利用可能(公衆無線LAN)</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>電波状態<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品の電波状態を表示します。');return false;" /></td>
+<td class='small_item_td2'>レベル：5</td>
+</tr>
+<tr>
+<td colspan='2'><h2>LAN側状態<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のLAN側の状態を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>IPアドレス／ネットマスク<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品が使用するLAN側のIPアドレス／ネットマスクを表示します。');return false;" /></td>
+<td class='small_item_td2'>    192.168.0.1/24</td>
+</tr>
+<tr>
+<td colspan='2'><h2>WAN側状態<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品のWAN側の状態を表示します。');return false;" /></h2></td>
+</tr><tr class='small_item_info_tr'>
+<td class='small_item_td'>IPアドレス／ネットマスク<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品が使用するWAN側のIPアドレス／ネットマスクを表示します。');return false;" /></td>
+<td class='small_item_td2'>    49.133.123.124/32</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>ゲートウェイ<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品が使用するWAN側の ゲートウェイを表示します。');return false;" /></td>
+<td class='small_item_td2'>119.107.202.251</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>プライマリDNS<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品が使用するWAN側のプライマリDNSを表示します。');return false;" /></td>
+<td class='small_item_td2'> 119.107.211.87</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>セカンダリDNS<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品が使用するWAN側のセカンダリDNSを表示します。');return false;" /></td>
+<td class='small_item_td2'> 119.107.211.215</td>
+</tr>
+<tr class='small_item_info_tr'>
+<td class='small_item_td'>ドメイン名<input type='image' class='help' alt='help' value='ヘルプ' src='/common/help_btn.gif' onclick="HelpShow(event, '本商品が使用するWAN側のドメイン名を表示します。');return false;" /></td>
+<td class='small_item_td2'>uqc.ne.jp</td>
+</tr>
+</table>
+<input type='hidden' id='PERMIT_MODEL' name='PERMIT_MODEL' value='enable' />
+<div class='button_item'>
+<hr />
+<input type='button' id='WIMAX_DISC' value='WiAMX切断' onclick='wimax_disc_click()' />
+<input type='button' id='WIFI_DISC' value='公衆無線LAN切断' onclick='wifi_disc_click()' />
+<input type='button' id='WAN_PRIORITY' value='無線優先接続切替' onclick='wan_priority_click()' />
+<hr />
+<input type='button' id='REMOOTE_BTSTANDBY' value='スタンバイ(Wake on Bluetooth)' onclick='remote_btstandby_click()' />
+<input type='button' id='REMOOTE_STANDBY' value='スタンバイ' onclick='remote_standby_click()' />
+<input type='button' id='REMOOTE_REBOOT' value='再起動' onclick='remote_reboot_click()' />
+<hr />
+</div>
+
+<div class='button_item'>
+<input type='button' name='UPDATE_BUTTON' id='UPDATE_BUTTON' value='最新状態に更新' onclick='Reload()' />
+</div>
+<hr />
+<div class='top_button'>
+<input type='button' value='トップページへ戻る' onclick='Back()' />
+</div>
+<div>
+<input type='hidden' name='DISABLED_CHECKBOX' id='DISABLED_CHECKBOX' value='' />
+<input type='hidden' id='CHECK_ACTION_MODE' name='CHECK_ACTION_MODE' value='1' />
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' />
+</div>
+</form>
+</div>
+<form name='info_btn_wimax' id='info_btn_wimax' action='./info_btn_wimax' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /><input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' /></div><!-- MAC IE5.2 FORM Submit dummy input -->
+</form>
+<form name='info_btn_wifi' id='info_btn_wifi' action='./info_btn_wifi' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /><input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' /></div><!-- MAC IE5.2 FORM Submit dummy input -->
+</form>
+<form name='info_btn_reboot' id='info_btn_reboot' action='./info_btn_reboot' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /><input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' /></div><!-- MAC IE5.2 FORM Submit dummy input -->
+</form>
+<form name='info_btn_priority' id='info_btn_priority' action='./info_btn_priority' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /><input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' /></div><!-- MAC IE5.2 FORM Submit dummy input -->
+</form>
+<form name='info_btn_standby' id='info_btn_standby' action='./info_btn_standby' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /><input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' /></div><!-- MAC IE5.2 FORM Submit dummy input -->
+</form>
+<form name='info_btn_btstandby' id='info_btn_btstandby' action='./info_btn_btstandby' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /><input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' /></div><!-- MAC IE5.2 FORM Submit dummy input -->
+</form><form name='info_btn_start' id='info_btn_start' action='./info_btn_start' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /></div><!-- MAC IE5.2では空FORMのSubmitは不可のためダミーのinputを使用 -->
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' />
+</form><form name='info_btn_stop' id='info_btn_stop' action='./info_btn_stop' method='post'>
+<div><input type='hidden' name='DUMMY' id='DUMMY' value='' /></div><!-- MAC IE5.2では空FORMのSubmitは不可のためダミーのinputを使用 -->
+<input type='hidden' id='SESSION_ID' name='SESSION_ID' value='7E27D5C477DC911EF64659825B5D3552' />
+</form><div id='help' style='position:absolute; top:100px; left:50px; width:12em; border-top:2px #b7c3dd solid; border-left:2px #b7c3dd solid; border-right:3px #4b5d83 solid; border-bottom:3px #4b5d83 solid; background-color: #f1f1f1; font-size:smaller; visibility : hidden;'>
+<!-- ヘルプで表示するブロック -->
+<div style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; border-bottom:2px #35589e solid;'><span style='background-color: #35589e; height:1.5em; width:100%; color:white; font-weight:bold; padding:1px 2px; '>ヘルプ<img src='/common/close.gif' onmousedown='HelpHide();' style='position:absolute; top:1px; right:0px;' alt='' /></span></div>
+<div style='padding: 5px 5px 0px; '><span id='help_msg'>　</span><br /><br />
+<form>
+<div style='text-align: center; '><input type='button' value='閉じる' onclick='HelpHide();' onmousedown='mouseDownCansel= true;' /></div>
+</form>
+</div>
+</div>
+</body>
+</html>

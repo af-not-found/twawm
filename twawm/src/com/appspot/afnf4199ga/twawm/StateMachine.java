@@ -565,15 +565,17 @@ public class StateMachine {
 
         // 通信モード、Wi-Fiスポット使用
         comState = COM_TYPE.NA;
-        if (routerInfo != null && routerInfo.nad) {
+        if (routerInfo != null) {
             if (routerInfo.comState != COM_TYPE.NA) {
                 comState = routerInfo.comState;
             }
-            if (routerInfo.comSetting != COM_TYPE.NA) {
-                comSetting = routerInfo.comSetting;
-            }
-            if (routerInfo.wifiSpotEnabled != null) {
-                wifiSpotEnabled = routerInfo.wifiSpotEnabled;
+            if (routerInfo.nad) {
+                if (routerInfo.comSetting != COM_TYPE.NA) {
+                    comSetting = routerInfo.comSetting;
+                }
+                if (routerInfo.wifiSpotEnabled != null) {
+                    wifiSpotEnabled = routerInfo.wifiSpotEnabled;
+                }
             }
         }
 
@@ -588,8 +590,7 @@ public class StateMachine {
             }
             else {
                 // inetReachableかつ、アンテナ1以上の場合だけオンラインにする
-                // Wi-Fiスポットの場合はアンテナレベル無視
-                if (inetReachable && (antennaLevel >= 1 || comState == COM_TYPE.WIFI_SPOT)) {
+                if (inetReachable && antennaLevel >= 1) {
                     netState = NETWORK_STATE.ONLINE;
                 }
                 else {
@@ -638,9 +639,11 @@ public class StateMachine {
             stopBattCalc(service, now);
         }
 
-        // NADシリーズでN/A以外なら、通信モード追加
-        if (routerInfo != null && routerInfo.nad && routerInfo.comState != COM_TYPE.NA) {
-            notifyText += "(" + routerInfo.comState.toString() + ")";
+        if (routerInfo != null) {
+            // N/A以外なら、通信モード追加
+            if (routerInfo.comState != COM_TYPE.NA) {
+                notifyText += "(" + routerInfo.comState.toString() + ")";
+            }
         }
 
         // ロック外ならwdTextを更新
@@ -665,23 +668,21 @@ public class StateMachine {
         }
         notifyText += ", " + battNotifyText;
 
-        // アンテナテキスト（Wi-Fiスポットの場合は表示しない）
-        if (comState != COM_TYPE.WIFI_SPOT) {
-            int max = 6; // WMシリーズはmax6
-            if (routerInfo != null && routerInfo.nad) {
-                if (comState == COM_TYPE.HIGH_SPEED) {
-                    max = 4;
-                }
-                if (comState == COM_TYPE.NO_LIMIT) {
-                    max = 5;
-                }
+        // アンテナテキスト
+        int max = 6; // WMシリーズはmax6
+        if (routerInfo != null && routerInfo.nad) {
+            if (comState == COM_TYPE.HIGH_SPEED) {
+                max = 4;
             }
-            if (0 <= antennaLevel && antennaLevel <= 6) {
-                notifyText += ", ant=" + antennaLevel + "/" + max;
+            if (comState == COM_TYPE.NO_LIMIT || comState == COM_TYPE.WIFI_SPOT) {
+                max = 5;
             }
-            else {
-                notifyText += ", ant=N/A";
-            }
+        }
+        if (0 <= antennaLevel && antennaLevel <= 6) {
+            notifyText += ", ant=" + antennaLevel + "/" + max;
+        }
+        else {
+            notifyText += ", ant=N/A";
         }
 
         // アイコン作成

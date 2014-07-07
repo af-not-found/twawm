@@ -53,10 +53,20 @@ public class IconSelector {
             }
 
         case WIFI_SPOT:
-            if (netState == NETWORK_STATE.ONLINE) {
-                return R.drawable.ntficon_wifi_green_batt_000 + battOffset;
-            }
-            else {
+            switch (antennaLevel) {
+            case 1:
+                return R.drawable.ntficon_wifi_green_1_batt_000 + battOffset;
+            case 2:
+                return R.drawable.ntficon_wifi_green_2_batt_000 + battOffset;
+            case 3:
+                return R.drawable.ntficon_wifi_green_3_batt_000 + battOffset;
+            case 4:
+                return R.drawable.ntficon_wifi_green_4_batt_000 + battOffset;
+            case 5:
+                return R.drawable.ntficon_wifi_green_5_batt_000 + battOffset;
+            case 6:
+                return R.drawable.ntficon_wifi_green_6_batt_000 + battOffset;
+            default:
                 return R.drawable.ntficon_wifi_white_batt_000 + battOffset;
             }
 
@@ -127,13 +137,22 @@ public class IconSelector {
             }
 
         case WIFI_SPOT:
-            if (netState == NETWORK_STATE.ONLINE) {
-                return R.drawable.icon_wifi_green_batt_000 + battOffset;
-            }
-            else {
+            switch (antennaLevel) {
+            case 1:
+                return R.drawable.icon_wifi_green_1_batt_000 + battOffset;
+            case 2:
+                return R.drawable.icon_wifi_green_2_batt_000 + battOffset;
+            case 3:
+                return R.drawable.icon_wifi_green_3_batt_000 + battOffset;
+            case 4:
+                return R.drawable.icon_wifi_green_4_batt_000 + battOffset;
+            case 5:
+                return R.drawable.icon_wifi_green_5_batt_000 + battOffset;
+            case 6:
+                return R.drawable.icon_wifi_green_6_batt_000 + battOffset;
+            default:
                 return R.drawable.icon_wifi_white_batt_000 + battOffset;
             }
-
             // WMシリーズ
         default:
             switch (antennaLevel) {
