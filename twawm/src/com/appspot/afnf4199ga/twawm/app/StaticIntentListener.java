@@ -3,9 +3,12 @@ package com.appspot.afnf4199ga.twawm.app;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiManager;
 
 import com.appspot.afnf4199ga.twawm.Const;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig.SsidFilterAction;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 
@@ -25,7 +28,10 @@ public class StaticIntentListener extends BroadcastReceiver {
                 Logger.v("StaticIntentListener ACTION_BOOT_COMPLETED");
 
                 // サービス開始を試みる
-                startServiceIfNeed(context, service);
+                boolean started = startServiceOnWifiStarted(context, service);
+                if (started == false) {
+                    startServiceOnSupplicantCompleted(context, service);
+                }
             }
 
             // 端末シャットダウン
@@ -48,13 +54,24 @@ public class StaticIntentListener extends BroadcastReceiver {
                 if (state == WifiManager.WIFI_STATE_ENABLED) {
 
                     // サービス開始を試みる
-                    startServiceIfNeed(context, service);
+                    startServiceOnWifiStarted(context, service);
+                }
+            }
+            // supplicant状態更新
+            else if (AndroidUtils.isActionEquals(intent, WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)) {
+
+                // 完了intentなら
+                SupplicantState newstate = intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE);
+                if (newstate != null && newstate == SupplicantState.COMPLETED) {
+
+                    // サービス開始を試みる
+                    startServiceOnSupplicantCompleted(context, service);
                 }
             }
         }
     }
 
-    private void startServiceIfNeed(Context context, BackgroundService service) {
+    private boolean startServiceOnWifiStarted(Context context, BackgroundService service) {
 
         // サービス未起動で
         if (service == null) {
@@ -70,8 +87,30 @@ public class StaticIntentListener extends BroadcastReceiver {
                     Logger.v("StaticIntentListener WIFI_STATE_ENABLED");
                     Intent bootIntent = new Intent(context, BackgroundService.class);
                     context.startService(bootIntent);
+
+                    return true;
                 }
             }
         }
+
+        return false;
     }
+
+    private void startServiceOnSupplicantCompleted(Context context, BackgroundService service) {
+
+        // サービス未起動で
+        if (service == null) {
+
+            // SSIDフィルタをチェック
+            SsidFilterAction config = WifiNetworkConfig.getSsidFilterActionForCurrentAP(context, null);
+            if (config == SsidFilterAction.START) {
+
+                // サービス起動
+                Logger.v("StaticIntentListener SUPPLICANT_STATE_CHANGED_ACTION");
+                Intent bootIntent = new Intent(context, BackgroundService.class);
+                context.startService(bootIntent);
+            }
+        }
+    }
+
 }

@@ -22,6 +22,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -30,6 +31,9 @@ import android.widget.EditText;
 import com.appspot.afnf4199ga.twawm.BluetoothHelper;
 import com.appspot.afnf4199ga.twawm.Const;
 import com.appspot.afnf4199ga.twawm.StateMachine;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig.SsidFilterAction;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig.WifiNetwork;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
@@ -307,6 +311,43 @@ public class MyPreferenceActivity extends PreferenceActivity {
 
         // リスナー登録
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(lister);
+
+        // SSIDフィルタ
+        try {
+            PreferenceCategory ssidFilterCat = (PreferenceCategory) findPreference(getText(R.string.menu_key_ssid_filter));
+            ssidFilterCat.removeAll();
+
+            String[] entries = getResources().getStringArray(R.array.entries_menu_action_ssid_filter);
+            String[] entryValues = getResources().getStringArray(R.array.entryValues_menu_action_ssid_filter);
+
+            // WifiNetwork取得
+            List<WifiNetwork> networks = WifiNetworkConfig.getNetworks(this);
+            if (networks == null) {
+                ssidFilterCat.setTitle(R.string.ssid_filter_wifi_disabled_toast);
+            }
+            else {
+                ssidFilterCat.setTitle(R.string.menu_ssid_filter_summay); // removeAllでタイトルも消えてしまう
+
+                for (WifiNetwork config : networks) {
+                    String key = Const.PREF_PREFIX_SSID_FILTER_ACTION + config.hash;
+                    SsidFilterAction val = Const.getPrefSsidFilterConfig(this, config.ssid);
+                    ListPreference ssidPref = new ListPreference(this);
+                    ssidPref.setKey(key);
+                    ssidPref.setValue("" + val.ordinal());
+                    ssidPref.setTitle(config.ssid);
+                    ssidPref.setDialogTitle(R.string.menu_ssid_filter_summay);
+                    ssidPref.setEntries(entries);
+                    ssidPref.setEntryValues(entryValues);
+                    updateSummary(ssidPref, entries, entryValues);
+
+                    // ListPreference追加
+                    ssidFilterCat.addPreference(ssidPref);
+                }
+            }
+        }
+        catch (Exception e) {
+            Logger.e("init ssid filter failed", e);
+        }
     }
 
     @Override
@@ -376,11 +417,17 @@ public class MyPreferenceActivity extends PreferenceActivity {
 
                     // 「スタンバイ後の挙動」のsummaryを更新
                     else if (MyStringUtlis.eqauls(key, getString(R.string.menu_key_action_after_suspend))) {
-
-                        // 更新実行
                         String[] entries = getResources().getStringArray(R.array.entries_menu_action_after_suspend);
                         String[] entryValues = getResources().getStringArray(R.array.entryValues_menu_action_after_suspend);
                         updateSummary(prefListActionAfterSuspend, entries, entryValues);
+                    }
+
+                    // SSIDフィルタのsummaryを更新
+                    else if (key.indexOf(Const.PREF_PREFIX_SSID_FILTER_ACTION) == 0) {
+                        String[] entries = getResources().getStringArray(R.array.entries_menu_action_ssid_filter);
+                        String[] entryValues = getResources().getStringArray(R.array.entryValues_menu_action_ssid_filter);
+                        ListPreference ssidPref = (ListPreference) findPreference(key);
+                        updateSummary(ssidPref, entries, entryValues);
                     }
                 }
             }

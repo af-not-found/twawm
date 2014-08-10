@@ -8,12 +8,14 @@ import java.util.UUID;
 
 import net.afnf.and.twawm2.R;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
 import com.appspot.afnf4199ga.twawm.TwawmUtils.BT_RESUME_TYPE;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig.SsidFilterAction;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
@@ -83,6 +85,12 @@ public class Const {
     public static final String URL_WIKI_LOGSEND_WHAT = "http://w.livedoor.jp/twawm/lite/d/%a5%ed%a5%b0%a4%ce%c1%f7%bf%ae%a4%cb%a4%c4%a4%a4%a4%c6";
     public static final String URL_WIKI_LOGSEND_REPLY = "http://w.livedoor.jp/twawm/bbs/16128/l50";
     public static final String URL_WIKI_NOT_WORKS = "http://w.livedoor.jp/twawm/lite/d/FAQ";
+
+    public static final int ACTIVITY_FLAG_ROOT = Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+            | Intent.FLAG_ACTIVITY_CLEAR_TASK;
+    public static final int ACTIVITY_FLAG_SUB = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY;
+
+    public static final String PREF_PREFIX_SSID_FILTER_ACTION = "menu_ssid_filter_action_";
 
     /**
      * 初期化
@@ -226,6 +234,19 @@ public class Const {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean("menu_disable_wifi_when_ap_conn_failed",
                 Boolean.parseBoolean(context.getString(R.string.dv_menu_disable_wifi_when_ap_conn_failed)));
+    }
+
+    /** 再接続回数 */
+    public static SsidFilterAction getPrefSsidFilterConfig(Context context, String ssid) {
+        if (MyStringUtlis.isEmpty(ssid)) {
+            return SsidFilterAction.KEEP;
+        }
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String hash = WifiNetworkConfig.hashSsid(ssid, null);
+        String key = Const.PREF_PREFIX_SSID_FILTER_ACTION + hash;
+        int val = AndroidUtils.getPrefInt(pref, key, "" + SsidFilterAction.KEEP.ordinal());
+        return SsidFilterAction.ordinalOf(val);
     }
 
     /** ウィザードを自動起動する */

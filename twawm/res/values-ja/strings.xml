@@ -24,10 +24,13 @@
     <string name="invalid_format">[警告] 入力フォーマットが不正です</string>
     <string name="router_ip_addr_not_set">[警告] ルーターIPアドレスが設定されていません</string>
     <string name="bt_error_need_to_reboot">[警告] Bluetoothエラー発生、端末の再起動が必要かも？</string>
+    <string name="ssid_filter_short">SSIDﾌｨﾙﾀ</string>
+    <string name="ssid_filter_wifi_disabled_toast">Wi-Fiをオンにしてください</string>
+    <string name="ssid_filter_stopped_toast">SSIDフィルタによりtwawm2サービスは停止されました</string>
 
     <!-- 初期設定ウィザード -->
     <string name="wizard_title">初期設定ウィザード</string>
-    <string name="wizard_text_init">これからtwawm2の初期設定を行います。この作業は5分程度で終わります。</string>
+    <string name="wizard_text_init">これからtwawm2の初期設定を行います。この作業は3分程度で終わります。</string>
     <string name="wizard_text_connection">Wi-Fiを有効にしてから、対応ルーターに接続してください。</string>
     <string name="wizard_text_input_router_ip">ルーターに接続できません。ルーターIPアドレスを入力して下さい。\n 例) 192.168.179.1</string>
     <string name="wizard_text_password_not_init">管理画面パスワードが未設定です。管理画面を開いて設定して下さい。</string>
@@ -138,6 +141,8 @@
     <string name="menu_ap_conn_retry_limit_summay">ルーターへの再接続上限回数を設定します</string>
     <string name="menu_disable_wifi_when_ap_conn_failed_title">接続失敗時にWi-Fi無効</string>
     <string name="menu_disable_wifi_when_ap_conn_failed_summay">Wi-Fiアクセスポイントに接続できない場合、Wi-Fiを無効にします</string>
+    <string name="menu_ssid_filter_title">SSIDフィルタ</string>
+    <string name="menu_ssid_filter_summay">Wi-Fiアクセスポイントごとの挙動を選択します</string>
     <string name="menu_wizard_category">初期設定ウィザード</string>
     <string name="menu_wizard_title">ウィザード起動</string>
     <string name="menu_wizard_summary">初期設定ウィザードを起動します</string>
@@ -146,7 +151,12 @@
     <string name="menu_reset_batt_history_title">放電履歴をリセット</string>
     <string name="menu_reset_batt_history_toast">リセットしました</string>
     <string name="menu_reset_batt_history_summary">現在の平均値 : %1$s%%/h</string>
-    
+
+    <!-- SSIDフィルタ アクション -->
+    <string name="menu_action_ssid_filter__start_service_label">サービス起動</string>
+    <string name="menu_action_ssid_filter__keep_label">維持</string>
+    <string name="menu_action_ssid_filter__stop_service_label">サービス停止</string>
+
     <!-- サービス設定 -->
     <string name="menu_service_category">サービス設定</string>
     <string name="menu_action_after_suspend_title">スタンバイ後の挙動</string>

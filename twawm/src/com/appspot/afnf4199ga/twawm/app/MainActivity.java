@@ -15,6 +15,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.appspot.afnf4199ga.twawm.Const;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig.SsidFilterAction;
 import com.appspot.afnf4199ga.twawm.ctl.CustomizeActionsActivity;
 import com.appspot.afnf4199ga.twawm.ctl.ListItem;
 import com.appspot.afnf4199ga.twawm.router.EcoModeControl;
@@ -86,8 +89,17 @@ public class MainActivity extends Activity {
             }
             // サービスが無く、かつWiFiが有効ならサービス起動
             else if (wifiEnabled) {
-                Intent srvIntent = new Intent(this, BackgroundService.class);
-                startService(srvIntent);
+
+                // SSIDフィルタをチェック
+                SsidFilterAction config = WifiNetworkConfig.getSsidFilterActionForCurrentAP(this, wifi);
+                if (config != SsidFilterAction.STOP) {
+                    Intent srvIntent = new Intent(this, BackgroundService.class);
+                    startService(srvIntent);
+                }
+                else {
+                    // toast
+                    UIAct.toast(getString(R.string.ssid_filter_stopped_toast));
+                }
             }
 
             UIAct.postActivityButton(true, true, wifiEnabled, suppCompleted, ecoCharge, null, null);
@@ -211,12 +223,24 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         int i = 1;
-        menu.add(Menu.NONE, i++, Menu.NONE, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences)
-                .setIntent(new Intent(this, MyPreferenceActivity.class));
-        menu.add(Menu.NONE, i++, Menu.NONE, R.string.send_log_short).setIcon(android.R.drawable.ic_menu_upload)
-                .setIntent(new Intent(this, LogSendActivity.class));
-        menu.add(Menu.NONE, i++, Menu.NONE, R.string.info).setIcon(android.R.drawable.ic_menu_info_details)
-                .setIntent(new Intent(this, InfoActivity.class));
+        {
+            Intent intent = new Intent(this, MyPreferenceActivity.class);
+            intent.setFlags(Const.ACTIVITY_FLAG_SUB);
+            MenuItem menuItem = menu.add(Menu.NONE, i++, Menu.NONE, R.string.settings);
+            menuItem.setIcon(android.R.drawable.ic_menu_preferences).setIntent(intent);
+        }
+        {
+            Intent intent = new Intent(this, LogSendActivity.class);
+            intent.setFlags(Const.ACTIVITY_FLAG_SUB);
+            MenuItem menuItem = menu.add(Menu.NONE, i++, Menu.NONE, R.string.send_log_short);
+            menuItem.setIcon(android.R.drawable.ic_menu_upload).setIntent(intent);
+        }
+        {
+            Intent intent = new Intent(this, InfoActivity.class);
+            intent.setFlags(Const.ACTIVITY_FLAG_SUB);
+            MenuItem menuItem = menu.add(Menu.NONE, i++, Menu.NONE, R.string.info);
+            menuItem.setIcon(android.R.drawable.ic_menu_info_details).setIntent(intent);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -246,10 +270,15 @@ public class MainActivity extends Activity {
             boolean suppCompleted = wifiEnabled && BackgroundService.isSupplicantCompleted(wifi);
             updateAsWorking(wifiEnabled, suppCompleted);
 
-            // WiFiが有効ならサービス起動
+            // WiFiが有効の場合
             if (wifiEnabled) {
-                Intent srvIntent = new Intent(this, BackgroundService.class);
-                startService(srvIntent);
+
+                // SSIDフィルタをチェック
+                SsidFilterAction config = WifiNetworkConfig.getSsidFilterActionForCurrentAP(this, wifi);
+                if (config != SsidFilterAction.STOP) {
+                    Intent srvIntent = new Intent(this, BackgroundService.class);
+                    startService(srvIntent);
+                }
             }
         }
         // 一時停止中へ切り替え
@@ -269,11 +298,14 @@ public class MainActivity extends Activity {
     }
 
     public void onSettings(View view) {
-        startActivity(new Intent(this, MyPreferenceActivity.class));
+        Intent intent = new Intent(this, MyPreferenceActivity.class);
+        intent.setFlags(Const.ACTIVITY_FLAG_SUB);
+        startActivity(intent);
     }
 
     public void onNotWorksFine(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Const.URL_WIKI_NOT_WORKS));
+        intent.setFlags(Const.ACTIVITY_FLAG_SUB);
         startActivity(intent);
     }
 
@@ -342,11 +374,10 @@ public class MainActivity extends Activity {
     @SuppressLint("InlinedApi")
     public static void startActivity(Context context, ACTIVITY_FLAG flag) {
         Intent actIntent = new Intent(context, MainActivity.class);
-        actIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        actIntent.setFlags(Const.ACTIVITY_FLAG_ROOT);
 
         // Bluetooth有効化リクエスト
         if (flag == ACTIVITY_FLAG.BT_ENABLING) {
-            actIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             actIntent.putExtra(Const.INTENT_EX_BT_ENABLING, true);
         }
         // アクションダイアログ表示

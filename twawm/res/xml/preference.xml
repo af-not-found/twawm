@@ -74,7 +74,7 @@
             android:summary="aaaa"
             android:title="@string/menu_widget_click_action_title" >
 
-            <!-- WiFi無効時タップ -->
+            <!-- Wi-Fi無効時タップ -->
             <ListPreference
                 android:defaultValue="@string/dv_menu_widget_click_action_wifi_disabled"
                 android:entries="@array/entries_menu_widget_click_action"
@@ -142,12 +142,21 @@
                 android:summary="@string/menu_ap_conn_retry_limit_summay"
                 android:title="@string/menu_ap_conn_retry_limit_title" />
 
-            <!-- 接続失敗時にWiFi無効 -->
+            <!-- 接続失敗時にWi-Fi無効 -->
             <CheckBoxPreference
                 android:defaultValue="@string/dv_menu_disable_wifi_when_ap_conn_failed"
                 android:key="menu_disable_wifi_when_ap_conn_failed"
                 android:summary="@string/menu_disable_wifi_when_ap_conn_failed_summay"
                 android:title="@string/menu_disable_wifi_when_ap_conn_failed_title" />
+
+            <!-- SSIDフィルタ -->
+            <PreferenceScreen
+                android:summary="@string/menu_ssid_filter_summay"
+                android:title="@string/menu_ssid_filter_title" >
+                <PreferenceCategory
+                    android:key="@string/menu_key_ssid_filter" >
+                </PreferenceCategory>
+            </PreferenceScreen>
         </PreferenceCategory>
 
         <!-- その他 -->
@@ -169,13 +178,12 @@
                 android:key="menu_start_wizard_automatically"
                 android:summary="@string/menu_start_wizard_automatically_summay"
                 android:title="@string/menu_start_wizard_automatically_title" />
-            
+
             <!-- 放電履歴をリセット -->
             <Preference
                 android:key="@string/menu_key_reset_batt_history"
                 android:title="@string/menu_reset_batt_history_title" >
             </Preference>
-
         </PreferenceCategory>
     </PreferenceScreen>
 
@@ -200,7 +208,7 @@
                 android:summary="@string/menu_statusbar_notify_summay"
                 android:title="@string/menu_statusbar_notify_title" />
 
-            <!-- WiFi有効時に開始 -->
+            <!-- Wi-Fi有効時に開始 -->
             <CheckBoxPreference
                 android:defaultValue="@string/dv_menu_start_service_when_wifi_enabled"
                 android:key="menu_start_service_when_wifi_enabled"

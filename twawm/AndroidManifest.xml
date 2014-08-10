@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.afnf.and.twawm2"
     android:installLocation="internalOnly"
-    android:versionCode="51"
-    android:versionName="0.5.5" >
+    android:versionCode="52"
+    android:versionName="0.5.6" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -25,8 +25,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <!-- android:configChanges="orientation|screenSize|keyboardHidden" -->
 
     <application
         android:allowBackup="true"
@@ -81,6 +79,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.supplicant.STATE_CHANGE" />
             </intent-filter>
         </receiver>
     </application>

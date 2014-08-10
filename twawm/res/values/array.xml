@@ -160,6 +160,22 @@
         <item>@string/menu_action_after_suspend__do_nothing</item>
     </string-array>
 
+    <!-- SSIDフィルタ -->
+    <string name="menu_action_ssid_filter__start_service" translatable="false">0</string>
+    <string name="menu_action_ssid_filter__keep" translatable="false">1</string>
+    <string name="menu_action_ssid_filter__stop_service" translatable="false">2</string>
+
+    <string-array name="entries_menu_action_ssid_filter" translatable="false">
+        <item>@string/menu_action_ssid_filter__start_service_label</item>
+        <item>@string/menu_action_ssid_filter__keep_label</item>
+        <item>@string/menu_action_ssid_filter__stop_service_label</item>
+    </string-array>
+    <string-array name="entryValues_menu_action_ssid_filter" translatable="false">
+        <item>@string/menu_action_ssid_filter__start_service</item>
+        <item>@string/menu_action_ssid_filter__keep</item>
+        <item>@string/menu_action_ssid_filter__stop_service</item>
+    </string-array>
+
     <!-- リモート起動方法 -->
     <string name="menu_bt_resume_type__fast" translatable="false">0</string>
     <string name="menu_bt_resume_type__normal" translatable="false">3</string>

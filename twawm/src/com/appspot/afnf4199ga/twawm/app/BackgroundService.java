@@ -34,6 +34,8 @@ import com.appspot.afnf4199ga.twawm.OnlineChecker;
 import com.appspot.afnf4199ga.twawm.StateMachine;
 import com.appspot.afnf4199ga.twawm.StateMachine.STATE;
 import com.appspot.afnf4199ga.twawm.StateMachine.TRIGGER;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig;
+import com.appspot.afnf4199ga.twawm.WifiNetworkConfig.SsidFilterAction;
 import com.appspot.afnf4199ga.twawm.app.MainActivity.ACTIVITY_FLAG;
 import com.appspot.afnf4199ga.twawm.router.EcoModeControl;
 import com.appspot.afnf4199ga.twawm.router.RouterControl;
@@ -98,9 +100,6 @@ public class BackgroundService extends Service {
             filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
             receiverRegisted = true;
             registerReceiver(broadcastReceiver, filter);
-
-            // 起動トリガー
-            state.perform(TRIGGER.BOOT);
 
             // 念のためsetClickIntentしておく
             DefaultWidgetProvider.setClickIntent(this);
@@ -174,11 +173,15 @@ public class BackgroundService extends Service {
                     Logger.v("BackgroundService onStartCommand EX_TOGGLE_WIFI");
                     toggleWifiFromUI();
                 }
-                // アクション実行
                 else {
+                    // アクション実行
                     String action = intent.getStringExtra(Const.INTENT_EX_DO_ACTION);
                     if (MyStringUtlis.isEmpty(action) == false) {
                         doAction(action);
+                    }
+                    // それ以外は起動トリガー
+                    else {
+                        state.perform(TRIGGER.BOOT);
                     }
                 }
             }
@@ -624,7 +627,7 @@ public class BackgroundService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                AndroidUtils.sleep(5000); // TODO 設定化？
+                AndroidUtils.sleep(3000); // TODO 設定化？
                 stopServiceImmediately();
             }
         }).start();
@@ -769,6 +772,7 @@ public class BackgroundService extends Service {
                     else if (AndroidUtils.isActionEquals(intent, WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)) {
                         SupplicantState newstate = intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE);
                         if (newstate != null && (newstate == SupplicantState.DISCONNECTED || newstate == SupplicantState.DORMANT)) {
+                            // FIXME 2秒ぐらい遅らせたい
                             state.perform(TRIGGER.BC_SUPPLICANT_DISCONNECTED);
                         }
                     }
@@ -851,6 +855,23 @@ public class BackgroundService extends Service {
     public void startOnlineCheck(long delay_ms) {
         terminateOnlineCheck();
 
+        // SSIDフィルタをチェック
+        SsidFilterAction config = WifiNetworkConfig.getSsidFilterActionForCurrentAP(this, wifi);
+        if (config == SsidFilterAction.STOP) {
+            Logger.v("SSID filter on startOnlineCheck");
+
+            // アイコン変更
+            state.setStateToStoppingService();
+
+            // toast
+            UIAct.toast(getString(R.string.ssid_filter_stopped_toast));
+
+            // サービス停止
+            stopServiceWithDelay();
+            return;
+        }
+
+        // 遅延取得
         if (delay_ms != 0 && shortIntervalCheck) {
             delay_ms = Const.getPrefOnlineCheckIntervalMsAfterOffline(this);
         }
@@ -890,6 +911,8 @@ public class BackgroundService extends Service {
 
     private Notification createNotification(int notifyImageId, String notifyText) {
         Intent notificationIntent = new Intent(this, MainActivity.class);
+        notificationIntent.setFlags(Const.ACTIVITY_FLAG_ROOT);
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentIntent(contentIntent);

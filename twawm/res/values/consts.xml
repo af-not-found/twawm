@@ -42,7 +42,7 @@
     <string name="dv_menu_widget_click_action_offline" translatable="false">@string/menu_widget_click_action__choose</string>
 
     <!-- ルーター設定 -->
-    <string name="dv_menu_ap_conn_retry_limit" translatable="false">0</string>
+    <string name="dv_menu_ap_conn_retry_limit" translatable="false">1</string>
     <string name="dv_menu_ap_conn_timeout_sec" translatable="false">20</string>
     <string name="dv_menu_disable_wifi_when_ap_conn_failed" translatable="false">false</string>
     <string name="dv_menu_start_wizard_automatically" translatable="false">true</string>
@@ -62,6 +62,7 @@
     <string name="menu_key_widget_click_action_wifi_disabled" translatable="false">menu_key_widget_click_action_wifi_disabled</string>
     <string name="menu_key_widget_click_action_online" translatable="false">menu_key_widget_click_action_online</string>
     <string name="menu_key_widget_click_action_offline" translatable="false">menu_key_widget_click_action_offline</string>
+    <string name="menu_key_ssid_filter" translatable="false">menu_key_ssid_filter</string>
     <string name="menu_key_reset_batt_history" translatable="false">menu_key_reset_batt_history</string>
     <string name="menu_key_action_after_suspend" translatable="false">menu_action_after_suspend</string>
     <string name="menu_key_ap_ip_addr" translatable="false">menu_ap_ip_addr</string>

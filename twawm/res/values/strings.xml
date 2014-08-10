@@ -24,10 +24,13 @@
     <string name="invalid_format">[Warning] Inputed value format is invalid</string>
     <string name="router_ip_addr_not_set">[Warning] Router IP address is not set</string>
     <string name="bt_error_need_to_reboot">[Warning] Bluetooth error occurred. Need to reboot.</string>
+    <string name="ssid_filter_short">SSIDfltr</string>
+    <string name="ssid_filter_wifi_disabled_toast">Please turn on Wi-Fi</string>
+    <string name="ssid_filter_stopped_toast">twawm2 service is stopped by SSID Filter</string>
 
     <!-- 初期設定ウィザード -->
     <string name="wizard_title">Configuration wizard</string>
-    <string name="wizard_text_init">Starting initial configuration wizard for twawm2. It will only take 5 minutes.</string>
+    <string name="wizard_text_init">Starting initial configuration wizard for twawm2. It will only take 3 minutes.</string>
     <string name="wizard_text_connection">Please enable Wi-Fi, then connect to router.</string>
     <string name="wizard_text_input_router_ip">Couldn\'t connect to router. Input router IP Address.</string>
     <string name="wizard_text_password_not_init">Admin password is not initialized. Open admin page to set.</string>
@@ -138,6 +141,8 @@
     <string name="menu_ap_conn_retry_limit_summay">Retry limit for router</string>
     <string name="menu_disable_wifi_when_ap_conn_failed_title">Disable Wi-Fi if no AP</string>
     <string name="menu_disable_wifi_when_ap_conn_failed_summay">Disable Wi-Fi if cannot find access point</string>
+    <string name="menu_ssid_filter_title">SSID filter</string>
+    <string name="menu_ssid_filter_summay">Select action per Wi-Fi AP</string>
     <string name="menu_wizard_category">Configuration wizard</string>
     <string name="menu_wizard_title">Start wizard</string>
     <string name="menu_wizard_summary">Start initial configuration wizard</string>
@@ -146,6 +151,11 @@
     <string name="menu_reset_batt_history_title">Reset discharging history</string>
     <string name="menu_reset_batt_history_toast">Reset done</string>
     <string name="menu_reset_batt_history_summary">Current average : %1$s%%/h</string>
+
+    <!-- SSIDフィルタ アクション -->
+    <string name="menu_action_ssid_filter__start_service_label">Start service</string>
+    <string name="menu_action_ssid_filter__keep_label">Keep</string>
+    <string name="menu_action_ssid_filter__stop_service_label">Stop service</string>
 
     <!-- サービス設定 -->
     <string name="menu_service_category">Service settings</string>
@@ -161,8 +171,8 @@
     <string name="menu_action_after_suspend__wifioff_stop_service_label">Wi-Fi OFF and stop service</string>
     <string name="menu_action_after_suspend__stop_service_label">Stop service</string>
     <string name="menu_action_after_suspend__do_nothing_label">Do nothing</string>
-    
-   <!-- ステータスバー通知 -->
+
+    <!-- ステータスバー通知 -->
     <string name="menu_statusbar_notify__always_label">Always</string>
     <string name="menu_statusbar_notify__changed_label">When changed</string>
     <string name="menu_statusbar_notify__never_label">Never</string>

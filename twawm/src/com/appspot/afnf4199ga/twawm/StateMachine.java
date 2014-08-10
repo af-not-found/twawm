@@ -519,6 +519,22 @@ public class StateMachine {
                 comSetting, wifiSpotEnabled);
     }
 
+    public void setStateToStoppingService() {
+        BackgroundService service = BackgroundService.getInstance();
+        if (service == null) {
+            Logger.e("service is null on StateMachine.setStateToStoppingService");
+            return;
+        }
+
+        setState(STATE.NOT_WM);
+        //wdText = service.getString(R.string.ssid_filter_short);
+        wdText = service.getString(R.string.processing); // うっとうしいので処理中に変更
+        wdImageId = R.drawable.icon_wimax_gray_batt_na;
+        notifyImageId = R.drawable.ntficon_wimax_gray_batt_na;
+
+        reflesh(false);
+    }
+
     public void setStateToWifiRestart() {
         BackgroundService service = BackgroundService.getInstance();
         if (service == null) {
