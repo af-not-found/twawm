@@ -44,6 +44,7 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
 
             // updateAppWidget
             for (int id : appWidgetIds) {
+                setClickIntent(context, id, rv);
                 appWidgetManager.updateAppWidget(id, rv);
             }
         }
@@ -66,6 +67,7 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
 
             // updateAppWidget
             for (int id : appWidgetIds) {
+                setClickIntent(context, id, rv);
                 appWidgetManager.updateAppWidget(id, rv);
             }
         }
@@ -83,9 +85,6 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
         if (now >= lastUpdated + MIN_UPDATE_INTERVAL) {
             lastUpdated = now;
             forceUpdate = true;
-
-            // click時のIntent設定
-            setClickIntent(context);
         }
 
         // 準備
@@ -116,6 +115,7 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
 
             // updateAppWidget
             for (int id : appWidgetIds) {
+                setClickIntent(context, id, rv);
                 appWidgetManager.updateAppWidget(id, rv);
             }
         }
@@ -134,20 +134,24 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
         ComponentName thisAppWidget = new ComponentName(context.getPackageName(), DefaultWidgetProvider.class.getName());
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 
-        for (int i = 0; i < appWidgetIds.length; i++) {
-
-            Intent intent = new Intent(context, BackgroundService.class);
-            intent.setAction(Const.INTENT_WD_CLICKED);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            //intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds); // 未使用
-
-            PendingIntent pendingIntent = PendingIntent.getService(context, appWidgetIds[i], intent, 0); // putExtraする場合、第2引数(requestCode)の指定が必須
+        for (int id : appWidgetIds) {
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_default);
-            //rv.setOnClickPendingIntent(R.id.widgetImage, pendingIntent); // 不要らしい
-            //rv.setOnClickPendingIntent(R.id.widgetText, pendingIntent); // 不要らしい
-            rv.setOnClickPendingIntent(R.id.widgetDefaultLayout, pendingIntent);
-            appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
+            setClickIntent(context, id, rv);
         }
+    }
+
+    public static void setClickIntent(Context context, int appWidgetId, RemoteViews rv) {
+
+        Intent intent = new Intent(context, BackgroundService.class);
+        intent.setAction(Const.INTENT_WD_CLICKED);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        //intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds); // 未使用
+
+        PendingIntent pendingIntent = PendingIntent.getService(context, appWidgetId, intent, 0); // putExtraする場合、第2引数(requestCode)の指定が必須
+
+        // rv.setOnClickPendingIntent(R.id.widgetImage, pendingIntent); // 不要らしい
+        // rv.setOnClickPendingIntent(R.id.widgetText, pendingIntent); // 不要らしい
+        rv.setOnClickPendingIntent(R.id.widgetDefaultLayout, pendingIntent);
     }
 
     public static void showClickAnimation(Context context, int widgetId) {
@@ -172,6 +176,8 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
                 appWidgetManager.updateAppWidget(widgetId, rv);
                 AndroidUtils.sleep(250);
                 rv.setInt(R.id.widgetDefaultLayout, "setBackgroundResource", bg[0]);
+
+                setClickIntent(context, widgetId, rv);
                 appWidgetManager.updateAppWidget(widgetId, rv);
             }
             catch (Throwable e) {
@@ -216,6 +222,7 @@ public class DefaultWidgetProvider extends AppWidgetProvider {
 
         // updateAppWidget
         for (int id : appWidgetIds) {
+            setClickIntent(context, id, rv);
             appWidgetManager.updateAppWidget(id, rv);
         }
     }
