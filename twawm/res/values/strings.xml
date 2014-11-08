@@ -92,10 +92,10 @@
     <string name="menu_online_check_dns_timeout_sec_dialog_title">DNS lookup timeout [sec] (recommend=4)</string>
     <string name="menu_online_check_dns_timeout_sec_summay">DNS lookup timeout for online check</string>
     <string name="menu_online_check_dns_timeout_sec_title">DNS lookup timeout</string>
-    <string name="menu_online_check_interval_sec_after_offline_dialog_title">Check interval after offline [sec] (recommend=8)</string>
+    <string name="menu_online_check_interval_sec_after_offline_dialog_title">Check interval after offline [sec] (recommend=5)</string>
     <string name="menu_online_check_interval_sec_after_offline_summay">Online check interval after offline detected</string>
     <string name="menu_online_check_interval_sec_after_offline_title">Check interval after offline</string>
-    <string name="menu_online_check_count_after_offline_dialog_title">Check count after offline (recommend=15)</string>
+    <string name="menu_online_check_count_after_offline_dialog_title">Check count after offline (recommend=20)</string>
     <string name="menu_online_check_count_after_offline_summay">Online check limit count after offline detected</string>
     <string name="menu_online_check_count_after_offline_title">Check count after offline</string>
 
@@ -133,7 +133,7 @@
     <string name="menu_ap_ip_addr_dialog_title">Router LAN-side IP address, ex)192.168.179.1</string>
     <string name="menu_ap_conn_timeout_sec_title">Connection timeout</string>
     <string name="menu_ap_conn_timeout_sec_summay">Specify router connection timeout in seconds</string>
-    <string name="menu_ap_conn_timeout_sec_dialog_title">Router Connection timeout [sec] (recommend=20)</string>
+    <string name="menu_ap_conn_timeout_sec_dialog_title">Router Connection timeout [sec] (recommend=30)</string>
     <string name="menu_ap_conn_retry_limit_title">Re-Connection limit</string>
     <string name="menu_ap_conn_retry_limit_summay">Retry limit for router</string>
     <string name="menu_disable_wifi_when_ap_conn_failed_title">Disable Wi-Fi if no AP</string>
@@ -154,19 +154,27 @@
     <string name="menu_statusbar_notify_summay">Select timing to display information on statusbar (needs reboot when changed)</string>
     <string name="menu_start_service_when_wifi_enabled_title">Start service when Wi-Fi ON</string>
     <string name="menu_start_service_when_wifi_enabled_summay">Start service when deteched that Wi-Fi is enabled</string>
+    <string name="menu_non_target_router_action_title">Action for non WM3800R/NAD11</string>
+    <string name="menu_non_target_router_action_summay">Select action when connecting non WM3800R/NAD11 router</string>
     <string name="menu_enable_logging_title">Enable logging</string>
     <string name="menu_enable_logging_summary">Output directly is following. Logs older than 7days are deleted automatically.\n</string>
-
+    
     <!-- スタンバイ後の挙動 -->
     <string name="menu_action_after_suspend__wifioff_stop_service_label">Wi-Fi OFF and stop service</string>
     <string name="menu_action_after_suspend__stop_service_label">Stop service</string>
     <string name="menu_action_after_suspend__do_nothing_label">Do nothing</string>
     
-   <!-- ステータスバー通知 -->
+    <!-- ステータスバー通知 -->
     <string name="menu_statusbar_notify__always_label">Always</string>
     <string name="menu_statusbar_notify__changed_label">When changed</string>
     <string name="menu_statusbar_notify__never_label">Never</string>
 
+    <!-- 対応外ルーターに接続した場合の挙動 -->
+    <string name="menu_non_target_router_action__notify_label">Notify only</string>
+    <string name="menu_non_target_router_action__notify_stop_label">Notify and stop service</string>
+    <string name="menu_non_target_router_action__stop_label">Stop service without notify</string>
+    <string name="menu_non_target_router_action__none_label">Do nothing</string>
+    
     <!-- リモート起動設定 -->
     <string name="menu_bluetooth_category">Router resume settings</string>
     <string name="menu_bt_resume_type_title">Resume type</string>
@@ -176,6 +184,11 @@
     <string name="menu_bt_connection_timeout_sec_title">BT connection timeout</string>
     <string name="menu_bt_address_title">Bluetooth address</string>
     <string name="menu_bt_address_summay">Normally, it is unnecessary to change</string>
+    <string name="menu_disable_other_ap_after_resume_title">Disable other AP after resume</string>
+    <string name="menu_disable_other_ap_after_resume_summary">Disable other access point temporary after resuming to connect WM3800R/NAD11.</string>
+    <string name="menu_wait_after_resume_title">Wait after resume</string>
+    <string name="menu_wait_after_resume_summary">Specify wait time after resume in seconds</string>
+    <string name="menu_wait_after_resume_dialog_title">Wait time after resume [sec] (recommend=4~8)</string>
 
     <!-- リモート起動方法 -->
     <string name="menu_bt_resume_type__fast_label">Fast</string>

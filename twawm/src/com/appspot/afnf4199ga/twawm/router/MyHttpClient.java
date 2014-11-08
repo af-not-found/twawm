@@ -22,9 +22,13 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 
 import android.content.Context;
+import android.net.DhcpInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 import com.appspot.afnf4199ga.twawm.Const;
 import com.appspot.afnf4199ga.twawm.app.MyPreferenceActivity;
+import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
 import com.appspot.afnf4199ga.utils.MyStringUtlis;
 
@@ -169,6 +173,50 @@ public class MyHttpClient extends DefaultHttpClient {
         }
 
         return routerIpAddr;
+    }
+
+    static String estimateRouterIpAddr(Context context) {
+        try {
+            WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            if (wifi != null) {
+                String ipaddr = estimateRouterIpAddr(wifi);
+                if (ipaddr != null) {
+                    return ipaddr;
+                }
+            }
+        }
+        catch (Exception e) {
+            Logger.w("estimateRouterIpAddr failed", e);
+        }
+
+        return Const.ROUTER_IPADDR_DEFAULT;
+    }
+
+    static String estimateRouterIpAddr(WifiManager wifi) {
+
+        // ゲートウェイIPアドレス取得
+        DhcpInfo dhcpInfo = wifi.getDhcpInfo();
+        if (dhcpInfo != null) {
+            String ipaddr = AndroidUtils.intToIpaddr(dhcpInfo.gateway);
+            //Logger.i("estimateRouterIpAddr 1 " + ipaddr);
+            return ipaddr;
+        }
+
+        // クライアントIPアドレス取得
+        WifiInfo connectionInfo = wifi.getConnectionInfo();
+        if (connectionInfo != null) {
+            String ipaddr = AndroidUtils.intToIpaddr(connectionInfo.getIpAddress());
+            if (MyStringUtlis.isEmpty(ipaddr) == false) {
+                int index = ipaddr.lastIndexOf(".");
+                if (index != -1) {
+                    ipaddr = ipaddr.substring(0, index) + ".1";
+                    //Logger.i("estimateRouterIpAddr 2 " + ipaddr);
+                    return ipaddr;
+                }
+            }
+        }
+
+        return null;
     }
 
     static void discardContent(HttpResponse response) {

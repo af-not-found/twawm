@@ -15,150 +15,149 @@ import android.net.wifi.WifiInfo;
 
 public class BackgroundServiceTest extends DexmakerInstrumentationTestCase {
 
-	public void testGetSwitchTargetNetworkIdSet_01() {
+    public void testGetSwitchTargetNetworkIdSet_01() {
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(null, "ssid-dest999;ssid-dest2", null, null);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(null, "ssid-dest999;ssid-dest2", null, null);
+        assertNull(networkIdSet);
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_02() {
+    public void testGetSwitchTargetNetworkIdSet_02() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn(null);
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn(null);
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;ssid-dest2",
-				null, null);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;ssid-dest2",
+                null, null);
+        assertNull(networkIdSet);
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_03() {
+    public void testGetSwitchTargetNetworkIdSet_03() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-dest2");
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-dest2");
 
-		List<ScanResult> scanResults = new ArrayList<ScanResult>();
-		for (int i = 0; i < 3; i++) {
-			ScanResult scanResult = Mockito.mock(ScanResult.class);
-			scanResult.SSID = "ssid-dest" + i;
-			scanResults.add(scanResult);
-		}
+        List<ScanResult> scanResults = new ArrayList<ScanResult>();
+        for (int i = 0; i < 3; i++) {
+            ScanResult scanResult = Mockito.mock(ScanResult.class);
+            scanResult.SSID = "ssid-dest" + i;
+            scanResults.add(scanResult);
+        }
 
-		List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
-		for (int i = 0; i < 3; i++) {
-			WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
-			configuredNetwork.networkId = i;
-			configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
-			configuredNetworks.add(configuredNetwork);
-		}
+        List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
+        for (int i = 0; i < 3; i++) {
+            WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
+            configuredNetwork.networkId = i;
+            configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
+            configuredNetworks.add(configuredNetwork);
+        }
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, null, scanResults,
-				configuredNetworks);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, null, scanResults,
+                configuredNetworks);
+        assertNull(networkIdSet);
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_04() {
+    public void testGetSwitchTargetNetworkIdSet_04() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;ssid-dest2",
-				null, null);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest2", null, null);
+        assertNull(networkIdSet);
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_05() {
+    public void testGetSwitchTargetNetworkIdSet_05() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
 
-		List<ScanResult> scanResults = new ArrayList<ScanResult>();
-		for (int i = 0; i < 3; i++) {
-			ScanResult scanResult = Mockito.mock(ScanResult.class);
-			scanResult.SSID = "ssid-dest" + i;
-			scanResults.add(scanResult);
-		}
+        List<ScanResult> scanResults = new ArrayList<ScanResult>();
+        for (int i = 0; i < 3; i++) {
+            ScanResult scanResult = Mockito.mock(ScanResult.class);
+            scanResult.SSID = "ssid-dest" + i;
+            scanResults.add(scanResult);
+        }
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;ssid-dest2",
-				scanResults, null);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService
+                .getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest2", scanResults, null);
+        assertNull(networkIdSet);
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_09() {
+    public void testGetSwitchTargetNetworkIdSet_09() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-dest2");
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-dest2");
 
-		List<ScanResult> scanResults = new ArrayList<ScanResult>();
-		for (int i = 0; i < 3; i++) {
-			ScanResult scanResult = Mockito.mock(ScanResult.class);
-			scanResult.SSID = "ssid-dest" + i;
-			scanResults.add(scanResult);
-		}
+        List<ScanResult> scanResults = new ArrayList<ScanResult>();
+        for (int i = 0; i < 3; i++) {
+            ScanResult scanResult = Mockito.mock(ScanResult.class);
+            scanResult.SSID = "ssid-dest" + i;
+            scanResults.add(scanResult);
+        }
 
-		List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
-		for (int i = 0; i < 3; i++) {
-			WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
-			configuredNetwork.networkId = i;
-			configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
-			configuredNetworks.add(configuredNetwork);
-		}
+        List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
+        for (int i = 0; i < 3; i++) {
+            WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
+            configuredNetwork.networkId = i;
+            configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
+            configuredNetworks.add(configuredNetwork);
+        }
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;ssid-dest2",
-				scanResults, configuredNetworks);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest2", scanResults,
+                configuredNetworks);
+        assertNull(networkIdSet);
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_11() {
+    public void testGetSwitchTargetNetworkIdSet_11() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
 
-		List<ScanResult> scanResults = new ArrayList<ScanResult>();
-		for (int i = 0; i < 3; i++) {
-			ScanResult scanResult = Mockito.mock(ScanResult.class);
-			scanResult.SSID = "ssid-dest" + i;
-			scanResults.add(scanResult);
-		}
+        List<ScanResult> scanResults = new ArrayList<ScanResult>();
+        for (int i = 0; i < 3; i++) {
+            ScanResult scanResult = Mockito.mock(ScanResult.class);
+            scanResult.SSID = "ssid-dest" + i;
+            scanResults.add(scanResult);
+        }
 
-		List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
-		for (int i = 0; i < 3; i++) {
-			WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
-			configuredNetwork.networkId = i;
-			configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
-			configuredNetworks.add(configuredNetwork);
-		}
+        List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
+        for (int i = 0; i < 3; i++) {
+            WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
+            configuredNetwork.networkId = i;
+            configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
+            configuredNetworks.add(configuredNetwork);
+        }
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;   ;;ssid-dest2",
-				scanResults, configuredNetworks);
-		assertNotNull(networkIdSet);
-		assertEquals(1, networkIdSet.size());
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest2", scanResults,
+                configuredNetworks);
+        assertNotNull(networkIdSet);
+        assertEquals(1, networkIdSet.size());
 
-		Iterator<Integer> ite = networkIdSet.iterator();
-		assertEquals(Integer.valueOf(1), ite.next());
-	}
+        Iterator<Integer> ite = networkIdSet.iterator();
+        assertEquals(Integer.valueOf(1), ite.next());
+    }
 
-	public void testGetSwitchTargetNetworkIdSet_12() {
+    public void testGetSwitchTargetNetworkIdSet_12() {
 
-		WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
-		Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
+        WifiInfo connectionInfo = Mockito.mock(WifiInfo.class);
+        Mockito.when(connectionInfo.getSSID()).thenReturn("ssid-now");
 
-		List<ScanResult> scanResults = new ArrayList<ScanResult>();
-		for (int i = 0; i < 3; i++) {
-			ScanResult scanResult = Mockito.mock(ScanResult.class);
-			scanResult.SSID = "ssid-dest" + i;
-			scanResults.add(scanResult);
-		}
+        List<ScanResult> scanResults = new ArrayList<ScanResult>();
+        for (int i = 0; i < 3; i++) {
+            ScanResult scanResult = Mockito.mock(ScanResult.class);
+            scanResult.SSID = "ssid-dest" + i;
+            scanResults.add(scanResult);
+        }
 
-		List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
-		for (int i = 0; i < 3; i++) {
-			WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
-			configuredNetwork.networkId = i;
-			configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
-			configuredNetworks.add(configuredNetwork);
-		}
+        List<WifiConfiguration> configuredNetworks = new ArrayList<WifiConfiguration>();
+        for (int i = 0; i < 3; i++) {
+            WifiConfiguration configuredNetwork = Mockito.mock(WifiConfiguration.class);
+            configuredNetwork.networkId = i;
+            configuredNetwork.SSID = "\"ssid-dest" + (i + 1) + "\"";
+            configuredNetworks.add(configuredNetwork);
+        }
 
-		Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999;ssid-dest000",
-				scanResults, configuredNetworks);
-		assertNull(networkIdSet);
-	}
+        Set<Integer> networkIdSet = BackgroundService.getSwitchTargetNetworkIdSet(connectionInfo, "ssid-dest999", scanResults,
+                configuredNetworks);
+        assertNull(networkIdSet);
+    }
 }

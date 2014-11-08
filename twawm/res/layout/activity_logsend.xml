@@ -78,6 +78,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/link" />
 
+            <!-- 
             <TextView
                 android:id="@+id/textReply"
                 android:layout_width="wrap_content"
@@ -88,6 +89,7 @@
                 android:text="@string/menu_sendlog_reply"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/link" />
+                 -->
         </LinearLayout>
     </LinearLayout>
 

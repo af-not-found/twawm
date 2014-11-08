@@ -236,6 +236,12 @@ public class BackgroundService extends Service {
         state.perform(TRIGGER.BT_ENABLED);
     }
 
+    public void onBluetoothConnectedBeforeDisabling() {
+
+        // NetworkSwitcher初期化
+        NetworkSwitcher.init();
+    }
+
     public void onBluetoothConnected(boolean success) {
 
         // 失敗した場合は通知
@@ -260,8 +266,17 @@ public class BackgroundService extends Service {
 
     public void onOnlineCheckComplete(TRIGGER result, boolean becomeOnline) {
 
+        // 対象外ルーターで、サービス停止が設定されている場合
+        boolean willstop = false;
+        if (result == TRIGGER.NOT_WM && Const.getPrefNonTargetRouterActionStopService(this)) {
+            willstop = true;
+
+            // サービスを遅延停止
+            stopServiceWithDelay();
+        }
+
         // オンラインの場合、またはWMルーターでない場合
-        if (result == TRIGGER.ONLINE || result == TRIGGER.NOT_WM) {
+        else if (result == TRIGGER.ONLINE || result == TRIGGER.NOT_WM) {
 
             // オンラインチェック間隔を元に戻す
             resetShortInterval();
@@ -269,9 +284,7 @@ public class BackgroundService extends Service {
             // オンラインの場合、SSIDを更新
             if (result == TRIGGER.ONLINE) {
                 String ssid = wifi.getConnectionInfo().getSSID();
-                if (MyStringUtlis.eqauls(ssid, Const.getPrefLastConnectedWmSSID(this)) == false) {
-                    Const.updatePrefLastConnectedWmSSID(this, ssid);
-                }
+                Const.updatePrefLastTargetRouterInfo(this, ssid);
             }
         }
 
@@ -293,27 +306,31 @@ public class BackgroundService extends Service {
         // 状態遷移
         state.perform(result);
 
-        // WMシリーズのみ
-        if (RouterControlByHttp.isNad() == false) {
-            // 100回ごと、または今回オンラインになった場合に、ロングライフ充電状態を取得
-            if (++onlineCheckCompleteCount % 100 == 0 || becomeOnline) {
-                EcoModeControl.changeEcoMode(null);
-            }
-        }
+        // サービスが停止しない場合
+        if (willstop == false) {
 
-        // スイッチロック中で、WMルータでなければ
-        if (state.isRouterSwitchLocked() && result == TRIGGER.NOT_WM) {
-            // リモート起動に時間がかかるのでもう一度ロックしておく			
-            state.lockRouterSwitch();
-            // スキャン実行（通知したいのでperformの後で行う）
-            startScan();
+            // WMシリーズのみ
+            if (RouterControlByHttp.isNad() == false) {
+                // 100回ごと、または今回オンラインになった場合に、ロングライフ充電状態を取得
+                if (++onlineCheckCompleteCount % 100 == 0 || becomeOnline) {
+                    EcoModeControl.changeEcoMode(null);
+                }
+            }
+
+            // スイッチロック中で、WMルータでなければ
+            if (state.isRouterSwitchLocked() && result == TRIGGER.NOT_WM) {
+                // リモート起動に時間がかかるのでもう一度ロックしておく			
+                state.lockRouterSwitch();
+                // スキャン実行（通知したいのでperformの後で行う）
+                startScan();
+            }
         }
     }
 
     private void startScan() {
 
         // WMルータSSIDが設定されていれば
-        if (MyStringUtlis.isEmpty(Const.getPrefLastConnectedWmSSID(this)) == false) {
+        if (MyStringUtlis.isEmpty(Const.getPrefLastTargetSSID(this)) == false) {
 
             // 通知
             Logger.i("switching started");
@@ -355,7 +372,7 @@ public class BackgroundService extends Service {
 
             // 切り替え対象のネットワークIDを取得
             Set<Integer> switchTargetNetworkIdSet = getSwitchTargetNetworkIdSet(wifi.getConnectionInfo(),
-                    Const.getPrefLastConnectedWmSSID(this), scanResults, configuredNetworks);
+                    Const.getPrefLastTargetSSID(this), scanResults, configuredNetworks);
 
             // ネットワーク切り替え
             if (switchTargetNetworkIdSet != null) {
@@ -396,7 +413,7 @@ public class BackgroundService extends Service {
         }
     }
 
-    protected static Set<Integer> getSwitchTargetNetworkIdSet(WifiInfo connectionInfo, String conf_ssidstr,
+    protected static Set<Integer> getSwitchTargetNetworkIdSet(WifiInfo connectionInfo, String confssid,
             List<ScanResult> scanResults, List<WifiConfiguration> configuredNetworks) {
 
         // 現在のSSIDが空の場合、抜ける
@@ -407,6 +424,7 @@ public class BackgroundService extends Service {
         if (MyStringUtlis.isEmpty(current_ssid)) {
             return null;
         }
+        current_ssid = MyStringUtlis.trimQuote(current_ssid);
 
         // チェック
         if (scanResults == null || scanResults.size() == 0) {
@@ -417,70 +435,41 @@ public class BackgroundService extends Service {
         }
 
         // 設定のSSIDを取得してパース
-        if (MyStringUtlis.isEmpty(conf_ssidstr)) {
-            Logger.i("switching terminated : conf_ssidstr is blank 1");
-            return null;
-        }
-        String[] conf_ssids = conf_ssidstr.split(";");
-        if (conf_ssids == null || conf_ssids.length == 0) {
-            Logger.i("switching terminated : conf_ssidstr is blank 2");
+        if (MyStringUtlis.isEmpty(confssid)) {
+            Logger.i("switching terminated : confssid is blank");
             return null;
         }
 
-        // 設定SSIDでループ
-        for (int i = 0; i < conf_ssids.length; i++) {
-            String this_ssid = conf_ssids[i];
-
-            // 正規化
-            if (this_ssid != null) {
-                this_ssid = this_ssid.trim();
-                if (MyStringUtlis.isEmpty(this_ssid)) {
-                    this_ssid = null;
-                }
-            }
-
-            // 再代入しておく
-            conf_ssids[i] = this_ssid;
-
-            // 現在のSSIDが、設定のどれかと一致している場合は、WMルーターに接続していると見なして、抜ける
-            if (MyStringUtlis.eqauls(this_ssid, current_ssid)) {
-                Logger.i("switching terminated : conf_ssid matched");
-                return null;
-            }
+        // 現在のSSIDが、設定のどれかと一致している場合は、WMルーターに接続していると見なして抜ける
+        if (MyStringUtlis.eqauls(confssid, current_ssid)) {
+            Logger.i("switching terminated : confssid matched");
+            return null;
         }
 
         // 切り替え対象ネットワークID
         Set<Integer> switchTargetNetworkIdList = new LinkedHashSet<Integer>();
 
-        // 設定SSIDでループ
+        // スキャン結果でループ
         boolean found = false;
-        for (int i = 0; i < conf_ssids.length; i++) {
-            String this_ssid = conf_ssids[i];
-            String this_ssid_quoted = "\"" + this_ssid + "\"";
-            if (this_ssid != null) {
+        Iterator<ScanResult> ite = scanResults.iterator();
+        SR: while (ite.hasNext()) {
+            ScanResult scanResult = (ScanResult) ite.next();
 
-                // スキャン結果でループ
-                Iterator<ScanResult> ite = scanResults.iterator();
-                SR: while (ite.hasNext()) {
-                    ScanResult scanResult = (ScanResult) ite.next();
+            // スキャン結果に合致する設定SSIDが見つかった場合
+            String sssid = MyStringUtlis.trimQuote(scanResult.SSID);
+            if (MyStringUtlis.eqauls(sssid, confssid)) {
 
-                    // スキャン結果に合致する設定SSIDが見つかった場合
-                    if (MyStringUtlis.eqauls(scanResult.SSID, this_ssid)) {
+                // 対応する設定済ネットワークを取得
+                for (WifiConfiguration wc : configuredNetworks) {
 
-                        // 対応する設定済ネットワークを取得
-                        Iterator<WifiConfiguration> ite2 = configuredNetworks.iterator();
-                        while (ite2.hasNext()) {
-                            WifiConfiguration wifiConfiguration = (WifiConfiguration) ite2.next();
+                    // 設定済ネットワーク発見
+                    //  ※wifiConfiguration.SSIDはダブルクォートで囲まれている
+                    String wcssid = MyStringUtlis.trimQuote(wc.SSID);
+                    if (MyStringUtlis.eqauls(wcssid, confssid)) {
 
-                            // 設定済ネットワーク発見
-                            //  ※wifiConfiguration.SSIDはダブルクォートで囲まれている
-                            if (MyStringUtlis.eqauls(wifiConfiguration.SSID, this_ssid_quoted)) {
-
-                                switchTargetNetworkIdList.add(wifiConfiguration.networkId);
-                                found = true;
-                                break SR;
-                            }
-                        }
+                        switchTargetNetworkIdList.add(wc.networkId);
+                        found = true;
+                        break SR;
                     }
                 }
             }
@@ -559,6 +548,9 @@ public class BackgroundService extends Service {
         stopWatchdog();
         resetShortInterval();
 
+        // ネットワーク無効化
+        NetworkSwitcher.disableNetwork(this);
+
         // 先行してSupplicantStateをチェック
         if (getConnectivityState() == ConnectivityState.COMPLETE_WIFI) {
             state.perform(TRIGGER.BC_SUPPLICANT_COMPLETE);
@@ -569,6 +561,10 @@ public class BackgroundService extends Service {
     }
 
     public void checkOnline() {
+
+        // ネットワーク有効化
+        NetworkSwitcher.reEnableWithoutD();
+
         state.resetTextLock();
         startOnlineCheck(0);
     }
@@ -617,6 +613,9 @@ public class BackgroundService extends Service {
             Intent intent = new Intent(this, BackgroundService.class);
             stopService(intent);
             instance = null; // これがないと、一時停止後の再開によるサービス起動が動作しない？
+
+            // NetworkSwitcherリセット
+            NetworkSwitcher.reset();
         }
     }
 
@@ -624,7 +623,7 @@ public class BackgroundService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                AndroidUtils.sleep(5000); // TODO 設定化？
+                AndroidUtils.sleep(Const.SERVICE_STOP_DELAY_MS);
                 stopServiceImmediately();
             }
         }).start();
@@ -633,6 +632,10 @@ public class BackgroundService extends Service {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void doAction(String action) {
+
+        // NetworkSwitcherリセット
+        NetworkSwitcher.reset();
+
         // do nothing
         if (MyStringUtlis.eqauls(action, getString(R.string.menu_widget_click_action__none))) {
         }
@@ -751,6 +754,8 @@ public class BackgroundService extends Service {
                         state.perform(TRIGGER.BC_WIFI_ENABLED);
                     }
                     else if (disabled) {
+                        // NetworkSwitcherリセット
+                        NetworkSwitcher.reset();
                         state.perform(TRIGGER.BC_WIFI_DISABLED);
                     }
                     else if (disabling) {

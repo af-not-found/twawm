@@ -43,9 +43,10 @@ public class Const {
     public static final long ROUTER_SWITCH_LOCK_TIME_MS = 60000;
     public static final long WIFI_SCAN_DELAY_AFTER_RESUME = 10000;
     public static final long NOTIFY_DELAY_AFTER_BT_DISABLING = 2000;
+    public static final long SERVICE_STOP_DELAY_MS = 5000;
 
     public static final String ROUTER_HOSTNAME = "aterm.me";
-    public static final String ROUTER_IPADDR = "192.168.179.1";
+    public static final String ROUTER_IPADDR_DEFAULT = "192.168.179.1";
     public static final int ROUTER_PORT = 80;
     public static final int ROUTER_HTTP_TIMEOUT = 12000;
     public static final int ROUTER_SESSION_TIMEOUT = 260000;
@@ -79,7 +80,7 @@ public class Const {
     public static final int NOTIF_ID_EX = 2;
     public static final int REQUEST_ENABLE_BT = 1;
 
-    public static final String LOG_SEND_SERVER = "http://afnf4199ga.appspot.com/andreport/upload";
+    public static final String LOG_SEND_SERVER = "https://afnf4199ga.appspot.com/andreport/upload";
     public static final String URL_WIKI_LOGSEND_WHAT = "http://w.livedoor.jp/twawm/lite/d/%a5%ed%a5%b0%a4%ce%c1%f7%bf%ae%a4%cb%a4%c4%a4%a4%a4%c6";
     public static final String URL_WIKI_LOGSEND_REPLY = "http://w.livedoor.jp/twawm/bbs/16128/l50";
     public static final String URL_WIKI_NOT_WORKS = "http://w.livedoor.jp/twawm/lite/d/FAQ";
@@ -312,6 +313,16 @@ public class Const {
                 Boolean.parseBoolean(context.getString(R.string.dv_menu_start_service_when_wifi_enabled)));
     }
 
+    /** 対応外ルーターに接続した場合の挙動が、サービス停止系かどうか */
+    public static boolean getPrefNonTargetRouterActionStopService(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String val = pref
+                .getString("menu_non_target_router_action", context.getString(R.string.dv_menu_non_target_router_action));
+        String s1 = context.getString(R.string.menu_non_target_router_action__notify_stop);
+        String s2 = context.getString(R.string.menu_non_target_router_action__stop);
+        return MyStringUtlis.eqauls(val, s1) || MyStringUtlis.eqauls(val, s2);
+    }
+
     /** ログ出力を有効にする */
     public static boolean isPrefLoggingEnabled(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -373,6 +384,19 @@ public class Const {
         edit.commit();
     }
 
+    /** リモート起動後に他AP無効化 */
+    public static boolean getPrefDisableOtherApAfterResume(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean("menu_disable_other_ap_after_resume",
+                Boolean.parseBoolean(context.getString(R.string.dv_menu_disable_other_ap_after_resume)));
+    }
+
+    /** リモート起動後のウェイト */
+    public static int getPrefWaitAfterResumeMs(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return AndroidUtils.getPrefInt(pref, "menu_wait_after_resume", context.getString(R.string.dv_menu_wait_after_resume)) * 1000;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////
     // 設定画面にない保存値
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -391,18 +415,29 @@ public class Const {
         edit.commit();
     }
 
-    /** WMルーターSSID */
-    public static String getPrefLastConnectedWmSSID(Context context) {
+    /** 最後に接続した対象ルータのSSID */
+    public static String getPrefLastTargetSSID(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return AndroidUtils.getPrefString(pref, "menu_lastConnectedWmSSID");
+        return AndroidUtils.getPrefString(pref, "menu_lastTargetSSID");
     }
 
-    /** WMルーターSSID更新 */
-    public static void updatePrefLastConnectedWmSSID(Context context, String lastConnectedWmSSID) {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        Editor edit = pref.edit();
-        edit.putString("menu_lastConnectedWmSSID", lastConnectedWmSSID);
-        edit.commit();
+    /** 最後に接続した対象ルータ情報を更新 */
+    public static void updatePrefLastTargetRouterInfo(Context context, String ssid) {
+
+        // JBからクオートされるようになった模様
+        ssid = MyStringUtlis.trimQuote(ssid);
+
+        boolean ne1 = MyStringUtlis.isEmpty(ssid) == false;
+        boolean ch1 = ne1 && MyStringUtlis.eqauls(ssid, getPrefLastTargetSSID(context)) == false;
+
+        if (ch1) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            Editor edit = pref.edit();
+            if (ne1) {
+                edit.putString("menu_lastTargetSSID", ssid);
+            }
+            edit.commit();
+        }
     }
 
     /** ルーターパスワード */

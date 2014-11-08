@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import net.afnf.and.twawm2.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +25,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import com.appspot.afnf4199ga.twawm.Const;
-import net.afnf.and.twawm2.R;
 
 public class AndroidUtils {
 
@@ -73,9 +73,9 @@ public class AndroidUtils {
     }
 
     public static int indexOf(String[] datas, String val) {
-        if (val != null) {
+        if (val != null && datas != null) {
             for (int i = 0; i < datas.length; i++) {
-                if (datas[i].equals(val)) {
+                if (datas[i] != null && datas[i].equals(val)) {
                     return i;
                 }
             }
@@ -96,11 +96,15 @@ public class AndroidUtils {
         return wifiState == WifiManager.WIFI_STATE_ENABLED || wifiState == WifiManager.WIFI_STATE_ENABLING;
     }
 
-    public static void sleep(long ms) {
+    public static boolean sleep(long ms) {
         try {
-            Thread.sleep(ms);
+            if (ms > 0) {
+                Thread.sleep(ms);
+            }
+            return true;
         }
         catch (InterruptedException e) {
+            return false;
         }
     }
 
@@ -137,6 +141,10 @@ public class AndroidUtils {
             Logger.w("getPackageInfo failed", e);
             return "";
         }
+    }
+
+    public static String intToIpaddr(int i) {
+        return (i & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + ((i >> 16) & 0xFF) + "." + ((i >> 24) & 0xFF);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

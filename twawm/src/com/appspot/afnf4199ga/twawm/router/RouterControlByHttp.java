@@ -161,10 +161,14 @@ public class RouterControlByHttp {
             if (routerIpAddr == null) {
                 return 11;
             }
-            // ルーターIPアドレスがPrivateIPでない
+            // ルーターIPアドレスがPrivateIPでない場合
             else if (routerIpAddr == MyHttpClient.NOT_SITE_LOCAL_ADDR) {
-                return CTRL_ROUTER_IP_IS_NOT_SITE_LOCAL; //12
+                // IPアドレス推定
+                routerIpAddr = MyHttpClient.estimateRouterIpAddr(context);
+                // ルーターIPアドレス上書き
+                Const.updatePrefApIpAddr(context, routerIpAddr);
             }
+            routerInfo.ipaddr = routerIpAddr;
 
             // httpClient作成
             httpClient = MyHttpClient.createClient(context);
@@ -232,10 +236,10 @@ public class RouterControlByHttp {
                     // ルーター情報取得
                     HttpGet method = new HttpGet("http://" + routerIpAddr + path);
                     HttpResponse response = httpClient.executeWithAuth(method, AuthType.DEFAULT);
-                    int statusCode = HttpStatus.SC_UNAUTHORIZED;
+                    int statusCode = HttpStatus.SC_UNAUTHORIZED; // response無しの場合はSC_UNAUTHORIZED
                     HttpEntity entity = null;
 
-                    // レスポンス無しをSC_UNAUTHORIZEDにマッピングする工夫
+                    // statusCode/entity取得
                     if (response != null && response.getStatusLine() != null) {
                         statusCode = response.getStatusLine().getStatusCode();
                         entity = response.getEntity();

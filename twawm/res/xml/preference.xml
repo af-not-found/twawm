@@ -207,6 +207,16 @@
                 android:summary="@string/menu_start_service_when_wifi_enabled_summay"
                 android:title="@string/menu_start_service_when_wifi_enabled_title" />
 
+            
+            <!-- 対応外ルーターに接続した場合の挙動 -->
+            <ListPreference
+                android:defaultValue="@string/dv_menu_non_target_router_action"
+                android:entries="@array/entries_menu_non_target_router_action"
+                android:entryValues="@array/entryValues_menu_non_target_router_action"
+                android:key="menu_non_target_router_action"
+                android:summary="@string/menu_non_target_router_action_summay"
+                android:title="@string/menu_non_target_router_action_title" />
+            
             <!-- ログ出力を有効にする -->
             <CheckBoxPreference
                 android:defaultValue="@string/dv_menu_enable_logging"
@@ -242,6 +252,24 @@
                 android:key="@string/menu_key_bt_address"
                 android:summary="@string/menu_bt_address_summay"
                 android:title="@string/menu_bt_address_title" />
+            
+            <!-- リモート起動後に他AP無効化 -->
+            <CheckBoxPreference
+                android:defaultValue="@string/dv_menu_disable_other_ap_after_resume"
+                android:key="menu_disable_other_ap_after_resume"
+                android:summary="@string/menu_disable_other_ap_after_resume_summary"
+                android:title="@string/menu_disable_other_ap_after_resume_title" />
+            
+            <!-- リモート起動後のウェイト -->
+            <EditTextPreference
+                android:defaultValue="@string/dv_menu_wait_after_resume"
+                android:dialogTitle="@string/menu_wait_after_resume_dialog_title"
+                android:inputType="number"
+                android:key="menu_wait_after_resume"
+                android:maxLength="2"
+                android:summary="@string/menu_wait_after_resume_summary"
+                android:title="@string/menu_wait_after_resume_title" />
+            
         </PreferenceCategory>
     </PreferenceScreen>
 

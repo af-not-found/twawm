@@ -339,29 +339,47 @@ public class BluetoothHelper {
             // ここまで来た場合、全て成功として扱う
             success = true;
 
+            long beforeDisabling = System.currentTimeMillis();
+
+            // 無効化前のコールバック
+            service.onBluetoothConnectedBeforeDisabling();
+
             // 元々有効な場合、無効化しない
             if (btAlreadyEnabled) {
                 Logger.i("Bluetooth keep enabled");
-
-                // コールバック
-                service.onBluetoothConnected(success);
             }
             // 無効化
             else {
                 // BT無効化
                 Logger.i("Bluetooth disabling");
                 bt.disable();
-
-                // 遅延コールバック
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AndroidUtils.sleep(Const.NOTIFY_DELAY_AFTER_BT_DISABLING); // FIXME NAD11 ディレイを伸ばす？
-                        // コールバック
-                        BackgroundService.getInstance().onBluetoothConnected(success);
-                    }
-                }).start();
             }
+
+            // NAD11ならディレイを伸ばす
+            long afterDisabling = System.currentTimeMillis();
+            long diff = afterDisabling - beforeDisabling;
+            long wait = Const.getPrefWaitAfterResumeMs(service);
+            final long delay = Const.NOTIFY_DELAY_AFTER_BT_DISABLING + Math.max(0, wait - diff);
+
+            // 遅延コールバック
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    // 遅延
+                    AndroidUtils.sleep(delay);
+
+                    // サービス取得
+                    BackgroundService service = BackgroundService.getInstance();
+                    if (service == null) {
+                        Logger.e("service is null on BluetoothHelper.startConnecting().callback");
+                        return;
+                    }
+
+                    // コールバック
+                    service.onBluetoothConnected(success);
+                }
+            }).start();
         }
         catch (Throwable e) {
             Logger.w("Bluetooth connecting failed", e);

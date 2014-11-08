@@ -6,6 +6,10 @@ import net.afnf.and.twawm2.DexmakerInstrumentationTestCase;
 
 import org.mockito.Mockito;
 
+import android.net.DhcpInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+
 import com.appspot.afnf4199ga.twawm.Const;
 
 public class MyHttpClientTest extends DexmakerInstrumentationTestCase {
@@ -123,4 +127,59 @@ public class MyHttpClientTest extends DexmakerInstrumentationTestCase {
         Mockito.verifyNoMoreInteractions(mock);
     }
 
+    //
+    //        // ゲートウェイIPアドレス取得
+    //        DhcpInfo dhcpInfo = wifi.getDhcpInfo();
+    //        if (dhcpInfo != null) {
+    //            return AndroidUtils.intToIpaddr(dhcpInfo.gateway);
+    //        }
+    //
+    //        // クライアントIPアドレス取得
+    //        WifiInfo connectionInfo = wifi.getConnectionInfo();
+    //        if (connectionInfo != null) {
+    //            String ipaddr = AndroidUtils.intToIpaddr(connectionInfo.getIpAddress());
+    //            if (ipaddr.indexOf(Const.ROUTER_IPADDR_NAD_PREFIX) == 0) {
+    //                return Const.ROUTER_IPADDR_NAD_PREFIX + "1";
+    //            }
+    //            else if (ipaddr.indexOf(Const.ROUTER_IPADDR_WM_PREFIX) == 0) {
+    //                return Const.ROUTER_IPADDR_WM_PREFIX + "1";
+    //            }
+    //        }
+
+    public void testEstimateRouterIpAddr1() {
+        WifiManager wifi = Mockito.mock(WifiManager.class);
+        Mockito.when(wifi.getDhcpInfo()).thenReturn(null);
+        Mockito.when(wifi.getConnectionInfo()).thenReturn(null);
+        assertEquals(null, MyHttpClient.estimateRouterIpAddr(wifi));
+    }
+
+    public void testEstimateRouterIpAddr2() {
+        DhcpInfo dhcpInfo = new DhcpInfo();
+        dhcpInfo.gateway = 0x04030201;
+
+        WifiManager wifi = Mockito.mock(WifiManager.class);
+        Mockito.when(wifi.getDhcpInfo()).thenReturn(dhcpInfo);
+        Mockito.when(wifi.getConnectionInfo()).thenReturn(null);
+        assertEquals("1.2.3.4", MyHttpClient.estimateRouterIpAddr(wifi));
+    }
+
+    public void testEstimateRouterIpAddr3() {
+        WifiInfo wi = Mockito.mock(WifiInfo.class);
+        Mockito.when(wi.getIpAddress()).thenReturn(0x05030201); // 1.2.3.5
+
+        WifiManager wifi = Mockito.mock(WifiManager.class);
+        Mockito.when(wifi.getDhcpInfo()).thenReturn(null);
+        Mockito.when(wifi.getConnectionInfo()).thenReturn(wi);
+        assertEquals("1.2.3.1", MyHttpClient.estimateRouterIpAddr(wifi));
+    }
+
+    public void testEstimateRouterIpAddr4() {
+        WifiInfo wi = Mockito.mock(WifiInfo.class);
+        Mockito.when(wi.getIpAddress()).thenReturn(0x05b3a8c0); // 192.168.179.5
+
+        WifiManager wifi = Mockito.mock(WifiManager.class);
+        Mockito.when(wifi.getDhcpInfo()).thenReturn(null);
+        Mockito.when(wifi.getConnectionInfo()).thenReturn(wi);
+        assertEquals("192.168.179.1", MyHttpClient.estimateRouterIpAddr(wifi));
+    }
 }

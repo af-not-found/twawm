@@ -2,7 +2,7 @@
 
     <!-- 画面共通文字列 -->
     <string name="app_name" translatable="false">twawm2</string>
-    <string name="app_subname" translatable="false">for NAD11/WM3800R/WM3600R</string>
+    <string name="app_subname" translatable="false">for NAD11/WM3800R</string>
     <string name="app_version" translatable="false">ver</string>
     <string name="deleloper" translatable="false">by afnf</string>
     <string name="wiki_url" translatable="false">http://seesaawiki.jp/twawm/</string>
@@ -31,8 +31,8 @@
     <!-- ステータスチェック設定 -->
     <string name="dv_menu_online_check_interval_sec" translatable="false">60</string>
     <string name="dv_menu_online_check_dns_timeout_sec" translatable="false">4</string>
-    <string name="dv_menu_online_check_count_after_offline" translatable="false">15</string>
-    <string name="dv_menu_online_check_interval_sec_after_offline" translatable="false">8</string>
+    <string name="dv_menu_online_check_count_after_offline" translatable="false">20</string>
+    <string name="dv_menu_online_check_interval_sec_after_offline" translatable="false">5</string>
 
     <!-- ウィジェット設定 -->
     <string name="dv_menu_widget_str_color" translatable="false">@string/color_white_value</string>
@@ -43,7 +43,7 @@
 
     <!-- ルーター設定 -->
     <string name="dv_menu_ap_conn_retry_limit" translatable="false">0</string>
-    <string name="dv_menu_ap_conn_timeout_sec" translatable="false">20</string>
+    <string name="dv_menu_ap_conn_timeout_sec" translatable="false">30</string>
     <string name="dv_menu_disable_wifi_when_ap_conn_failed" translatable="false">false</string>
     <string name="dv_menu_start_wizard_automatically" translatable="false">true</string>
 
@@ -51,11 +51,14 @@
     <string name="dv_menu_action_after_suspend" translatable="false">@string/menu_action_after_suspend__wifioff_stop_service</string>
     <string name="dv_menu_statusbar_notify" translatable="false">@string/menu_statusbar_notify__always</string>
     <string name="dv_menu_start_service_when_wifi_enabled" translatable="false">false</string>
+    <string name="dv_menu_non_target_router_action" translatable="false">@string/menu_non_target_router_action__notify</string>
     <string name="dv_menu_enable_logging" translatable="false">true</string>
     
     <!-- リモート起動設定 -->
     <string name="dv_menu_bt_connection_timeout_sec" translatable="false">15</string>
-
+    <string name="dv_menu_disable_other_ap_after_resume" translatable="false">true</string>
+    <string name="dv_menu_wait_after_resume" translatable="false">6</string>
+    
     <!-- preference key -->
     <string name="menu_key_widget_str_color" translatable="false">menu_key_widget_str_color</string>
     <string name="menu_key_widget_background" translatable="false">menu_key_widget_background</string>

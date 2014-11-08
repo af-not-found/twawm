@@ -16,6 +16,25 @@
         <item>@string/menu_statusbar_notify__never</item>
     </string-array>
 
+    <!-- 対応外ルーターに接続した場合の挙動 -->
+    <string name="menu_non_target_router_action__notify" translatable="false">notify</string>
+    <string name="menu_non_target_router_action__notify_stop" translatable="false">notify_stop</string>
+    <string name="menu_non_target_router_action__stop" translatable="false">stop</string>
+    <string name="menu_non_target_router_action__none" translatable="false">none</string>
+
+    <string-array name="entries_menu_non_target_router_action">
+        <item>@string/menu_non_target_router_action__notify_label</item>
+        <item>@string/menu_non_target_router_action__notify_stop_label</item>
+        <!-- <item>@string/menu_non_target_router_action__stop_label</item> -->
+        <!-- <item>@string/menu_non_target_router_action__none_label</item> -->
+    </string-array>
+    <string-array name="entryValues_menu_non_target_router_action">
+        <item>@string/menu_non_target_router_action__notify</item>
+        <item>@string/menu_non_target_router_action__notify_stop</item>
+        <!-- <item>@string/menu_non_target_router_action__stop</item> -->
+        <!-- <item>@string/menu_non_target_router_action__none</item> -->
+    </string-array>
+
     <!-- 色値 -->
     <string name="color_black_value" translatable="false">black</string>
     <string name="color_gray_value" translatable="false">gray</string>

@@ -92,10 +92,10 @@
     <string name="menu_online_check_dns_timeout_sec_dialog_title">DNSタイムアウト [秒] (推奨設定=4)</string>
     <string name="menu_online_check_dns_timeout_sec_summay">オンライン状態チェックのためのDNSルックアップタイムアウトを秒で指定</string>
     <string name="menu_online_check_dns_timeout_sec_title">DNSタイムアウト</string>
-    <string name="menu_online_check_interval_sec_after_offline_dialog_title">オフライン後チェック間隔 [秒] (推奨設定=8)</string>
+    <string name="menu_online_check_interval_sec_after_offline_dialog_title">オフライン後チェック間隔 [秒] (推奨設定=5)</string>
     <string name="menu_online_check_interval_sec_after_offline_summay">オフラインになった後、オンライン状態をチェックする間隔を秒で指定</string>
     <string name="menu_online_check_interval_sec_after_offline_title">オフライン後チェック間隔</string>
-    <string name="menu_online_check_count_after_offline_dialog_title">オフライン後チェック回数 (推奨設定=15)</string>
+    <string name="menu_online_check_count_after_offline_dialog_title">オフライン後チェック回数 (推奨設定=20)</string>
     <string name="menu_online_check_count_after_offline_summay">オフラインになった後、オンライン状態をチェックする上限回数</string>
     <string name="menu_online_check_count_after_offline_title">オフライン後チェック回数</string>
 
@@ -133,7 +133,7 @@
     <string name="menu_ap_ip_addr_dialog_title">ルーターLAN側IPアドレス (例)192.168.179.1</string>
     <string name="menu_ap_conn_timeout_sec_title">接続タイムアウト [秒]</string>
     <string name="menu_ap_conn_timeout_sec_summay">ルーターへの接続タイムアウトを秒で指定</string>
-    <string name="menu_ap_conn_timeout_sec_dialog_title">ルーターへの接続タイムアウト [秒] (推奨設定=20)</string>
+    <string name="menu_ap_conn_timeout_sec_dialog_title">ルーターへの接続タイムアウト [秒] (推奨設定=30)</string>
     <string name="menu_ap_conn_retry_limit_title">再接続回数</string>
     <string name="menu_ap_conn_retry_limit_summay">ルーターへの再接続上限回数を設定します</string>
     <string name="menu_disable_wifi_when_ap_conn_failed_title">接続失敗時にWi-Fi無効</string>
@@ -154,6 +154,8 @@
     <string name="menu_statusbar_notify_summay">ステータスバーへの通知タイミングを選択します(要再起動)</string>
     <string name="menu_start_service_when_wifi_enabled_title">Wi-Fi有効時に開始</string>
     <string name="menu_start_service_when_wifi_enabled_summay">OS側でのWi-Fi有効化を感知して、サービスを開始します</string>
+    <string name="menu_non_target_router_action_title">対応外ルーター接続時の挙動</string>
+    <string name="menu_non_target_router_action_summay">WM3800R/NAD11以外のルーターに接続した場合の挙動を選択します</string>
     <string name="menu_enable_logging_title">ログ出力を有効にする</string>
     <string name="menu_enable_logging_summary">以下に出力されます。古いログは7日で自動削除されます。\n</string>
 
@@ -167,6 +169,12 @@
     <string name="menu_statusbar_notify__changed_label">変化した場合</string>
     <string name="menu_statusbar_notify__never_label">通知しない</string>
 
+    <!-- 対応外ルーターに接続した場合の挙動 -->
+    <string name="menu_non_target_router_action__notify_label">通知のみ</string>
+    <string name="menu_non_target_router_action__notify_stop_label">通知してサービス停止</string>
+    <string name="menu_non_target_router_action__stop_label">通知なしにサービス停止</string>
+    <string name="menu_non_target_router_action__none_label">なにもしない</string>
+    
     <!-- リモート起動設定 -->
     <string name="menu_bluetooth_category">リモート起動設定</string>
     <string name="menu_bt_resume_type_title">リモート起動方法</string>
@@ -176,7 +184,12 @@
     <string name="menu_bt_connection_timeout_sec_title">BT接続タイムアウト</string>
     <string name="menu_bt_address_title">Bluetoothアドレス</string>
     <string name="menu_bt_address_summay">通常、変更する必要はありません</string>
-
+    <string name="menu_disable_other_ap_after_resume_title">リモート起動後に他AP無効化</string>
+    <string name="menu_disable_other_ap_after_resume_summary">WM3800R/NAD11への接続を優先するため、他のアクセスポイント設定を一時的に無効化します</string>
+    <string name="menu_wait_after_resume_title">リモート起動後のウェイト</string>
+    <string name="menu_wait_after_resume_summary">NAD11はリモート起動直後のWi-Fiが不安定なので、6秒程度のウェイト挿入を推奨します</string>
+    <string name="menu_wait_after_resume_dialog_title">リモート起動後のウェイト[秒] (推奨設定=4～10)</string>
+    
     <!-- リモート起動方法 -->
     <string name="menu_bt_resume_type__fast_label">高速</string>
     <string name="menu_bt_resume_type__normal_label">通常</string>
