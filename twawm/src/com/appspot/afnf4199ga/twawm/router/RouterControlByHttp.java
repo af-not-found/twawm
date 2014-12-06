@@ -57,7 +57,7 @@ public class RouterControlByHttp {
         // WM3800R用
         WIMAX_DISCN, WIMAX_CONN,
         // NAD11用
-        GET_INFO_FORCE_IDXCT, NAD_COM_HS, NAD_COM_NL, NAD_WIFI_SPOT_ON, NAD_WIFI_SPOT_OFF
+        GET_INFO_FORCE_IDXCT, NAD_COM_HS, NAD_COM_NL, NAD_WIFI_SPOT_ON, NAD_WIFI_SPOT_OFF, NAD_WIMAX_RECONN
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,7 +199,7 @@ public class RouterControlByHttp {
 
                             // NAD11操作系
                             if (ctrl == CTRL.NAD_COM_HS || ctrl == CTRL.NAD_COM_NL || ctrl == CTRL.NAD_WIFI_SPOT_ON
-                                    || ctrl == CTRL.NAD_WIFI_SPOT_OFF) {
+                                    || ctrl == CTRL.NAD_WIFI_SPOT_OFF || ctrl == CTRL.NAD_WIMAX_RECONN) {
                                 path = Const.ROUTER_URL_INFO_IDXCT;
                             }
                             // INFOBTN強制、または操作系、または奇数回ならINFOBTN →定期的にパスワード未設定検出するため
@@ -320,14 +320,15 @@ public class RouterControlByHttp {
                     Logger.i(logkey + " path=" + path);
 
                     // スタンバイ・ルーター再起動の場合、
-                    // またはNAD11で、index_contents_local_setの場合は例外が飛ぶのが正常
-                    boolean expect_exception = ctrl == CTRL.STANDBY || ctrl == CTRL.REBOOT_WM
-                            || (routerInfo.nad && MyStringUtlis.eqauls(path, Const.ROUTER_URL_NAD_LOCAL_SET));
+                    // またはNAD11で、index_contents_local_setの場合（WiMAX再接続を除く）は例外が飛ぶのが正常
+                    boolean expect_exception = ctrl == CTRL.STANDBY
+                            || ctrl == CTRL.REBOOT_WM
+                            || (routerInfo.nad && MyStringUtlis.eqauls(path, Const.ROUTER_URL_NAD_LOCAL_SET) && ctrl != CTRL.NAD_WIMAX_RECONN);
 
                     try {
                         // 実行
                         HttpResponse response = httpClient.executeWithAuth(
-                                createMethod(ctrl, routerIpAddr, path, routerInfo.nad), AuthType.DEFAULT);
+                                createMethod(ctrl, routerIpAddr, path, routerInfo.nad, routerInfo.profile), AuthType.DEFAULT);
                         int statusCode = response.getStatusLine().getStatusCode();
                         Logger.i(logkey + " statusCode=" + statusCode);
 
@@ -400,6 +401,7 @@ public class RouterControlByHttp {
         case NAD_COM_NL:
         case NAD_WIFI_SPOT_ON:
         case NAD_WIFI_SPOT_OFF:
+        case NAD_WIMAX_RECONN:
             return Const.ROUTER_URL_NAD_LOCAL_SET;
 
         default:
@@ -407,7 +409,7 @@ public class RouterControlByHttp {
         }
     }
 
-    protected static HttpRequestBase createMethod(CTRL ctrl, String routerIpAddr, String path, boolean nad11)
+    protected static HttpRequestBase createMethod(CTRL ctrl, String routerIpAddr, String path, boolean nad11, String profile)
             throws UnsupportedEncodingException {
 
         HttpPost method = new HttpPost("http://" + routerIpAddr + path);
@@ -424,6 +426,7 @@ public class RouterControlByHttp {
         }
         // NAD11で、index_contents_local_setの場合
         else if (nad11 && MyStringUtlis.eqauls(path, Const.ROUTER_URL_NAD_LOCAL_SET)) {
+            filterHidden = true;
             params.add(new BasicNameValuePair("DISABLED_CHECKBOX", ""));
             params.add(new BasicNameValuePair("CHECK_ACTION_MODE", "1"));
 
@@ -443,6 +446,10 @@ public class RouterControlByHttp {
             case NAD_WIFI_SPOT_OFF:
                 params.add(new BasicNameValuePair("BTN_CLICK", "wifi"));
                 break;
+            case NAD_WIMAX_RECONN:
+                params.add(new BasicNameValuePair("SELECT_PROFILE", profile));
+                params.add(new BasicNameValuePair("BTN_CLICK", "profile"));
+                break;
             default:
                 break;
             }
@@ -459,6 +466,7 @@ public class RouterControlByHttp {
             while (iterator.hasNext()) {
                 String key = iterator.next();
                 params.add(new BasicNameValuePair(key, hiddenMap.get(key)));
+                //Logger.v("hidden " + key + ":" + hiddenMap.get(key));
             }
         }
 
@@ -535,31 +543,6 @@ public class RouterControlByHttp {
             //    data[4]  ->  0:充電中, 1:放電中
             //    data[5]  ->  Wi-Fiクライアント数
             //    data[6]  ->  NAD11側のWi-Fiが 1:ONか0:OFFか
-
-            //            // 通信モード毎のアンテナレベル補正
-            //            if (routerInfo.comState == COM_TYPE.HIGH_SPEED) {
-            //                switch (routerInfo.antennaLevel) {
-            //                case 4:
-            //                    routerInfo.antennaLevel = 6;
-            //                    break;
-            //                case 3:
-            //                    routerInfo.antennaLevel = 4;
-            //                    break;
-            //                }
-            //            }
-            //            else if (routerInfo.comState == COM_TYPE.NO_LIMIT) {
-            //                switch (routerInfo.antennaLevel) {
-            //                case 5:
-            //                    routerInfo.antennaLevel = 6;
-            //                    break;
-            //                case 4:
-            //                    routerInfo.antennaLevel = 5;
-            //                    break;
-            //                case 3:
-            //                    routerInfo.antennaLevel = 4;
-            //                    break;
-            //                }
-            //            }
 
             return;
         }
@@ -671,8 +654,15 @@ public class RouterControlByHttp {
                     // NADシリーズ
                     else {
 
+                        // プロファイル
+                        List<BasicNameValuePair> pairs = RouterControlByHttp.getPulldownValues(doc, "#SELECT_PROFILE");
+                        if (pairs.size() >= 1) {
+                            BasicNameValuePair pair = pairs.get(0);
+                            routerInfo.profile = pair.getValue();
+                        }
+
                         // 通信モード
-                        List<BasicNameValuePair> pairs = RouterControlByHttp.getPulldownValues(doc, "#COM_MODE_SEL");
+                        pairs = RouterControlByHttp.getPulldownValues(doc, "#COM_MODE_SEL");
                         if (pairs.size() >= 1) {
                             BasicNameValuePair pair = pairs.get(0);
                             int intval = MyStringUtlis.toInt(pair.getValue(), COM_TYPE.NA.ordinal());

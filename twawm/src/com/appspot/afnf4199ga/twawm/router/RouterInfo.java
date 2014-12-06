@@ -58,6 +58,7 @@ public class RouterInfo {
     public COM_TYPE comSetting = COM_TYPE.NA;
     public Boolean wifiSpotEnabled = null;
     public String ipaddr;
+    public String profile;
 
     public String getBatteryText() {
         if (battery < 0) {

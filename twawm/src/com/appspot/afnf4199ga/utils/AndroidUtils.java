@@ -147,6 +147,14 @@ public class AndroidUtils {
         return (i & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + ((i >> 16) & 0xFF) + "." + ((i >> 24) & 0xFF);
     }
 
+    /**
+     * http://developer.android.com/guide/practices/screens_support.html#dips-pels
+     */
+    public static int dip2pixel(Context context, int dip) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dip * scale + 0.5f);
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 設定系
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

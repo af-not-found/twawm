@@ -119,12 +119,15 @@ public class RouterControl {
                         return;
                     }
 
+                    boolean nad11 = RouterControlByHttp.isNad();
                     int ret;
                     RouterInfo routerInfo = new RouterInfo();
 
-                    // 切断
+                    // 切断通知
                     UIAct.toast(service.getString(R.string.wimax_disconnecting));
-                    ret = RouterControlByHttp.exec(service, CTRL.WIMAX_DISCN, routerInfo);
+
+                    // 切断実行
+                    ret = RouterControlByHttp.exec(service, nad11 ? CTRL.NAD_WIMAX_RECONN : CTRL.WIMAX_DISCN, routerInfo);
                     if (ret != RouterControlByHttp.CTRL_OK) {
                         UIAct.toast(service.getString(R.string.failed));
                     }
@@ -135,16 +138,22 @@ public class RouterControl {
                     // 待ち
                     AndroidUtils.sleep(2000);
 
-                    // ※INFOBTN系と通常画面はセッションが分離されているので、resetPreviousが必要
-                    RouterControlByHttp.resetPrevious();
-
-                    // 接続
+                    // 通知
                     UIAct.toast(service.getString(R.string.wimax_connecting));
-                    ret = RouterControlByHttp.exec(service, CTRL.WIMAX_CONN, routerInfo);
-                    if (ret != RouterControlByHttp.CTRL_OK) {
-                        UIAct.toast(service.getString(R.string.failed));
+
+                    // WM3800Rの場合だけ再接続実行
+                    if (nad11 == false) {
+
+                        // ※INFOBTN系と通常画面はセッションが分離されているので、resetPreviousが必要
+                        RouterControlByHttp.resetPrevious();
+
+                        // 接続実行
+                        ret = RouterControlByHttp.exec(service, CTRL.WIMAX_CONN, routerInfo);
+                        if (ret != RouterControlByHttp.CTRL_OK) {
+                            UIAct.toast(service.getString(R.string.failed));
+                        }
+                        RouterControlByHttp.resetPrevious();
                     }
-                    RouterControlByHttp.resetPrevious();
 
                     // オンラインチェックを遅延実行
                     service.startOnlineCheck(Const.ONLINE_CHECK_DELAY_AFTER_CTRL);

@@ -21,6 +21,8 @@
     <string name="mode_no_limit">WiMAX (NL)</string>
     <string name="wifi_spot_on">Wi-Fi Spot ON</string>
     <string name="wifi_spot_off">Wi-Fi Spot OFF</string>
+    <string name="keep_hs_on">WiMAX 2+ 維持 ON</string>
+    <string name="keep_hs_off">WiMAX 2+ 維持 OFF</string>
     <string name="invalid_format">[警告] 入力フォーマットが不正です</string>
     <string name="router_ip_addr_not_set">[警告] ルーターIPアドレスが設定されていません</string>
     <string name="bt_error_need_to_reboot">[警告] Bluetoothエラー発生、端末の再起動が必要かも？</string>

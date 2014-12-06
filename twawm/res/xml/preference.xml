@@ -169,13 +169,12 @@
                 android:key="menu_start_wizard_automatically"
                 android:summary="@string/menu_start_wizard_automatically_summay"
                 android:title="@string/menu_start_wizard_automatically_title" />
-            
+
             <!-- 放電履歴をリセット -->
             <Preference
                 android:key="@string/menu_key_reset_batt_history"
                 android:title="@string/menu_reset_batt_history_title" >
             </Preference>
-
         </PreferenceCategory>
     </PreferenceScreen>
 
@@ -207,7 +206,6 @@
                 android:summary="@string/menu_start_service_when_wifi_enabled_summay"
                 android:title="@string/menu_start_service_when_wifi_enabled_title" />
 
-            
             <!-- 対応外ルーターに接続した場合の挙動 -->
             <ListPreference
                 android:defaultValue="@string/dv_menu_non_target_router_action"
@@ -216,7 +214,7 @@
                 android:key="menu_non_target_router_action"
                 android:summary="@string/menu_non_target_router_action_summay"
                 android:title="@string/menu_non_target_router_action_title" />
-            
+
             <!-- ログ出力を有効にする -->
             <CheckBoxPreference
                 android:defaultValue="@string/dv_menu_enable_logging"
@@ -252,14 +250,14 @@
                 android:key="@string/menu_key_bt_address"
                 android:summary="@string/menu_bt_address_summay"
                 android:title="@string/menu_bt_address_title" />
-            
+
             <!-- リモート起動後に他AP無効化 -->
             <CheckBoxPreference
                 android:defaultValue="@string/dv_menu_disable_other_ap_after_resume"
                 android:key="menu_disable_other_ap_after_resume"
                 android:summary="@string/menu_disable_other_ap_after_resume_summary"
                 android:title="@string/menu_disable_other_ap_after_resume_title" />
-            
+
             <!-- リモート起動後のウェイト -->
             <EditTextPreference
                 android:defaultValue="@string/dv_menu_wait_after_resume"
@@ -269,9 +267,22 @@
                 android:maxLength="2"
                 android:summary="@string/menu_wait_after_resume_summary"
                 android:title="@string/menu_wait_after_resume_title" />
-            
         </PreferenceCategory>
     </PreferenceScreen>
+
+    <!--
+    画面表示設定 
+    <PreferenceScreen android:title="@string/menu_screen_category" >
+        <PreferenceCategory android:title="@string/menu_screen_button_category" >
+
+            <CheckBoxPreference
+                android:defaultValue="@string/dv_menu_sb_"
+                android:key="menu_sb_"
+                android:summary="@string/menu_sb_summary"
+                android:title="@string/menu_sb__title" />
+            
+        </PreferenceCategory>
+    </PreferenceScreen>    -->
 
     <!-- バックアップと復元 -->
     <PreferenceScreen android:title="@string/menu_backup_and_restore" >

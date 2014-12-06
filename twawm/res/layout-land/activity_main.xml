@@ -150,6 +150,26 @@
                 android:textOff="@string/wifi_spot_off"
                 android:textOn="@string/wifi_spot_on" />
         </LinearLayout>
+
+        <!--
+        <LinearLayout
+            android:id="@+id/layoutKeepHs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal|center_vertical" >
+
+            <ToggleButton
+                android:id="@+id/toggleKeepHs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:onClick="onToggleKeepHs"
+                android:textOff="@string/keep_hs_off"
+                android:textOn="@string/keep_hs_on" />
+        </LinearLayout>
+        -->
+        
     </LinearLayout>
 
 </LinearLayout>

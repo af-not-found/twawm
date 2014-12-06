@@ -25,6 +25,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo12() {
@@ -45,6 +46,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo13() {
@@ -65,6 +67,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo21() {
@@ -85,6 +88,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo22() {
@@ -105,6 +109,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.WIFI_SPOT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo23() {
@@ -127,6 +132,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo24() {
@@ -149,6 +155,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comSetting);
         assertEquals(Boolean.TRUE, routerInfo.wifiSpotEnabled);
+        assertEquals("2", routerInfo.profile);
     }
 
     public void testUpdateRouterInfo31() {
@@ -169,6 +176,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo32() {
@@ -189,6 +197,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NA, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo41() {
@@ -209,6 +218,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.HIGH_SPEED, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo42() {
@@ -229,6 +239,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.HIGH_SPEED, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo43() {
@@ -249,6 +260,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo44() {
@@ -269,6 +281,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo45() {
@@ -289,6 +302,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.NO_LIMIT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo46() {
@@ -309,6 +323,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.WIFI_SPOT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testUpdateRouterInfo47() {
@@ -329,6 +344,7 @@ public class RouterControlByHttpTest extends DexmakerInstrumentationTestCase {
         assertEquals(COM_TYPE.WIFI_SPOT, routerInfo.comState);
         assertEquals(COM_TYPE.NA, routerInfo.comSetting);
         assertEquals(null, routerInfo.wifiSpotEnabled);
+        assertEquals(null, routerInfo.profile);
     }
 
     public void testIsNotAuthedOfWmRouter() {

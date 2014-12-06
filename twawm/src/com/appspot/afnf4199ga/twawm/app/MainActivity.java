@@ -10,15 +10,19 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -60,6 +64,9 @@ public class MainActivity extends Activity {
 
         // WifiManager初期化
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+
+        // レイアウト変更
+        setLayoutMargin();
     }
 
     @Override
@@ -552,14 +559,59 @@ public class MainActivity extends Activity {
     }
 
     public void toggleNadLayout() {
+
+        LinearLayout layoutWm = (LinearLayout) findViewById(R.id.layoutWm);
+        LinearLayout layoutNad = (LinearLayout) findViewById(R.id.layoutNad);
+        // LinearLayout layoutKeepHs = (LinearLayout) findViewById(R.id.layoutKeepHs);
+
+        LayoutParams lpWm = layoutWm.getLayoutParams();
+        LayoutParams lpNad = layoutNad.getLayoutParams();
+        // LayoutParams lpKeepHs = layoutKeepHs.getLayoutParams();
+
         // WM/NAD切り替え
         if (RouterControlByHttp.isNad()) {
-            findViewById(R.id.layoutWm).getLayoutParams().height = 0;
-            findViewById(R.id.layoutNad).getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+            lpWm.height = 0;
+            lpNad.height = LayoutParams.WRAP_CONTENT;
+            // lpKeepHs.height = LayoutParams.WRAP_CONTENT;
         }
         else {
-            findViewById(R.id.layoutWm).getLayoutParams().height = LayoutParams.WRAP_CONTENT;
-            findViewById(R.id.layoutNad).getLayoutParams().height = 0;
+            lpWm.height = LayoutParams.WRAP_CONTENT;
+            lpNad.height = 0;
+            // lpKeepHs.height = 0;
+        }
+
+        // レイアウト変更
+        setLayoutMargin();
+    }
+
+    private void setLayoutMargin() {
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int height = (int) (displayMetrics.heightPixels / displayMetrics.density);
+        //Logger.v("height dip = " + height);
+
+        int margin = 5;
+        if (height >= 900) {
+            margin = 16;
+        }
+        else if (height >= 400) {
+            margin = 8;
+        }
+
+        if (margin < 8) {
+            Configuration config = getResources().getConfiguration();
+            if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                margin = 8;
+            }
+        }
+
+        int[] ids = { R.id.layoutButtonCommon, R.id.layoutSub, R.id.layoutWm, R.id.layoutNad /* R.id.layoutKeepHs*/};
+        for (int id : ids) {
+            LinearLayout layout = (LinearLayout) findViewById(id);
+            if (layout != null && layout.getLayoutParams() instanceof MarginLayoutParams) {
+                MarginLayoutParams mlp = (MarginLayoutParams) layout.getLayoutParams();
+                mlp.topMargin = mlp.height == 0 ? 0 : AndroidUtils.dip2pixel(this, margin);
+            }
         }
     }
 }

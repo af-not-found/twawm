@@ -21,10 +21,12 @@
     <string name="mode_no_limit">WiMAX (NL)</string>
     <string name="wifi_spot_on">Wi-Fi Spot ON</string>
     <string name="wifi_spot_off">Wi-Fi Spot OFF</string>
+    <string name="keep_hs_on">Keep WiMAX 2+ ON</string>
+    <string name="keep_hs_off">Keep WiMAX 2+ OFF</string>
     <string name="invalid_format">[Warning] Inputed value format is invalid</string>
     <string name="router_ip_addr_not_set">[Warning] Router IP address is not set</string>
     <string name="bt_error_need_to_reboot">[Warning] Bluetooth error occurred. Need to reboot.</string>
-
+    
     <!-- 初期設定ウィザード -->
     <string name="wizard_title">Configuration wizard</string>
     <string name="wizard_text_init">Starting initial configuration wizard for twawm2. It will only take 5 minutes.</string>
