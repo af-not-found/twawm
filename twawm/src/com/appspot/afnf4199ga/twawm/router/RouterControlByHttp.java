@@ -166,7 +166,7 @@ public class RouterControlByHttp {
                 // IPアドレス推定
                 routerIpAddr = MyHttpClient.estimateRouterIpAddr(context);
                 // ルーターIPアドレス上書き
-                Const.updatePrefApIpAddr(context, routerIpAddr);
+                // 対応外ルータで常に実行されてしまうためコメントアウト   Const.updatePrefApIpAddr(context, routerIpAddr);
             }
             routerInfo.ipaddr = routerIpAddr;
 
