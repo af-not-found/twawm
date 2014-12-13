@@ -36,6 +36,7 @@ public class Const {
     public static final String INTENT_EX_TOGGLE_ROUTER = INTENT_PREFIX + ".EX_TOGGLE_ROUTER";
     public static final String INTENT_EX_DO_ACTION = INTENT_PREFIX + ".EX_DO_ACTION";
     public static final String INTENT_EX_INIT_WIZARD = INTENT_PREFIX + ".PASS_NOT_INITIALIZED";
+    public static final String INTENT_TASKER = "net.afnf.and.twawm2.TaskerIntent";
 
     public static final long ONLINE_CHECK_DELAY_AFTER_CTRL = 7000;
     public static final int WATCH_DOG_TIMEOUT_MS = 15000;

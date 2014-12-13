@@ -26,6 +26,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.support.v4.app.NotificationCompat;
 
 import com.appspot.afnf4199ga.twawm.BluetoothHelper;
@@ -50,6 +51,7 @@ public class BackgroundService extends Service {
     private WifiManager wifi;
     private ConnectivityManager conn;
     private PowerManager power;
+    private WakeLock wakelock = null;
 
     private Thread watchdogThread;
     private OnlineChecker onlineCheckerThread;
@@ -205,6 +207,8 @@ public class BackgroundService extends Service {
         // 放電速度更新
         getStateMachine().stopBattCalc(this);
 
+        releaseWakeLock();
+
         // ステータスバーに通知する場合
         if (Const.isStatusBarNotifyNever(this) == false) {
             // フォアグラウンドサービス停止
@@ -265,6 +269,7 @@ public class BackgroundService extends Service {
     }
 
     public void onOnlineCheckComplete(TRIGGER result, boolean becomeOnline) {
+        releaseWakeLock();
 
         // 対象外ルーターで、サービス停止が設定されている場合
         boolean willstop = false;
@@ -913,6 +918,7 @@ public class BackgroundService extends Service {
             state.resetTextLock();
             String bluetoothAddress = Const.getPrefBluetoothAddress(this);
             if (BluetoothHelper.isValidBluetoothAddress(bluetoothAddress)) {
+                getWakeLock();
                 state.perform(TRIGGER.BUTTON_BT_RESUME);
             }
             else {
@@ -927,6 +933,30 @@ public class BackgroundService extends Service {
     public void toggleWifiFromUI() {
         boolean enabled = AndroidUtils.isWifiEnabledOrEnabling(wifi);
         state.perform(enabled ? TRIGGER.BUTTON_WIFI_OFF : TRIGGER.BUTTON_WIFI_ON);
+    }
+
+    private synchronized void getWakeLock() {
+        if (wakelock == null) {
+            Logger.v("getWakeLock");
+            wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    Const.LOGTAG);
+            wakelock.acquire();
+
+            new Thread() {
+                public void run() {
+                    AndroidUtils.sleep(60000);
+                    releaseWakeLock();
+                };
+            }.start();
+        }
+    }
+
+    private synchronized void releaseWakeLock() {
+        if (isWakeLocked()) {
+            Logger.v("releaseWakeLock");
+            wakelock.release();
+            wakelock = null;
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1020,4 +1050,7 @@ public class BackgroundService extends Service {
         return ecoCharge;
     }
 
+    public boolean isWakeLocked() {
+        return wakelock != null && wakelock.isHeld();
+    }
 }

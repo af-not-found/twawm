@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import com.appspot.afnf4199ga.twawm.Const;
 import com.appspot.afnf4199ga.utils.AndroidUtils;
 import com.appspot.afnf4199ga.utils.Logger;
+import com.appspot.afnf4199ga.utils.MyStringUtlis;
 
 public class StaticIntentListener extends BroadcastReceiver {
 
@@ -49,6 +50,19 @@ public class StaticIntentListener extends BroadcastReceiver {
 
                     // サービス開始を試みる
                     startServiceIfNeed(context, service);
+                }
+            }
+
+            // Tasker
+            else if (AndroidUtils.isActionEquals(intent, Const.INTENT_TASKER)) {
+                String act = intent.getStringExtra("act");
+                Logger.v("TaskerIntentReceiver act=" + act);
+                if (MyStringUtlis.isEmpty(act) == false) {
+
+                    // サービス開始（既に開始済でもこれでOK）
+                    Intent srvIntent = new Intent(context, BackgroundService.class);
+                    srvIntent.putExtra(Const.INTENT_EX_DO_ACTION, act);
+                    context.startService(srvIntent);
                 }
             }
         }
